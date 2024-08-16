@@ -1,8 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../../commons/BackButton";
-import Button1 from "../../commons/EditButton";
-import Button2 from "../../commons/DeleteButton";
-import Button3 from "../../commons/ConfirmButton";
 import Header from "../Header";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -16,7 +13,6 @@ import InputText from "../../commons/InputText";
 import { Confirm } from "notiflix/build/notiflix-confirm-aio";
 import InputSelect from "../../commons/InputSelect";
 import InputDate from "../../commons/InputDate";
-import Button4 from "../../commons/Button4";
 import DeleteButton from "../../commons/DeleteButton";
 import EditButton from "../../commons/EditButton";
 import ConfirmButton from "../../commons/ConfirmButton";
@@ -108,6 +104,13 @@ function IndividualConsulta() {
     }));
   };
 
+  const handleTimeChange = (name: string) => (time: string) => {
+    setEventData((prevEventData) => ({
+      ...prevEventData,
+      [name]: time,
+    }));
+  };
+
   const handleConfirmDeleteEvent = async () => {
     if (id) {
       const eventId = parseInt(id, 10);
@@ -123,9 +126,9 @@ function IndividualConsulta() {
     }
   };
 
-  // if (!polizaNumber) {
-  //   return <div>No existe la póliza solicitada.</div>;
-  // }
+  if (!id) {
+    return <div>No existe la póliza solicitada.</div>;
+  }
 
   const handleConfirmEditEvent = async () => {
     if (id) {
@@ -260,7 +263,7 @@ function IndividualConsulta() {
                     ) : (
                       <InputDate
                         value={formatDate(eventData.fecha.slice(0, 10))}
-                        onChange={handleDateChange}
+                        onChange={handleDateChange("fecha")}
                         width="full"
                       />
                     )}
@@ -279,6 +282,7 @@ function IndividualConsulta() {
                     ) : (
                       <InputTime
                         value={`${eventData.horarioInicio.slice(0, 5)}hs`}
+                        onChange={handleTimeChange("horarioInicio")}
                       />
                     )}
                   </div>
@@ -341,6 +345,7 @@ function IndividualConsulta() {
                     ) : (
                       <InputTime
                         value={`${eventData.horarioFin.slice(0, 5)}hs`}
+                        onChange={handleTimeChange("horarioFin")}
                       />
                     )}
                   </div>

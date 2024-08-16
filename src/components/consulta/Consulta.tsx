@@ -22,7 +22,7 @@ function Consulta() {
     gimnasio: "",
     horarioInicio: "",
     horarioFin: "",
-    fecha: new Date(),
+    fecha: "",
   };
 
   const [filterData, setFilterData] = useState(initialFilterData);
@@ -161,10 +161,10 @@ function Consulta() {
             </div>
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">
               <TablaConsulta
-              pageTotal={pageTotal}
-              pageFilter={pageFilter}
-              filter={filterData}
-              isFilter={isFilter}
+                pageTotal={pageTotal}
+                pageFilter={pageFilter}
+                filter={filterData}
+                isFilter={isFilter}
               />
               <Pagination
                 pageTotal={pageTotal}

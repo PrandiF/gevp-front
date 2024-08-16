@@ -17,7 +17,7 @@ type FilterProps = {
   deporte?: string;
   nombreSocio?: string;
   evento?: string;
-  fecha: Date | null;
+  fecha: string | null;
   horarioInicio: string;
   horarioFin: string;
 };
