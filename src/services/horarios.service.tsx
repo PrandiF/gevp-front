@@ -1,51 +1,88 @@
 import axios from "axios";
 
-const USER_URL = `http://localhost:5433/api/evento`;
+const USER_URL = `http://localhost:5433/api/horario`;
 
-type EventoProps = {
+type HorarioProps = {
   gimnasio: string;
   deporte: string;
-  nombreSocio: string;
-  evento: string;
-  fecha: Date;
+  dia: string;
+  categoria: string;
   quienCarga: string;
   horarioInicio: string;
   horarioFin: string;
 };
-
 type FilterProps = {
   gimnasio: string;
-  deporte?: string;
-  nombreSocio?: string;
-  evento?: string;
-  fecha: Date | null;
+  deporte: string;
+  dia: string;
+  categoria?: string;
   horarioInicio: string;
   horarioFin: string;
 };
 
-export const getEventos = async (page: number = 1) => {
+export const getHorarios = async (page: number = 1) => {
   try {
     const res = await axios.get(`${USER_URL}?page=${page}`, {
       withCredentials: true,
     });
     return res.data.data;
   } catch (error) {
-    console.error("Error al obtener los Eventos:", error);
+    console.log("Error al obtener los horarios:", error);
     throw error;
   }
 };
 
-export const getEvento = async () => {
+export const createHorario = async (horarioData: HorarioProps) => {
   try {
-    const res = await axios.get(`${USER_URL}`, { withCredentials: true });
+    const res = await axios.post(
+      `${USER_URL}`,
+      { ...horarioData },
+      { withCredentials: true }
+    );
     return res.data;
   } catch (error) {
-    console.error("Error al obtener el evento:", error);
+    console.log("Error al crear el horario:", error);
     throw error;
   }
 };
 
-export const getFilterEvento = async (
+export const getHorarioById = async (id: number) => {
+  try {
+    const res = await axios.get(`${USER_URL}/${id}`, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    console.log("Error al obtener el horario:", error);
+    throw error;
+  }
+};
+
+export const deleteHorario = async (id: number) => {
+  try {
+    const res = await axios.delete(`${USER_URL}/${id}`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (error) {
+    console.log("Error al eliminar el horario:", error);
+    throw error;
+  }
+};
+
+export const editHorario = async (id: number, data: HorarioProps) => {
+  try {
+    const res = await axios.put(
+      `${USER_URL}/${id}`,
+      { ...data },
+      { withCredentials: true }
+    );
+    return res.data;
+  } catch (error) {
+    console.log("Error al editar el horario:", error);
+    throw error;
+  }
+};
+
+export const getFilterHorario = async (
   filter: FilterProps,
   page: number = 1
 ) => {
@@ -53,18 +90,11 @@ export const getFilterEvento = async (
   let filterClean: FilterProps = {
     gimnasio: filter.gimnasio,
     deporte: filter.deporte,
-    nombreSocio: filter.nombreSocio,
-    fecha: filter.fecha,
+    categoria: filter.categoria,
+    dia: filter.dia,
     horarioInicio: filter.horarioInicio,
     horarioFin: filter.horarioFin,
   };
-
-  if (
-    filter.fecha &&
-    new Date(filter.fecha).toLocaleDateString() === "31/12/1899"
-  ) {
-    filterClean.fecha = null;
-  }
 
   // const newUrl = async () => {
   let stringReq = "";
@@ -92,70 +122,14 @@ export const getFilterEvento = async (
     });
     return res.data.data;
   } catch (error) {
-    console.error("Error al filtrar el/los evento/s:", error);
-    throw error;
-  }
-  // }
-  // newUrl()
-  // return response;
-};
-
-export const createEvento = async (eventoData: EventoProps) => {
-  try {
-    const res = await axios.post(
-      `${USER_URL}`,
-      { ...eventoData },
-      { withCredentials: true }
-    );
-    console.log("Nuevo evento:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("Error al crear el evento:", error);
-    throw error;
-  }
-};
-
-export const getEventoById = async (id: number) => {
-  try {
-    const res = await axios.get(`${USER_URL}/${id}`, {
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (error) {
-    console.error("Error al obtener el evento:", error);
-    throw error;
-  }
-};
-
-export const deleteEvento = async (id: number) => {
-  try {
-    const res = await axios.delete(`${USER_URL}/${id}`, {
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (error) {
-    console.log("Error al eliminar el evento:", error);
-    throw error;
-  }
-};
-
-export const editEvento = async (id: number, data: EventoProps) => {
-  try {
-    const res = await axios.put(
-      `${USER_URL}/${id}`,
-      { ...data },
-      { withCredentials: true }
-    );
-    return res.data;
-  } catch (error) {
-    console.log("Error al editar el evento:", error);
+    console.error("Error al filtrar el/los horario/s:", error);
     throw error;
   }
 };
 
 export const verificarHorarioDisponible = async (
   gimnasio: string,
-  fecha: Date,
+  dia: string,
   horarioInicio: string,
   horarioFin: string
 ): Promise<boolean> => {
@@ -164,7 +138,7 @@ export const verificarHorarioDisponible = async (
       `${USER_URL}/disponibilidad`,
       {
         gimnasio,
-        fecha,
+        dia,
         horarioInicio,
         horarioFin,
       },
@@ -184,4 +158,3 @@ export const verificarHorarioDisponible = async (
     return false;
   }
 };
-

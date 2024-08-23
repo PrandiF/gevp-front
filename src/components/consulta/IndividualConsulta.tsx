@@ -18,15 +18,18 @@ import EditButton from "../../commons/EditButton";
 import ConfirmButton from "../../commons/ConfirmButton";
 import CancelButton from "../../commons/CancelButton";
 import InputTime from "../../commons/InputTime";
+import { useUserStoreLocalStorage } from "../../store/userStore";
+import Title from "../../commons/Title";
 
 interface EventProps {
   gimnasio: string;
   deporte: string;
-  fecha: string;
+  fecha: Date;
   horarioInicio: string;
   horarioFin: string;
   nombreSocio: string;
   evento: string;
+  quienCarga: string;
 }
 
 Confirm.init({
@@ -44,33 +47,44 @@ Confirm.init({
 });
 
 function IndividualConsulta() {
+  const { role } = useUserStoreLocalStorage();
+  const formatDate = (date: Date | string): string => {
+    const dateObj = typeof date === "string" ? new Date(date) : date;
 
-  const formatDate = (date: string): string => {
-    const [year, month, day] = date.split('-');
-    return `${day}-${month}-${year}`;
+    if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) {
+      throw new Error("Invalid date");
+    }
+
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const year = dateObj.getFullYear();
+
+    return `${day}/${month}/${year}`;
   };
 
   const navigate = useNavigate();
   const [eventData, setEventData] = useState<EventProps>({
     gimnasio: "",
     deporte: "",
-    fecha: "",
+    fecha: new Date(),
     horarioInicio: "",
     horarioFin: "",
     nombreSocio: "",
     evento: "",
+    quienCarga: "",
   });
 
   const [originalEventData, setOriginalEventData] = useState<EventProps>({
     gimnasio: "",
     deporte: "",
-    fecha: "",
+    fecha: new Date(),
     horarioInicio: "",
     horarioFin: "",
     nombreSocio: "",
     evento: "",
+    quienCarga: "",
   });
-  const [error, setError] = useState("");
+
   const [editar, setEditar] = useState(false);
 
   const { id } = useParams();
@@ -78,7 +92,7 @@ function IndividualConsulta() {
   useEffect(() => {
     AOS.init();
     if (id) {
-      const eventId = parseInt(id, 10); // Convierte id a un número
+      const eventId = parseInt(id, 10);
       if (!isNaN(eventId)) {
         getEventoById(eventId)
           .then((res) => {
@@ -87,12 +101,8 @@ function IndividualConsulta() {
           })
           .catch((error) => {
             console.error(error);
-            setError(
-              "Evento no encontrado. Verifica el ID e intenta nuevamente."
-            );
           });
       } else {
-        setError("ID del evento inválido.");
       }
     }
   }, [id]);
@@ -198,12 +208,12 @@ function IndividualConsulta() {
   };
 
   return (
-    <div className="relative flex flex-col w-full h-screen items-center z-20 ">
+    <div className="relative flex w-full h-screen items-center z-20">
       <Header />
       <div className="flex w-full items-start flex-col gap-8">
-        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto  rounded-3xl">
+        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%]  rounded-3xl">
           <div
-            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-16 py-5 m-auto rounded-3xl"
+            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-10 py-5 m-auto rounded-3xl"
             data-aos="fade"
             data-aos-duration="2600"
             data-aos-delay="400"
@@ -216,8 +226,9 @@ function IndividualConsulta() {
             >
               <BackButton />
             </div>
+            <Title text="Evento" />
 
-            <div className="flex w-[50%] flex-col items-center justify-center xl:gap-8 md:gap-6 gap-4 mx-auto">
+            <div className="flex xl:w-[50%] flex-col items-center justify-center xl:gap-8 md:gap-6 gap-4 mx-auto">
               <div className="flex w-full  justify-center gap-8">
                 <div className="flex w-full flex-col gap-6">
                   <div className="flex flex-col">
@@ -256,13 +267,13 @@ function IndividualConsulta() {
                     {!editar ? (
                       <InputText
                         name="fecha"
-                        value={formatDate(eventData.fecha.slice(0, 10))}
+                        value={formatDate(eventData.fecha)}
                         onChange={handleChange}
                         readonly={true}
                       />
                     ) : (
                       <InputDate
-                        value={formatDate(eventData.fecha.slice(0, 10))}
+                        value={formatDate(eventData.fecha)}
                         onChange={handleDateChange("fecha")}
                         width="full"
                       />
@@ -285,6 +296,18 @@ function IndividualConsulta() {
                         onChange={handleTimeChange("horarioInicio")}
                       />
                     )}
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
+                      Nombre Socio
+                    </label>
+                    <InputText
+                      name="nombreSocio"
+                      value={eventData.nombreSocio}
+                      onChange={handleChange}
+                      readonly={!editar}
+                    />
                   </div>
                 </div>
                 <div className="flex w-full flex-col gap-6">
@@ -321,11 +344,12 @@ function IndividualConsulta() {
 
                   <div className="flex flex-col">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
-                      Nombre Socio
+                      Evento
                     </label>
+
                     <InputText
-                      name="nombreSocio"
-                      value={eventData.nombreSocio}
+                      name="evento"
+                      value={eventData.evento}
                       onChange={handleChange}
                       readonly={!editar}
                     />
@@ -349,34 +373,43 @@ function IndividualConsulta() {
                       />
                     )}
                   </div>
+
+                  <div className="flex flex-col">
+                    <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
+                      Quien Cargó
+                    </label>
+                    <InputText
+                      name="quienCarga"
+                      value={eventData.quienCarga}
+                      onChange={handleChange}
+                      readonly={!editar}
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="flex w-full mx-auto items-center justify-center">
-                <div className="flex flex-col">
-                  <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
-                    Evento
-                  </label>
-
-                  <InputText
-                    name="evento"
-                    value={eventData.evento}
-                    onChange={handleChange}
-                    readonly={!editar}
-                  />
-                </div>
-              </div>
+              <div className="flex w-full mx-auto items-center justify-center"></div>
             </div>
-            {!editar ? (
-              <div className="flex gap-4 w-full items-center justify-center">
-                <EditButton onClick={() => setEditar(true)} />
-                <DeleteButton onClick={handleDeleteEvent} />
-              </div>
+            {role == "admin" ? (
+              <>
+                {!editar ? (
+                  <div className="flex gap-4 w-full items-center justify-center">
+                    <EditButton
+                      onClick={() => setEditar(true)}
+                      text="Editar"
+                      icon={true}
+                    />
+                    <DeleteButton onClick={handleDeleteEvent} />
+                  </div>
+                ) : (
+                  <div className="flex gap-4 w-full items-center justify-center">
+                    <ConfirmButton onClick={handleEditPoliza} />
+                    <CancelButton onClick={handleCancelEdit} />
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="flex gap-4 w-full items-center justify-center">
-                <ConfirmButton onClick={handleEditPoliza} />
-                <CancelButton onClick={handleCancelEdit} />
-              </div>
+              ""
             )}
           </div>
         </div>

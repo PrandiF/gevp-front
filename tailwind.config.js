@@ -14,6 +14,7 @@ export default {
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
         raleway: ["Raleway", "sans-serif"],
+        IBM: ["IBM Plex mono"]
       },
       colors: {
         celeste: "#2E99E8",

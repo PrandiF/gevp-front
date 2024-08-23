@@ -111,7 +111,7 @@ function TablaConsulta({
                     <td className="w-[16%] py-1 border">
                       <button
                         onClick={() =>
-                          navigate(`/consultar/individual/${evento.id}`)
+                          navigate(`/eventos/individual/${evento.id}`)
                         }
                         className="text-celeste underline"
                         style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
@@ -139,7 +139,7 @@ function TablaConsulta({
                     <td className="w-[16%] py-1 border">
                       <button
                         onClick={() =>
-                          navigate(`/consultar/individual/${evento.id}`)
+                          navigate(`/eventos/individual/${evento.id}`)
                         }
                         className="text-celeste underline"
                         style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}

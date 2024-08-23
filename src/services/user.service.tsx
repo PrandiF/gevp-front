@@ -9,8 +9,11 @@ export const login = async (username: string, password: string) => {
       { username, password },
       { withCredentials: true }
     );
+    
+    console.log("Login res.data:", res.data); 
     return res.data;
   } catch (error) {
+    console.error("Login error:", error);
     throw error;
   }
 };

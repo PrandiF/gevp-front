@@ -1,5 +1,4 @@
 import BackButton from "../../commons/BackButton";
-import InputDate from "../../commons/InputDate";
 import InputSelect from "../../commons/InputSelect";
 import InputText from "../../commons/InputText";
 import Title from "../../commons/Title";
@@ -9,67 +8,57 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
 import {
-  createEvento,
+  createHorario,
   verificarHorarioDisponible,
   // verificarHorarioDisponible,
-} from "../../services/evento.service";
+} from "../../services/horarios.service";
 import Button4 from "../../commons/Button4";
 import InputTime from "../../commons/InputTime";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 
-function Carga() {
+function CargaHorario() {
   const { role } = useUserStoreLocalStorage();
-
-  console.log("Role in component:", role);
-  const [eventData, setEventData] = useState({
+  console.log(role);
+  const [horarioData, setHorarioData] = useState({
     gimnasio: "",
     deporte: "",
-    nombreSocio: "",
-    fecha: new Date(),
-    quienCarga: "",
+    dia: "",
     horarioInicio: "",
     horarioFin: "",
-    evento: "",
+    categoria: "",
+    quienCarga: "",
   });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setEventData((prevEventData) => ({
-      ...prevEventData,
+    setHorarioData((prevHorarioData) => ({
+      ...prevHorarioData,
       [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleDateChange = (name: string) => (date: string) => {
-    setEventData((prevEventData) => ({
-      ...prevEventData,
-      [name]: date,
     }));
   };
 
   const handleSubmit = async () => {
     if (
-      !eventData.gimnasio ||
-      !eventData.deporte ||
-      !eventData.fecha ||
-      !eventData.nombreSocio ||
-      !eventData.evento ||
-      !eventData.horarioInicio ||
-      !eventData.horarioFin ||
-      !eventData.quienCarga
+      !horarioData.gimnasio ||
+      !horarioData.deporte ||
+      !horarioData.dia ||
+      !horarioData.categoria ||
+      !horarioData.horarioInicio ||
+      !horarioData.horarioFin ||
+      !horarioData.quienCarga
     ) {
       Report.failure(
-        "Error al cargar el evento",
+        "Error al cargar el entrenamiento",
         "Debe completar todos los campos",
         "Volver"
       );
       return;
     }
 
-    if (eventData.horarioInicio >= eventData.horarioFin) {
+    if (horarioData.horarioInicio >= horarioData.horarioFin) {
       Report.failure(
-        "Error al cargar el evento",
+        "Error al cargar el entrenamiento",
         "El horario de inicio debe ser anterior al horario de fin.",
         "Volver"
       );
@@ -78,57 +67,55 @@ function Carga() {
 
     try {
       const disponible = await verificarHorarioDisponible(
-        eventData.gimnasio,
-        eventData.fecha,
-        eventData.horarioInicio,
-        eventData.horarioFin
+        horarioData.gimnasio,
+        horarioData.dia,
+        horarioData.horarioInicio,
+        horarioData.horarioFin
       );
 
       if (!disponible) {
         Report.failure(
-          "Error al cargar el evento",
+          "Error al cargar el entrenamiento",
           "El horario ya está ocupado.",
           "Volver"
         );
         return;
       }
 
-      const res = await createEvento(eventData);
+      const res = await createHorario(horarioData);
 
       if (res) {
         Report.success(
-          "Evento Cargado",
-          "Se cargó un nuevo evento correctamente",
+          "Entrenamiento Cargado",
+          "Se cargó un nuevo entrenamiento correctamente",
           "Ok",
           () => {
-            setEventData({
+            setHorarioData({
               gimnasio: "",
               deporte: "",
-              nombreSocio: "",
-              fecha: new Date(),
+              categoria: "",
+              dia: "",
               quienCarga: "",
               horarioInicio: "",
               horarioFin: "",
-              evento: "",
             });
             window.location.reload();
           }
         );
       } else {
         Report.failure(
-          "Error al cargar el evento",
-          "No se pudo cargar el evento correctamente",
+          "Error al cargar el entrenamiento",
+          "No se pudo cargar el entrenamiento correctamente",
           "Volver",
           () => {
-            setEventData({
+            setHorarioData({
               gimnasio: "",
               deporte: "",
-              nombreSocio: "",
-              fecha: new Date(),
+              categoria: "",
+              dia: "",
               quienCarga: "",
               horarioInicio: "",
               horarioFin: "",
-              evento: "",
             });
             window.location.reload();
           }
@@ -136,8 +123,8 @@ function Carga() {
       }
     } catch (error) {
       Report.failure(
-        "Error al cargar el evento",
-        "No se pudo cargar el evento correctamente",
+        "Error al cargar el entrenamiento",
+        "No se pudo cargar el entrenamiento correctamente",
         "Volver"
       );
       throw error;
@@ -152,8 +139,8 @@ function Carga() {
     <div className="relative flex w-full h-screen items-center z-20">
       <Header />
       {role == "admin" ? (
-        <div className="flex w-full items-center flex-col gap-8 xl:pt-0 xl:pb-0 ">
-          <div className="xl:mt-[5%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
+        <div className="flex w-full items-center justify-center flex-col gap-8 xl:pt-0 xl:pb-0 pt-[8%]">
+          <div className="xl:mt-[5%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center  gap-10 py-8 m-auto rounded-3xl">
             <div
               className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
               data-aos="fade"
@@ -168,48 +155,28 @@ function Carga() {
               >
                 <BackButton />
               </div>
-              <Title text="Cargar Evento" />
-              <div className="flex flex-col xl:w-[70%] w-[50%] items-start justify-center xl:gap-8 md:gap-8 gap-3 mx-auto">
-                <div className="flex w-full  justify-center gap-8">
-                  <div className="flex w-full flex-col gap-6">
+              <div className="w-full text-center">
+                <Title text="Cargar entrenamiento" />
+              </div>
+
+              <div className="flex flex-col xl:w-[60%] md:w-[50%] w-full items-start justify-center xl:gap-8 md:gap-8 gap-3">
+                <div className="flex w-full items-center justify-around xl:gap-5 gap-2">
+                  <div className="flex w-full flex-col xl:gap-6 gap-3">
                     <InputSelect
-                      placeholder="Gimnasio"
+                      placeholder="Día"
                       options={[
-                        "Gimnasio 1",
-                        "Gimnasio 2",
-                        "Monza",
-                        "Alix",
-                        "Terracita",
+                        "Lunes",
+                        "Martes",
+                        "Miércoles",
+                        "Jueves",
+                        "Viernes",
+                        "Sabado",
                       ]}
                       width="full"
-                      value={eventData.gimnasio}
+                      value={horarioData.dia}
                       onChange={handleChange}
-                      name="gimnasio"
+                      name="dia"
                     />
-                    <InputDate
-                      placeholder="Fecha"
-                      width="full"
-                      onChange={handleDateChange("fecha")}
-                    />
-                    <InputTime
-                      placeholder="Horario Inicio"
-                      width="full"
-                      onChange={(time) =>
-                        setEventData((prevEventData) => ({
-                          ...prevEventData,
-                          horarioInicio: time,
-                        }))
-                      }
-                      value={eventData.horarioInicio}
-                    />
-                    <InputText
-                      placeholder="Nombre Socio"
-                      value={eventData.nombreSocio}
-                      onChange={handleChange}
-                      name="nombreSocio"
-                    />
-                  </div>
-                  <div className="flex w-full flex-col gap-6">
                     <InputSelect
                       placeholder="Deporte"
                       width="full"
@@ -222,35 +189,82 @@ function Carga() {
                         "Fútbol",
                         "Zumba",
                       ]}
-                      value={eventData.deporte}
+                      value={horarioData.deporte}
                       onChange={handleChange}
                       name="deporte"
                     />
-                    <InputText
-                      placeholder="Evento"
-                      name="evento"
-                      value={eventData.evento}
-                      onChange={handleChange}
+                    <InputTime
+                      placeholder="Horario Inicio"
                       width="full"
+                      onChange={(time) =>
+                        setHorarioData((prevHorarioData) => ({
+                          ...prevHorarioData,
+                          horarioInicio: time,
+                        }))
+                      }
+                      value={horarioData.horarioInicio}
+                    />
+                  </div>
+                  <div className="flex w-full flex-col xl:gap-6 gap-3">
+                    <InputSelect
+                      placeholder="Gimnasio"
+                      options={[
+                        "Gimnasio 1",
+                        "Gimnasio 2",
+                        "Monza",
+                        "Alix",
+                        "Terracita",
+                      ]}
+                      width="full"
+                      value={horarioData.gimnasio}
+                      onChange={handleChange}
+                      name="gimnasio"
+                    />
+                    <InputSelect
+                      placeholder="Categoría"
+                      options={[
+                        "Primera A",
+                        "Primera B",
+                        "U21 A",
+                        "U21 B",
+                        "U17 A",
+                        "U17 B",
+                        "U15 A",
+                        "U15 B",
+                        "U13 A",
+                        "U13 B",
+                        "Mini A",
+                        "Mini B",
+                        "Premini A",
+                        "Premini B",
+                        "Mosquito",
+                        "Escuelita",
+                      ]}
+                      width="full"
+                      value={horarioData.categoria}
+                      onChange={handleChange}
+                      name="categoria"
                     />
                     <InputTime
                       placeholder="Horario Fin"
                       width="full"
                       onChange={(time) =>
-                        setEventData((prevEventData) => ({
-                          ...prevEventData,
+                        setHorarioData((prevHorarioData) => ({
+                          ...prevHorarioData,
                           horarioFin: time,
                         }))
                       }
-                      value={eventData.horarioFin}
-                    />
-                    <InputText
-                      placeholder="Quien Carga"
-                      value={eventData.quienCarga}
-                      onChange={handleChange}
-                      name="quienCarga"
+                      value={horarioData.horarioFin}
                     />
                   </div>
+                </div>
+                <div className="flex w-full mx-auto items-center justify-center">
+                  <InputText
+                    name="quienCarga"
+                    value={horarioData.quienCarga}
+                    onChange={handleChange}
+                    placeholder="Quien Carga"
+                  />
                 </div>
               </div>
               <div
@@ -282,7 +296,8 @@ function Carga() {
             </div>
 
             <p className="text-black xl:text-2xl md:text-2xl text-xl xl:text-start md:text-start text-center">
-              Lo siento, debes ser administrador para cargar un nuevo evento
+              Lo siento, debes ser administrador para cargar un nuevo
+              entrenamiento
             </p>
           </div>
         </div>
@@ -293,4 +308,4 @@ function Carga() {
   );
 }
 
-export default Carga;
+export default CargaHorario;

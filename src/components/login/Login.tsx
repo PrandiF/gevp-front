@@ -1,4 +1,4 @@
-import logo from "../../assets/gevpLogo.png"
+import logo from "../../assets/gevpLogo.png";
 import InputText from "../../commons/InputText";
 import InputPsw from "../../commons/InputPsw";
 import AOS from "aos";
@@ -32,14 +32,19 @@ function Login() {
     e.preventDefault();
     try {
       const res = await login(userData.username, userData.password);
-      if (res == "User has been logged") {
-        loginState();
+      if (res && res.message === "User has been logged" && res.role) {
+        console.log("User res.data:", res);
+        loginState(res.role);
         navigate("/inicio");
+      } else {
+        console.error("Unexpected response structure:", res);
       }
     } catch (error) {
+      console.error("Login error:", error);
       throw error;
     }
   };
+
   return (
     <div className="flex w-full h-screen items-center justify-center z-20">
       <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[40%] md:w-[60%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
@@ -50,7 +55,10 @@ function Login() {
           data-aos-delay="200"
         >
           <div data-aos="fade" data-aos-duration="2000" data-aos-delay="400">
-            <img src={logo} className="xlL:w-[15%] md:w-[20%] w-[25%] flex mx-auto"/>
+            <img
+              src={logo}
+              className="xlL:w-[15%] md:w-[20%] w-[25%] flex mx-auto"
+            />
           </div>
 
           <form className="xl:w-[60%] flex flex-col gap-6">

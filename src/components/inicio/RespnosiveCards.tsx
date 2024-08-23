@@ -9,8 +9,8 @@ import {
   BsFillArrowRightSquareFill,
 } from "react-icons/bs";
 import Card from "./Card";
-import imgCargar from "../../assets/imagenCargar.png";
-import imgConsultar from "../../assets/imagenConsultar.png";
+import entrenamientosImg from "../../assets/entrenamientos2.png";
+import eventosImg from "../../assets/eventos.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -27,7 +27,7 @@ function RespnosiveCards() {
          data-aos-duration="2000"
         data-aos-delay="400"
       >
-        <div className="swiper-button-prev-serv absolute left-5 top-[50%] transform z-10">
+        <div className="swiper-button-prev-serv absolute left-12 top-[50%] transform z-10">
           <BsFillArrowLeftSquareFill className="w-8 h-8 cursor-pointer rounded-xl" />
         </div>
         <Swiper
@@ -49,20 +49,20 @@ function RespnosiveCards() {
             prevEl: ".swiper-button-prev-serv",
           }}
           modules={[EffectCoverflow, Pagination, Navigation]}
-          className="h-full w-[65%] relative flex items-center m-auto mt-4"
+          className="h-full w-[55%] relative flex items-center mx-auto mt-4"
         >
-          <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center">
-            <Card img={imgCargar} buttonText="Cargar" buttonHref="/cargar" />
+          <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center items-center">
+            <Card img={entrenamientosImg} text="Entrenamientos" buttonHref="/entrenamientos" />
           </SwiperSlide>
-          <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center">
+          <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center items-center">
             <Card
-              img={imgConsultar}
-              buttonText="Consultar"
-              buttonHref="/consultar"
+              img={eventosImg}
+              text="Eventos"
+              buttonHref="/eventos"
             />
           </SwiperSlide>
         </Swiper>
-        <div className="swiper-button-next-serv absolute right-5 top-[50%] transform  z-10">
+        <div className="swiper-button-next-serv absolute right-12 top-[50%] transform  z-10">
           <BsFillArrowRightSquareFill className="w-8 h-8 cursor-pointer rounded-xl" />
         </div>
       </div>
