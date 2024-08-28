@@ -12,7 +12,7 @@ function Home() {
     AOS.init();
   }, []);
   return (
-    <div className="relative flex w-full h-screen items-center z-20 ">
+    <div className="relative flex w-full items-center z-20 h-screen">
       <Header />
       <div className=" flex  flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[55%] md:w-[90%] w-[95%] items-center justify-center gap-10 py-5 mx-auto xl:mt-[3%] rounded-3xl">
         <div

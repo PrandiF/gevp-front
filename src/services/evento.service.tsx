@@ -49,24 +49,23 @@ export const getFilterEvento = async (
   filter: FilterProps,
   page: number = 1
 ) => {
-  // const [response, setResponse] = useState([])
+  // Limpiar y preparar los filtros
   let filterClean: FilterProps = {
     gimnasio: filter.gimnasio,
-    deporte: filter.deporte,
-    nombreSocio: filter.nombreSocio,
     fecha: filter.fecha,
     horarioInicio: filter.horarioInicio,
     horarioFin: filter.horarioFin,
   };
 
+  // Limpiar la fecha si es el valor predeterminado
   if (
-    filter.fecha &&
-    new Date(filter.fecha).toLocaleDateString() === "31/12/1899"
+    filterClean.fecha &&
+    new Date(filterClean.fecha).toLocaleDateString() === "31/12/1899"
   ) {
     filterClean.fecha = null;
   }
 
-  // const newUrl = async () => {
+  // Construcción de la cadena de consulta
   let stringReq = "";
   Object.keys(filterClean).forEach((key) => {
     if (
@@ -90,14 +89,11 @@ export const getFilterEvento = async (
     const res = await axios.get(`${USER_URL}/filter${stringReq}`, {
       withCredentials: true,
     });
-    return res.data.data;
+    return res.data;
   } catch (error) {
     console.error("Error al filtrar el/los evento/s:", error);
     throw error;
   }
-  // }
-  // newUrl()
-  // return response;
 };
 
 export const createEvento = async (eventoData: EventoProps) => {
@@ -184,4 +180,3 @@ export const verificarHorarioDisponible = async (
     return false;
   }
 };
-

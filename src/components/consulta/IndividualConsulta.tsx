@@ -208,10 +208,10 @@ function IndividualConsulta() {
   };
 
   return (
-    <div className="relative flex w-full h-screen items-center z-20">
+    <div className="relative flex w-full items-center z-20 xl:py-0 xl:pt-[5%] md:py-0 md:pt-[5%] py-[8%]">
       <Header />
-      <div className="flex w-full items-start flex-col gap-8">
-        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%]  rounded-3xl">
+      <div className="flex w-full items-start flex-col gap-8 xl:pt-0  pt-[5%]">
+        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%] mt-[10%]  rounded-3xl">
           <div
             className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-10 py-5 m-auto rounded-3xl"
             data-aos="fade"
@@ -228,8 +228,8 @@ function IndividualConsulta() {
             </div>
             <Title text="Evento" />
 
-            <div className="flex xl:w-[50%] flex-col items-center justify-center xl:gap-8 md:gap-6 gap-4 mx-auto">
-              <div className="flex w-full  justify-center gap-8">
+            <div className="flex w-[50%] flex-col items-center justify-center xl:gap-8 md:gap-6 gap-4 mx-auto">
+              <div className="flex w-full justify-center items-center gap-2">
                 <div className="flex w-full flex-col gap-6">
                   <div className="flex flex-col">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
@@ -260,7 +260,7 @@ function IndividualConsulta() {
                     )}
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Fecha
                     </label>
@@ -279,7 +279,7 @@ function IndividualConsulta() {
                       />
                     )}
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Horario Inicio
                     </label>
@@ -298,7 +298,7 @@ function IndividualConsulta() {
                     )}
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Nombre Socio
                     </label>
@@ -311,7 +311,7 @@ function IndividualConsulta() {
                   </div>
                 </div>
                 <div className="flex w-full flex-col gap-6">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Deporte
                     </label>
@@ -342,7 +342,7 @@ function IndividualConsulta() {
                     )}
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Evento
                     </label>
@@ -355,7 +355,7 @@ function IndividualConsulta() {
                     />
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Horario Fin
                     </label>
@@ -374,7 +374,7 @@ function IndividualConsulta() {
                     )}
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Quien Cargó
                     </label>

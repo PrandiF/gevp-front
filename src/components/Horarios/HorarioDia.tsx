@@ -9,9 +9,11 @@ import BackButton from "../../commons/BackButton";
 import Header from "../Header";
 import TablaHorarios from "./TablaHorarios";
 import { useParams } from "react-router-dom";
-import PaginationHorarios from "./PaginationHorarios";
+// import PaginationHorarios from "./PaginationHorarios";
+import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function HorarioDia() {
+  const { role } = useUserStoreLocalStorage();
   const initialFilterData = {
     gimnasio: "",
     horarioInicio: "",
@@ -25,8 +27,8 @@ function HorarioDia() {
 
   const [filterData, setFilterData] = useState(initialFilterData);
   const [isFilter, setIsFilter] = useState(false);
-  const [pageTotal, setPageTotal] = useState(1);
-  const [pageFilter, setPageFilter] = useState(1);
+  // const [pageTotal, setPageTotal] = useState(1);
+  // const [pageFilter, setPageFilter] = useState(1);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,21 +46,21 @@ function HorarioDia() {
   const handleCancel = () => {
     setFilterData(initialFilterData);
     setIsFilter(false);
-    setPageTotal(1);
+    // setPageTotal(1);
   };
 
-  const functionSetPageTotal = (num: number) => {
-    setPageTotal(num);
-  };
+  // const functionSetPageTotal = (num: number) => {
+  //   setPageTotal(num);
+  // };
 
-  const functionSetPageFilter = (num: number) => {
-    setPageFilter(num);
-  };
+  // const functionSetPageFilter = (num: number) => {
+  //   setPageFilter(num);
+  // };
   return (
-    <div className="relative flex w-full h-screen items-start z-20 pt-[8%]">
+    <div className="relative flex w-full  items-start z-20 xl:py-0 xl:pt-[5%] md:py-0 md:pt-[5%] py-[8%]">
       <Header />
-      <div className="flex w-full items-start flex-col gap-8">
-        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[90%] w-[80%]  items-center gap-10 xl:py-8 py-3 mx-auto xl:mt-[4%] mt-[10%]  rounded-3xl">
+      <div className="flex w-full items-start flex-col gap-8 xl:pt-0  pt-[5%]">
+        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[90%] w-[90%]  items-center gap-10 xl:py-8 py-3 mx-auto xl:mt-[4%] mt-[10%] mb-[1.5%]  rounded-3xl">
           <div className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%]  w-[95%] xl:px-5  items-center gap-10 xl:py-8 py-5 m-auto rounded-3xl">
             <div
               className="flex mr-auto xl:pl-0 pl-5"
@@ -142,7 +144,7 @@ function HorarioDia() {
                   clean={!isFilter}
                 />
               </div>
-              {/* <div
+              <div
                 className="flex  items-center gap-5 h-full w-full "
                 data-aos="fade"
                 data-aos-duration="2000"
@@ -174,7 +176,7 @@ function HorarioDia() {
                   name="categoria"
                   clean={!isFilter}
                 />
-              </div> */}
+              </div>
               <div className="flex xl:flex-row md:flex-row flex-col xl:gap-4 md:gap-4 gap-2 justify-center items-center xl:w-full md:w-[50%] md:mx-auto">
                 <button
                   onClick={isFilter ? handleCancel : handleSearch}
@@ -191,29 +193,29 @@ function HorarioDia() {
                     <SearchButton />
                   )}
                 </button>
-                <div
-                  className="xl:w-fit w-full flex h-full justify-center items-center"
-                  data-aos="fade"
-                  data-aos-duration="2000"
-                  data-aos-delay="600"
-                >
-                  <AddButton text="Nuevo Entrenamiento" url="/entrenamientos/cargar"/>
-                </div>
+                {role == "admin" ? (
+                  <div
+                    className="xl:w-fit w-full flex h-full justify-center items-center"
+                    data-aos="fade"
+                    data-aos-duration="2000"
+                    data-aos-delay="600"
+                  >
+                    <AddButton
+                      text="Nuevo Entrenamiento"
+                      url="/entrenamientos/cargar"
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">
               <TablaHorarios
-                pageTotal={pageTotal}
-                pageFilter={pageFilter}
+                // pageTotal={pageTotal}
+                // pageFilter={pageFilter}
                 filter={filterData}
                 isFilter={isFilter}
-              />
-              <PaginationHorarios
-                pageTotal={pageTotal}
-                isFilter={isFilter}
-                pageFilter={pageFilter}
-                setPageTotal={functionSetPageTotal}
-                setPageFilter={functionSetPageFilter}
               />
             </div>
           </div>

@@ -9,7 +9,7 @@ type EventoProps = {
   deporte: string;
   nombreSocio: string;
   evento: string;
-  fecha: string;
+  fecha: Date;
   horarioInicio: string;
   horarioFin: string;
 };
@@ -20,7 +20,7 @@ type FilterProps = {
     deporte?: string;
     nombreSocio?: string;
     evento?: string;
-    fecha: string;
+    fecha: Date;
     horarioInicio: string;
     horarioFin: string;
   };
@@ -60,15 +60,13 @@ function TablaConsulta({
 
   useEffect(() => {
     if (isFilter) {
-      console.log('Enviando filtro:', filter); // Verificar el filtro enviado
       try {
         getFilterEvento(filter, pageFilter).then((res) => {
-          console.log('Respuesta del filtro:', res); // Verificar la respuesta
           if (!res || res.length === 0) {
             setArrayFilter([]);
             setArrayEmpty(true);
           } else {
-            setArrayFilter(res);
+            setArrayFilter(res.data);
             setArrayEmpty(false);
           }
         });
@@ -77,11 +75,8 @@ function TablaConsulta({
         setArrayFilter([]);
         setArrayEmpty(true);
       }
-    } else {
-      setArrayEmpty(false)
     }
   }, [isFilter, pageFilter]);
-  
 
   return (
     <Table className="xl:w-[90%] w-[98%] rounded-lg">

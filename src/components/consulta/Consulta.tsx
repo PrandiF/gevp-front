@@ -13,8 +13,10 @@ import InputSelect from "../../commons/InputSelect";
 import CancelSearchButton from "../../commons/CancelSearchButton";
 import InputTime from "../../commons/InputTime";
 import AddButton from "../../commons/AddButton";
+import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function Consulta() {
+  const { role } = useUserStoreLocalStorage();
   useEffect(() => {
     AOS.init();
   }, []);
@@ -23,7 +25,7 @@ function Consulta() {
     gimnasio: "",
     horarioInicio: "",
     horarioFin: "",
-    fecha: "",
+    fecha: new Date("1900-01-01"),
   };
 
   const [filterData, setFilterData] = useState(initialFilterData);
@@ -34,20 +36,20 @@ function Consulta() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
+    isFilter && setIsFilter(false)
     setFilterData((prevEventoData) => ({
       ...prevEventoData,
       [e.target.name]: e.target.value,
     }));
+    
   };
 
   const handleDateChange = (name: string) => (date: string) => {
-    setFilterData((prevEventoData) => {
-      console.log(`Fecha seleccionada (${name}):`, date); // Depuración
-      return {
-        ...prevEventoData,
-        [name]: date,
-      };
-    });
+    isFilter && setIsFilter(false)
+    setFilterData((prevEventoData) => ({
+      ...prevEventoData,
+      [name]: date,
+    }));
   };
 
   const handleSearch = () => {
@@ -68,7 +70,7 @@ function Consulta() {
     setPageFilter(num);
   };
   return (
-    <div className="relative flex w-full h-screen items-start z-20 pt-[8%]">
+    <div className="relative flex w-full items-start z-20 xl:py-0 xl:pt-[5%] md:py-0 md:pt-[5%] py-[8%]">
       <Header />
       <div className="flex w-full items-start flex-col gap-8">
         <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[90%] w-[96%]  items-center gap-10 xl:py-8 py-3 mx-auto xl:mt-[3%] mt-[13%] rounded-3xl">
@@ -160,14 +162,18 @@ function Consulta() {
                     <SearchButton />
                   )}
                 </button>
-                <div
-                 className="xl:w-fit w-full flex h-full justify-center items-center"
-                  data-aos="fade"
-                  data-aos-duration="2000"
-                  data-aos-delay="600"
-                >
-                  <AddButton text="Nuevo Evento" url="/eventos/cargar"/>
-                </div>
+                {role == "admin" ? (
+                  <div
+                    className="xl:w-fit w-full flex h-full justify-center items-center"
+                    data-aos="fade"
+                    data-aos-duration="2000"
+                    data-aos-delay="600"
+                  >
+                    <AddButton text="Nuevo Evento" url="/eventos/cargar" />
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">

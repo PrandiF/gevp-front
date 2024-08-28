@@ -183,10 +183,10 @@ function HorarioIndividual() {
   };
 
   return (
-    <div className="relative flex w-full h-screen items-center z-20">
+    <div className="relative flex w-full items-center z-20 xl:py-0 xl:pt-[5%] md:py-0 md:pt-[5%] py-[8%]">
       <Header />
-      <div className="flex w-full items-start flex-col gap-8">
-        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%]  rounded-3xl">
+      <div className="flex w-full items-start flex-col gap-8 xl:pt-0 pt-[8%]">
+        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%] mt-[10%]  rounded-3xl">
           <div
             className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-16 py-5 m-auto rounded-3xl"
             data-aos="fade"
@@ -203,9 +203,9 @@ function HorarioIndividual() {
             </div>
             <Title text="Entrenamiento" />
 
-            <div className="flex w-[50%]  items-center justify-center xl:gap-8 md:gap-6 gap-4 mx-auto">
+            <div className="flex w-[50%] flex-col items-center justify-center xl:gap-8 md:gap-6 gap-4 mx-auto">
               <div className="flex w-full  justify-center gap-8">
-                <div className="flex w-full flex-col  gap-6">
+                <div className="flex w-full flex-col xl:gap-6 md:gap-6 gap-8">
                   <div className="flex flex-col">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Día
@@ -235,7 +235,7 @@ function HorarioIndividual() {
                       />
                     )}
                   </div>
-                  <div className="flex w-full flex-col gap-6">
+                  <div className="flex w-full flex-col xl:gap-6 md:gap-6 gap-8">
                     <div className="flex flex-col">
                       <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                         Deporte
@@ -287,7 +287,7 @@ function HorarioIndividual() {
                   </div>
                 </div>
 
-                <div className="flex w-full flex-col  gap-6">
+                <div className="flex w-full flex-col xl:gap-6 md:gap-6 gap-8">
                   <div className="flex flex-col">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Gminasio
@@ -349,20 +349,30 @@ function HorarioIndividual() {
                   </div>
                 </div>
               </div>
-              <div className="flex w-full mx-auto items-center justify-center">
+              <div className="flex w-full mx-auto items-center justify-center xl:mt-0 md:mt-0 mt-4">
+                <div className="flex flex-col">
+                  <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
+                    Quien cargó
+                  </label>
                   <InputText
                     name="quienCarga"
                     value={horarioData.quienCarga}
                     onChange={handleChange}
                     placeholder="Quien Cargó"
+                    readonly={!editar}
                   />
                 </div>
+              </div>
             </div>
             {role == "admin" ? (
               <>
                 {!editar ? (
                   <div className="flex gap-4 w-full items-center justify-center">
-                    <EditButton onClick={() => setEditar(true)} text="Editar" icon={true}/>
+                    <EditButton
+                      onClick={() => setEditar(true)}
+                      text="Editar"
+                      icon={true}
+                    />
                     <DeleteButton onClick={handleDeleteHorario} />
                   </div>
                 ) : (

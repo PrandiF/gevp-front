@@ -10,11 +10,13 @@ export default {
           "linear-gradient(to bottom, #0092EE 0%, #70ADD8 57%, #0092EE 100%)",
         "button2-gradient":
           "linear-gradient(to right, #0092EE 0%, #F8F8F8 43%, #E9E9E9 100%)",
+        "bg-gradient-blue":
+          "linear-gradient(to bottom right, #001932 0%, #06018a 50%, #001932 100%)",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
         raleway: ["Raleway", "sans-serif"],
-        IBM: ["IBM Plex mono"]
+        IBM: ["IBM Plex mono"],
       },
       colors: {
         celeste: "#2E99E8",

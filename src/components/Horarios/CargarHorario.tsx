@@ -142,7 +142,7 @@ function CargaHorario() {
         <div className="flex w-full items-center justify-center flex-col gap-8 xl:pt-0 xl:pb-0 pt-[8%]">
           <div className="xl:mt-[5%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center  gap-10 py-8 m-auto rounded-3xl">
             <div
-              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
+              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[90%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
               data-aos="fade"
               data-aos-duration="2500"
               data-aos-delay="400"
@@ -159,7 +159,7 @@ function CargaHorario() {
                 <Title text="Cargar entrenamiento" />
               </div>
 
-              <div className="flex flex-col xl:w-[60%] md:w-[50%] w-full items-start justify-center xl:gap-8 md:gap-8 gap-3">
+              <div className="flex flex-col xl:w-[60%] md:w-[70%] w-full items-start justify-center xl:gap-8 md:gap-8 gap-3">
                 <div className="flex w-full items-center justify-around xl:gap-5 gap-2">
                   <div className="flex w-full flex-col xl:gap-6 gap-3">
                     <InputSelect
@@ -239,6 +239,10 @@ function CargaHorario() {
                         "Premini B",
                         "Mosquito",
                         "Escuelita",
+                        "Técnica individual",
+                        "Femenino",
+                        "Veteranos +54",
+                        "Veteranos +48",
                       ]}
                       width="full"
                       value={horarioData.categoria}
