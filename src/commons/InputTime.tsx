@@ -31,13 +31,14 @@ function InputTime({
         defaultDate: value,
         onChange: (selectedDates, dateStr) => {
           if (onChange) {
+            console.log(selectedDates);
             onChange(dateStr);
           }
         },
       });
 
       return () => {
-        fp.destroy(); // Cleanup on unmount
+        fp.destroy();
       };
     }
   }, [onChange, value]);

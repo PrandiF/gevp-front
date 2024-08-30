@@ -9,8 +9,8 @@ import {
   BsFillArrowRightSquareFill,
 } from "react-icons/bs";
 import Card from "./Card";
-import entrenamientosImg from "../../assets/entrenamientos2.png";
-import eventosImg from "../../assets/eventos.png";
+import entrenamientosImg from "/assets/entrenamientos2.png";
+import eventosImg from "/assets/eventos.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";

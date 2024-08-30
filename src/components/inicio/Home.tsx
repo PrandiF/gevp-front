@@ -2,8 +2,8 @@ import Header from "../Header";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-import entrenamientosImg from "../../assets/entrenamientos2.png";
-import eventosImg from "../../assets/eventos.png";
+import entrenamientosImg from "/assets/entrenamientos2.png";
+import eventosImg from "/assets/eventos.png";
 import Card from "./Card";
 import RespnosiveCards from "./RespnosiveCards";
 
