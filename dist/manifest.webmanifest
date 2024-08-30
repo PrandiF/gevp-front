@@ -1,0 +1,1 @@
+{"name":"GEVP","short_name":"GEVP","start_url":"/","display":"standalone","background_color":"#06018a","lang":"en","scope":"/","description":"Consulta o carga entrenamientos y eventos en el club GEVP.","theme_color":"#06018a","icons":[{"src":"assets/gevpLogo.png","sizes":"192x192","type":"image/png"},{"src":"assets/gevpLogo-512x512.png","sizes":"512x512","type":"image/png"}]}

@@ -1,4 +1,4 @@
-import logo from "../assets/gevpLogo.png";
+import logo from "/assets/gevpLogo.png";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
