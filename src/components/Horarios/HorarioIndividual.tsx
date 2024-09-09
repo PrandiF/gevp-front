@@ -188,7 +188,7 @@ function HorarioIndividual() {
       <div className="flex w-full items-start flex-col gap-8 xl:pt-0 pt-[8%]">
         <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%] mt-[10%]  rounded-3xl">
           <div
-            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-16 py-5 m-auto rounded-3xl"
+            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-16 py-5 m-auto rounded-3xl xl:border-2 border border-gray-600"
             data-aos="fade"
             data-aos-duration="2600"
             data-aos-delay="400"

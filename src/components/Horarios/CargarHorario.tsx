@@ -142,7 +142,7 @@ function CargaHorario() {
         <div className="flex w-full items-center justify-center flex-col gap-8 xl:pt-0 xl:pb-0 pt-[8%]">
           <div className="xl:mt-[5%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center  gap-10 py-8 m-auto rounded-3xl">
             <div
-              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[90%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
+              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[90%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
               data-aos="fade"
               data-aos-duration="2500"
               data-aos-delay="400"

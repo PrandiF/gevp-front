@@ -1,6 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
-const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"];
+const daysOfWeek = [
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sabado",
+];
 
 const Agenda = () => {
   const navigate = useNavigate();
@@ -13,10 +20,12 @@ const Agenda = () => {
       {daysOfWeek.map((day) => (
         <div
           key={day}
-          className="xl:w-1/5 md:w-1/5 w-[90%] bg-gray-100 px-4 pb-6 pt-4 rounded-lg shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer"
+          className="xl:w-1/5 md:w-1/6 w-[90%] bg-gray-100 px-4 pb-6 pt-4 rounded-lg shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer flex items-center md:justify-center xl:justify-start"
           onClick={() => handleDayClick(day)}
         >
-          <h3 className="xl:text-start md:text-start text-center text-lg text-black font-semibold mb-4">{day}</h3>
+          <h3 className="xl:text-start md:text-center text-center text-lg text-black font-semibold mb-4">
+            {day}
+          </h3>
         </div>
       ))}
     </div>

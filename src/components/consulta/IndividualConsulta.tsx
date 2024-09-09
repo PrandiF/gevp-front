@@ -47,6 +47,7 @@ Confirm.init({
 });
 
 function IndividualConsulta() {
+  const [isEnded, setIsEnded] = useState(false);
   const { role } = useUserStoreLocalStorage();
   const formatDate = (date: Date | string): string => {
     const dateObj = typeof date === "string" ? new Date(date) : date;
@@ -89,6 +90,20 @@ function IndividualConsulta() {
 
   const { id } = useParams();
 
+  const checkIfEventFinished = () => {
+    const currentDateTime = new Date();
+    const eventEndDateTime = new Date(eventData.fecha);
+    const [hours, minutes] = eventData.horarioFin.split(":").map(Number);
+    eventEndDateTime.setHours(hours, minutes, 0);
+
+    // Comparar la fecha y hora actuales con la fecha y hora de finalización del evento
+    if (currentDateTime > eventEndDateTime) {
+      setIsEnded(true);
+    } else {
+      setIsEnded(false);
+    }
+  };
+
   useEffect(() => {
     AOS.init();
     if (id) {
@@ -98,6 +113,8 @@ function IndividualConsulta() {
           .then((res) => {
             setEventData(res);
             setOriginalEventData(res);
+            // checkIfEventFinished();
+            // console.log(isEnded)
           })
           .catch((error) => {
             console.error(error);
@@ -106,6 +123,12 @@ function IndividualConsulta() {
       }
     }
   }, [id]);
+
+  useEffect(() => {
+    if (eventData.fecha && eventData.horarioFin) {
+      checkIfEventFinished();
+    }
+  }, [eventData]);
 
   const handleDateChange = (name: string) => (date: string) => {
     setEventData((prevEventData) => ({
@@ -213,7 +236,7 @@ function IndividualConsulta() {
       <div className="flex w-full items-start flex-col gap-8 xl:pt-0  pt-[5%]">
         <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%] mt-[10%]  rounded-3xl">
           <div
-            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-10 py-5 m-auto rounded-3xl"
+            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-10 py-5 m-auto rounded-3xl xl:border-2 border border-gray-600"
             data-aos="fade"
             data-aos-duration="2600"
             data-aos-delay="400"
@@ -388,9 +411,9 @@ function IndividualConsulta() {
                 </div>
               </div>
 
-              <div className="flex w-full mx-auto items-center justify-center"></div>
+              {/* <div className="flex w-full mx-auto items-center justify-center"></div> */}
             </div>
-            {role == "admin" ? (
+            {role == "admin" && !isEnded ? (
               <>
                 {!editar ? (
                   <div className="flex gap-4 w-full items-center justify-center">
@@ -408,6 +431,18 @@ function IndividualConsulta() {
                   </div>
                 )}
               </>
+            ) : role == "admin" && isEnded ? (
+              <div className="flex w-full items-start justify-center">
+                <p className="text-red-600 text-lg  font-semibold">
+                  Evento Finalizdo
+                </p>
+              </div>
+            ) : role == "employee" && isEnded ? (
+              <div className="flex w-full items-start justify-center">
+                <p className="text-red-600 text-lg font-semibold">
+                  Evento Finalizdo
+                </p>
+              </div>
             ) : (
               ""
             )}

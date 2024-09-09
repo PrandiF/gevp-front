@@ -2,10 +2,11 @@ import Header from "../Header";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-import entrenamientosImg from "/assets/entrenamientos2.png";
-import eventosImg from "/assets/eventos.png";
-import Card from "./Card";
-import RespnosiveCards from "./RespnosiveCards";
+// import entrenamientosImg from "/assets/entrenamientos2.png";
+// import eventosImg from "/assets/eventos.png";
+// import Card from "./Card";
+// import RespnosiveCards from "./RespnosiveCards";
+import AlternativaHome from "./AlternativaHome";
 
 function Home() {
   useEffect(() => {
@@ -14,7 +15,8 @@ function Home() {
   return (
     <div className="relative flex w-full items-center z-20 h-screen">
       <Header />
-      <div className=" flex  flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[55%] md:w-[90%] w-[95%] items-center justify-center gap-10 py-5 mx-auto xl:mt-[3%] rounded-3xl">
+      <AlternativaHome />
+      {/* <div className=" flex  flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[55%] md:w-[90%] w-[95%] items-center justify-center gap-10 py-5 mx-auto xl:mt-[3%] rounded-3xl">
         <div
           className="flex relative   bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[90%] w-[95%] px-3 items-center justify-center gap-16 py-20 m-auto rounded-3xl"
           data-aos="fade"
@@ -33,7 +35,7 @@ function Home() {
             <RespnosiveCards />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
