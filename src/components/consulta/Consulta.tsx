@@ -32,10 +32,12 @@ function Consulta() {
   const [isFilter, setIsFilter] = useState(false);
   const [pageTotal, setPageTotal] = useState(1);
   const [pageFilter, setPageFilter] = useState(1);
+  const [isClean, setIsClean] = useState(false)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
+    setIsClean(false)
     isFilter && setIsFilter(false)
     setFilterData((prevEventoData) => ({
       ...prevEventoData,
@@ -45,6 +47,7 @@ function Consulta() {
   };
 
   const handleDateChange = (name: string) => (date: string) => {
+    setIsClean(false)
     isFilter && setIsFilter(false)
     setFilterData((prevEventoData) => ({
       ...prevEventoData,
@@ -58,7 +61,9 @@ function Consulta() {
 
   const handleCancel = () => {
     setFilterData(initialFilterData);
+    setIsClean(true);
     setIsFilter(false);
+    setPageFilter(1)
     setPageTotal(1);
   };
 
@@ -111,7 +116,7 @@ function Consulta() {
                   value={filterData.gimnasio}
                   onChange={handleChange}
                   name="gimnasio"
-                  clean={!isFilter}
+                  clean={isClean}
                 />
               </div>
 
@@ -123,7 +128,7 @@ function Consulta() {
               >
                 <InputDate
                   placeholder="Fecha"
-                  clean={!isFilter}
+                  clean={isClean}
                   width="full"
                   onChange={handleDateChange("fecha")}
                 />
@@ -136,7 +141,7 @@ function Consulta() {
               >
                 <InputTime
                   placeholder="Horario"
-                  clean={!isFilter}
+                  clean={isClean}
                   width="full"
                   onChange={(time) =>
                     setFilterData((prevFilterData) => ({
