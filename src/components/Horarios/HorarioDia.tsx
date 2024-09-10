@@ -9,7 +9,6 @@ import BackButton from "../../commons/BackButton";
 import Header from "../Header";
 import TablaHorarios from "./TablaHorarios";
 import { useParams } from "react-router-dom";
-// import PaginationHorarios from "./PaginationHorarios";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function HorarioDia() {
@@ -27,12 +26,13 @@ function HorarioDia() {
 
   const [filterData, setFilterData] = useState(initialFilterData);
   const [isFilter, setIsFilter] = useState(false);
-  // const [pageTotal, setPageTotal] = useState(1);
-  // const [pageFilter, setPageFilter] = useState(1);
+  const [isClean, setIsClean] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
+    setIsClean(false)
+    isFilter && setIsFilter(false)
     setFilterData((prevEventoData) => ({
       ...prevEventoData,
       [e.target.name]: e.target.value,
@@ -46,16 +46,9 @@ function HorarioDia() {
   const handleCancel = () => {
     setFilterData(initialFilterData);
     setIsFilter(false);
-    // setPageTotal(1);
+    setIsClean(true)
   };
 
-  // const functionSetPageTotal = (num: number) => {
-  //   setPageTotal(num);
-  // };
-
-  // const functionSetPageFilter = (num: number) => {
-  //   setPageFilter(num);
-  // };
   return (
     <div className="relative flex w-full  items-start z-20 xl:py-0 xl:pt-[5%] md:py-0 md:pt-[5%] py-[8%]">
       <Header />
@@ -98,7 +91,7 @@ function HorarioDia() {
                   value={filterData.gimnasio}
                   onChange={handleChange}
                   name="gimnasio"
-                  clean={!isFilter}
+                  clean={isClean}
                 />
               </div>
 
@@ -110,7 +103,7 @@ function HorarioDia() {
               >
                 <InputTime
                   placeholder="Horario"
-                  clean={!isFilter}
+                  clean={isClean}
                   width="full"
                   onChange={(time) =>
                     setFilterData((prevFilterData) => ({
@@ -141,7 +134,7 @@ function HorarioDia() {
                   value={filterData.deporte}
                   onChange={handleChange}
                   name="deporte"
-                  clean={!isFilter}
+                  clean={isClean}
                 />
               </div>
               <div
@@ -174,7 +167,7 @@ function HorarioDia() {
                   value={filterData.categoria}
                   onChange={handleChange}
                   name="categoria"
-                  clean={!isFilter}
+                  clean={isClean}
                 />
               </div>
               <div className="flex xl:flex-row md:flex-row flex-col xl:gap-4 md:gap-4 gap-2 justify-center items-center xl:w-full md:w-[50%] md:mx-auto">
@@ -212,8 +205,6 @@ function HorarioDia() {
             </div>
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">
               <TablaHorarios
-                // pageTotal={pageTotal}
-                // pageFilter={pageFilter}
                 filter={filterData}
                 isFilter={isFilter}
               />
