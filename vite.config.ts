@@ -31,10 +31,15 @@ export default defineConfig({
             type: "image/png",
           },
           {
-            src: "assets/gevpLogo-512x512.png",
+            src: "assets/gevpLogo.png",
             sizes: "512x512",
             type: "image/png",
           },
+          {
+            src: "assets/gevpLogo.png",
+            sizes: "180x180",
+            type: "image/png",
+          },        
         ],
       },
     }),

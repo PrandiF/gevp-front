@@ -224,6 +224,7 @@ function Carga() {
                         "Gimnasia Rítmica",
                         "Fútbol",
                         "Zumba",
+                        "Comisión Directiva"
                       ]}
                       value={eventData.deporte}
                       onChange={handleChange}

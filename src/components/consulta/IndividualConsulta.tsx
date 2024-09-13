@@ -356,6 +356,7 @@ function IndividualConsulta() {
                           "Gimnasia Rítmica",
                           "Fútbol",
                           "Zumba",
+                          "Comisión Directiva"
                         ]}
                         width="full"
                         value={eventData.deporte}
