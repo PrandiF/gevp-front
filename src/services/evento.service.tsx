@@ -49,7 +49,6 @@ export const getFilterEvento = async (
   filter: FilterProps,
   page: number = 1
 ) => {
-  // Limpiar y preparar los filtros
   let filterClean: FilterProps = {
     gimnasio: filter.gimnasio,
     fecha: filter.fecha,
@@ -57,7 +56,6 @@ export const getFilterEvento = async (
     horarioFin: filter.horarioFin,
   };
 
-  // Limpiar la fecha si es el valor predeterminado
   if (
     filterClean.fecha &&
     new Date(filterClean.fecha).toLocaleDateString() === "31/12/1899"
@@ -65,7 +63,6 @@ export const getFilterEvento = async (
     filterClean.fecha = null;
   }
 
-  // Construcción de la cadena de consulta
   let stringReq = "";
   Object.keys(filterClean).forEach((key) => {
     if (

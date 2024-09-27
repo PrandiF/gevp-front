@@ -18,10 +18,3 @@ function Button4({ text, onClick, url }: Button4Props) {
 }
 
 export default Button4;
-// <a
-//   href={url}
-//   onClick={onClick}
-//   className="z-30 bg-button1-gradient  py-1 xl:w-[150px] md:w-[120px] w-[100px] flex items-center justify-center shadow-deep-shadow rounded-3xl cursor-pointer hover:brightness-95"
-// >
-//   {text}
-// </a>

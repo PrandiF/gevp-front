@@ -4,7 +4,8 @@ import Header from "../Header";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-import Agenda from "./Agenda";
+import AgendaGimnasios from "../../pruebas/AgendaGimnasios"; //OPCION 1
+// import Agenda from "./Agenda"; //OPCION 2
 
 function Horarios() {
   useEffect(() => {
@@ -33,8 +34,9 @@ function Horarios() {
             >
               <Title text="Entrenamientos" />
             </div>
-            <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">
-              <Agenda />
+            <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3"> 
+              <AgendaGimnasios /> {/*OPCION 1*/}  
+              {/* <Agenda /> OPCION 2 */}
             </div>
           </div>
         </div>

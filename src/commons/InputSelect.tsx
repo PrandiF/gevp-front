@@ -30,14 +30,14 @@ function InputSelect({
 
   useEffect(() => {
     if (clean) {
-      setSelected(""); // Limpiar el valor seleccionado
+      setSelected("");
     }
   }, [clean]);
 
   return (
     <div className="relative w-full">
       <select
-        name={name} // Añadir el atributo name al select
+        name={name}
         onChange={handleChange}
         value={selected}
         className={`w-${width} bg-white rounded-3xl h-[2rem] px-3 border border-celeste outline-none cursor-pointer ${

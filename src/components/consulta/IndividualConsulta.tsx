@@ -150,7 +150,7 @@ function IndividualConsulta() {
       try {
         const res = await deleteEvento(eventId);
         if (res) {
-          navigate("/consultar");
+          navigate("/eventos");
         }
       } catch (error) {
         console.error("Error al eliminar la poliza:", error);
@@ -356,7 +356,7 @@ function IndividualConsulta() {
                           "Gimnasia Rítmica",
                           "Fútbol",
                           "Zumba",
-                          "Comisión Directiva"
+                          "Comisión Directiva",
                         ]}
                         width="full"
                         value={eventData.deporte}
@@ -402,17 +402,30 @@ function IndividualConsulta() {
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Quien Cargó
                     </label>
-                    <InputText
-                      name="quienCarga"
-                      value={eventData.quienCarga}
-                      onChange={handleChange}
-                      readonly={!editar}
-                    />
+                    {!editar ? (
+                      <InputText
+                        name="quienCarga"
+                        value={eventData.quienCarga}
+                        onChange={handleChange}
+                        readonly={true}
+                      />
+                    ) : (
+                      <InputSelect
+                        placeholder="Quien Carga"
+                        width="full"
+                        options={[
+                          "Franco Prandi",
+                          "Fernando Prandi",
+                          "Leonardo Assandri",
+                        ]}
+                        value={eventData.quienCarga}
+                        onChange={handleChange}
+                        name="quienCarga"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
-
-              {/* <div className="flex w-full mx-auto items-center justify-center"></div> */}
             </div>
             {role == "admin" && !isEnded ? (
               <>

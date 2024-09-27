@@ -16,6 +16,7 @@ import Horarios from "./components/Horarios/Horarios";
 import HorarioDia from "./components/Horarios/HorarioDia";
 import HorarioIndividual from "./components/Horarios/HorarioIndividual";
 import CargaHorario from "./components/Horarios/CargarHorario";
+import HorarioGimnasios from "./pruebas/HorarioGimnasios";
 
 function App() {
   const { isAuthenticated } = useUserStoreLocalStorage();
@@ -40,7 +41,9 @@ function App() {
               />
               <Route path="/entrenamientos" element={<Horarios />} />
               <Route path="/entrenamientos/cargar" element={<CargaHorario />} />
-              <Route path="/entrenamientos/:dia" element={<HorarioDia />} />
+              <Route path="/entrenamientos/:gimnasio" element={<HorarioGimnasios />} /> {/*OPCION 1*/}
+              <Route path="/entrenamientos/:gimnasio/:dia" element={<HorarioDia />} /> {/*OPCION 1*/}
+              {/* <Route path="/entrenamientos/:dia" element={<HorarioDia />} /> OPCION 2 */}
               <Route
                 path="/entrenamientos/individual/:id"
                 element={<HorarioIndividual />}

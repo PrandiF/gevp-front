@@ -102,7 +102,7 @@ function HorarioIndividual() {
       try {
         const res = await deleteHorario(horarioId);
         if (res) {
-          navigate("/consultar");
+          navigate("/entrenamientos");
         }
       } catch (error) {
         console.error("Error al eliminar la poliza:", error);
@@ -295,7 +295,7 @@ function HorarioIndividual() {
                     {!editar ? (
                       <InputText
                         name="gimnasio"
-                        value={horarioData.gimnasio}
+                        value={horarioData.gimnasio.split("_").join(" ")}
                         onChange={handleChange}
                         readonly={true}
                       />
@@ -303,14 +303,14 @@ function HorarioIndividual() {
                       <InputSelect
                         placeholder="Gimnasio"
                         options={[
-                          "Gimnasio 1",
-                          "Gimnasio 2",
+                          "Gimnasio_1",
+                          "Gimnasio_2",
                           "Monza",
                           "Alix",
                           "Terracita",
                         ]}
                         width="full"
-                        value={horarioData.gimnasio}
+                        value={horarioData.gimnasio.split("_").join(" ")}
                         onChange={handleChange}
                         name="gimnasio"
                       />
@@ -354,13 +354,28 @@ function HorarioIndividual() {
                   <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                     Quien cargó
                   </label>
-                  <InputText
+                  {!editar ? (
+                    <InputText
                     name="quienCarga"
                     value={horarioData.quienCarga}
                     onChange={handleChange}
                     placeholder="Quien Cargó"
-                    readonly={!editar}
                   />
+                  ) : (
+                    <InputSelect
+                      placeholder="Quien Carga"
+                      width="full"
+                      options={[
+                        "Franco Prandi",
+                        "Fernando Prandi",
+                        "Leonardo Assandri",
+                      ]}
+                      value={horarioData.quienCarga}
+                      onChange={handleChange}
+                      name="quienCarga"
+                    />
+                  )}
+                  
                 </div>
               </div>
             </div>

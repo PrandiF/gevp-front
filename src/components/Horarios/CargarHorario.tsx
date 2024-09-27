@@ -1,6 +1,5 @@
 import BackButton from "../../commons/BackButton";
 import InputSelect from "../../commons/InputSelect";
-import InputText from "../../commons/InputText";
 import Title from "../../commons/Title";
 import Header from "../Header";
 import { Report } from "notiflix/build/notiflix-report-aio";
@@ -10,7 +9,6 @@ import { useEffect, useState } from "react";
 import {
   createHorario,
   verificarHorarioDisponible,
-  // verificarHorarioDisponible,
 } from "../../services/horarios.service";
 import Button4 from "../../commons/Button4";
 import InputTime from "../../commons/InputTime";
@@ -209,8 +207,8 @@ function CargaHorario() {
                     <InputSelect
                       placeholder="Gimnasio"
                       options={[
-                        "Gimnasio 1",
-                        "Gimnasio 2",
+                        "Gimnasio_1",
+                        "Gimnasio_2",
                         "Monza",
                         "Alix",
                         "Terracita",
@@ -262,13 +260,19 @@ function CargaHorario() {
                     />
                   </div>
                 </div>
-                <div className="flex w-full mx-auto items-center justify-center">
-                  <InputText
-                    name="quienCarga"
-                    value={horarioData.quienCarga}
-                    onChange={handleChange}
-                    placeholder="Quien Carga"
-                  />
+                <div className="flex w-[50%] mx-auto items-center justify-center">
+                <InputSelect
+                      placeholder="Quien Carga"
+                      width="full"
+                      options={[
+                        "Franco Prandi",
+                        "Fernando Prandi",
+                        "Leonardo Assandri",
+                      ]}
+                      value={horarioData.quienCarga}
+                      onChange={handleChange}
+                      name="quienCarga"
+                    />
                 </div>
               </div>
               <div

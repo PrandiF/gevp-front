@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useNavigate, useParams } from "react-router-dom";
-import { getFilterHorario, getHorarios } from "../../services/horarios.service";
+import { getFilterHorario, getHorarios } from "../services/horarios.service";
 
 type HorarioProps = {
   id: number;
@@ -25,13 +25,13 @@ type FilterProps = {
   isFilter: boolean;
 };
 
-function TablaHorarios({ filter, isFilter }: FilterProps) {
+function TablaHorarios2({ filter, isFilter }: FilterProps) {
   const navigate = useNavigate();
   const [horarios, setHorarios] = useState<HorarioProps[]>([]);
   const [arrayFilter, setArrayFilter] = useState<HorarioProps[]>([]);
   const [arrayEmpty, setArrayEmpty] = useState(false);
 
-  const { dia } = useParams<{ dia: string }>();
+  const { dia, gimnasio } = useParams<{ dia: string; gimnasio: string }>();
 
   useEffect(() => {
     const fetchHorarios = async () => {
@@ -41,20 +41,22 @@ function TablaHorarios({ filter, isFilter }: FilterProps) {
           setHorarios([]);
           setArrayEmpty(true);
         } else {
-          const filteredHorarios = dia
-            ? res.filter(
-                (horario: HorarioProps) =>
-                  horario.dia.toLowerCase() === dia.toLowerCase()
-              )
-            : res;
-
-          const sortedHorarios = filteredHorarios.sort(
-            (a: HorarioProps, b: HorarioProps) =>
+          const filteredHorarios = res
+            .filter((horario: HorarioProps) => {
+              const matchesDia = dia
+                ? horario.dia.toLowerCase() === dia.toLowerCase()
+                : true;
+              const matchesGimnasio = gimnasio
+                ? horario.gimnasio.toLowerCase() === gimnasio.toLowerCase()
+                : true;
+              return matchesDia && matchesGimnasio;
+            })
+            .sort((a: HorarioProps, b: HorarioProps) =>
               a.horarioInicio.localeCompare(b.horarioInicio)
-          );
+            );
 
-          setHorarios(sortedHorarios);
-          setArrayEmpty(sortedHorarios.length === 0);
+          setHorarios(filteredHorarios);
+          setArrayEmpty(filteredHorarios.length === 0);
         }
       } catch (error) {
         console.error("Error al obtener los horarios:", error);
@@ -64,7 +66,7 @@ function TablaHorarios({ filter, isFilter }: FilterProps) {
     };
 
     fetchHorarios();
-  }, [dia]);
+  }, [dia, gimnasio]);
 
   useEffect(() => {
     if (isFilter) {
@@ -75,21 +77,33 @@ function TablaHorarios({ filter, isFilter }: FilterProps) {
             setArrayFilter([]);
             setArrayEmpty(true);
           } else {
-            const filteredByDay = dia
+            const filteredByDia = dia
               ? res.filter(
                   (horario: HorarioProps) =>
-                    horario.dia.toLowerCase() === dia.toLowerCase() &&
-                    horario.horarioInicio >= filter.horarioInicio
+                    horario.dia.toLowerCase() === dia.toLowerCase()
                 )
               : res;
 
-            const sortedFilteredByDay = filteredByDay.sort(
+            const filteredByGimnasio = gimnasio
+              ? filteredByDia.filter(
+                  (horario: HorarioProps) =>
+                    horario.gimnasio.toLowerCase() === gimnasio.toLowerCase()
+                )
+              : filteredByDia;
+
+            const filteredByHorarioInicio = filter.horarioInicio
+              ? filteredByGimnasio.filter(
+                  (horario: HorarioProps) =>
+                    horario.horarioInicio.slice(0, 5) === filter.horarioInicio
+                )
+              : filteredByGimnasio;
+            const sortedFilteredHorarios = filteredByHorarioInicio.sort(
               (a: HorarioProps, b: HorarioProps) =>
                 a.horarioInicio.localeCompare(b.horarioInicio)
             );
 
-            setArrayFilter(sortedFilteredByDay);
-            setArrayEmpty(sortedFilteredByDay.length === 0);
+            setArrayFilter(sortedFilteredHorarios);
+            setArrayEmpty(sortedFilteredHorarios.length === 0);
           }
         } catch (error) {
           console.error("Error al filtrar los horarios:", error);
@@ -102,15 +116,15 @@ function TablaHorarios({ filter, isFilter }: FilterProps) {
     } else {
       setArrayEmpty(false);
     }
-  }, [isFilter, filter, dia]);
+  }, [isFilter, filter, dia, gimnasio]);
 
   return (
     <div className="relative xl:w-[80%] w-full">
       <Table className="w-full min-w-full rounded-lg">
         <thead className="bg-button1-gradient opacity-95 text-white xl:text-lg md:text-base text-[13px]">
           <tr className="text-center">
-            <th className="py-2 pr-2.5 rounded-tl-lg w-1/4">Gimnasio</th>
-            <th className="py-2 pr-2.5 w-1/4">Horario</th>
+            {" "}
+            <th className="py-2 pr-2.5  w-1/4">Horario</th>
             <th className="py-2 pr-2.5 w-1/4">Deporte</th>
             <th className="py-2 pr-2.5 w-1/4 rounded-tr-lg">Categoría</th>
           </tr>
@@ -129,7 +143,6 @@ function TablaHorarios({ filter, isFilter }: FilterProps) {
               (isFilter ? arrayFilter : horarios).map(
                 (horario: HorarioProps, i) => (
                   <tr key={i} className="text-center">
-                    <td className="py-1 border w-1/4">{horario.gimnasio}</td>
                     <td className="py-1 border w-1/4">
                       {horario.horarioInicio.slice(0, 5)}hs -{" "}
                       {horario.horarioFin.slice(0, 5)}hs
@@ -158,4 +171,4 @@ function TablaHorarios({ filter, isFilter }: FilterProps) {
   );
 }
 
-export default TablaHorarios;
+export default TablaHorarios2;

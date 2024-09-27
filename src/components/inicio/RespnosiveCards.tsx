@@ -24,7 +24,7 @@ function RespnosiveCards() {
       <div
         className="w-full rounded-sm relative"
         data-aos="fade-up"
-         data-aos-duration="2000"
+        data-aos-duration="2000"
         data-aos-delay="400"
       >
         <div className="swiper-button-prev-serv absolute left-12 top-[50%] transform z-10">
@@ -52,14 +52,14 @@ function RespnosiveCards() {
           className="h-full w-[55%] relative flex items-center mx-auto mt-4"
         >
           <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center items-center">
-            <Card img={entrenamientosImg} text="Entrenamientos" buttonHref="/entrenamientos" />
+            <Card
+              img={entrenamientosImg}
+              text="Entrenamientos"
+              buttonHref="/entrenamientos"
+            />
           </SwiperSlide>
           <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center items-center">
-            <Card
-              img={eventosImg}
-              text="Eventos"
-              buttonHref="/eventos"
-            />
+            <Card img={eventosImg} text="Eventos" buttonHref="/eventos" />
           </SwiperSlide>
         </Swiper>
         <div className="swiper-button-next-serv absolute right-12 top-[50%] transform  z-10">

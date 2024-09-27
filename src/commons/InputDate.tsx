@@ -26,10 +26,10 @@ const InputDate: React.FC<DatePickerProps> = ({
     if (datePickerRef.current) {
       flatpickr(datePickerRef.current, {
         locale: Spanish,
-        dateFormat: "d-m-y", // Formato de fecha día-mes-año
+        dateFormat: "d-m-y", 
         onChange: (selectedDates) => {
           if (onChange && selectedDates.length > 0) {
-            const formattedDate = selectedDates[0].toISOString().split("T")[0]; // Convierte la fecha a string
+            const formattedDate = selectedDates[0].toISOString().split("T")[0]; 
             onChange(formattedDate);
           }
         },

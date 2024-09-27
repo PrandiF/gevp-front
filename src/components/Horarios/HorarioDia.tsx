@@ -7,9 +7,10 @@ import InputSelect from "../../commons/InputSelect";
 import Title from "../../commons/Title";
 import BackButton from "../../commons/BackButton";
 import Header from "../Header";
-import TablaHorarios from "./TablaHorarios";
 import { useParams } from "react-router-dom";
 import { useUserStoreLocalStorage } from "../../store/userStore";
+import TablaHorarios2 from "../../pruebas/TablaHorarios2"; //OPCION 1
+// import TablaHorarios from "./TablaHorarios"; //OPCION 2
 
 function HorarioDia() {
   const { role } = useUserStoreLocalStorage();
@@ -22,7 +23,7 @@ function HorarioDia() {
     deporte: "",
   };
 
-  const { dia } = useParams<{ dia: string }>();
+  const { dia, gimnasio } = useParams<{ dia: string; gimnasio: string }>();
 
   const [filterData, setFilterData] = useState(initialFilterData);
   const [isFilter, setIsFilter] = useState(false);
@@ -31,8 +32,8 @@ function HorarioDia() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setIsClean(false)
-    isFilter && setIsFilter(false)
+    setIsClean(false);
+    isFilter && setIsFilter(false);
     setFilterData((prevEventoData) => ({
       ...prevEventoData,
       [e.target.name]: e.target.value,
@@ -46,7 +47,7 @@ function HorarioDia() {
   const handleCancel = () => {
     setFilterData(initialFilterData);
     setIsFilter(false);
-    setIsClean(true)
+    setIsClean(true);
   };
 
   return (
@@ -69,10 +70,11 @@ function HorarioDia() {
               data-aos-duration="2000"
               data-aos-delay="400"
             >
-              <Title text={dia || ""} />
+              <Title text={`${gimnasio?.split("_").join(" ")} - ${dia}` || ""} /> {/*OPCION 1*/}
+              {/* <Title text={dia || ""} /> OPCION 2 */}
             </div>
             <div className="flex flex-col xl:flex-row xl:gap-5 gap-3 w-[80%] xl:w-auto">
-              <div
+              {/* <div
                 className="flex  items-center gap-5 h-full w-full "
                 data-aos="fade"
                 data-aos-duration="2000"
@@ -93,7 +95,7 @@ function HorarioDia() {
                   name="gimnasio"
                   clean={isClean}
                 />
-              </div>
+              </div> OPCION 2 */}
 
               <div
                 className="relative flex items-center gap-5 h-full w-full"
@@ -204,10 +206,8 @@ function HorarioDia() {
               </div>
             </div>
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">
-              <TablaHorarios
-                filter={filterData}
-                isFilter={isFilter}
-              />
+                 <TablaHorarios2 filter={filterData} isFilter={isFilter} /> {/*OPCION 1*/}
+               {/* <TablaHorarios filter={filterData} isFilter={isFilter} /> OPCION 2 */}
             </div>
           </div>
         </div>

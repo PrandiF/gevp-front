@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import {
   createEvento,
   verificarHorarioDisponible,
-  // verificarHorarioDisponible,
 } from "../../services/evento.service";
 import Button4 from "../../commons/Button4";
 import InputTime from "../../commons/InputTime";
@@ -224,7 +223,7 @@ function Carga() {
                         "Gimnasia Rítmica",
                         "Fútbol",
                         "Zumba",
-                        "Comisión Directiva"
+                        "Comisión Directiva",
                       ]}
                       value={eventData.deporte}
                       onChange={handleChange}
@@ -248,8 +247,14 @@ function Carga() {
                       }
                       value={eventData.horarioFin}
                     />
-                    <InputText
+                    <InputSelect
                       placeholder="Quien Carga"
+                      width="full"
+                      options={[
+                        "Franco Prandi",
+                        "Fernando Prandi",
+                        "Leonardo Assandri",
+                      ]}
                       value={eventData.quienCarga}
                       onChange={handleChange}
                       name="quienCarga"

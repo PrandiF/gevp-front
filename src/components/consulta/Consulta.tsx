@@ -1,6 +1,5 @@
 import BackButton from "../../commons/BackButton";
 import InputDate from "../../commons/InputDate";
-// import InputText from "../../commons/InputText";
 import SearchButton from "../../commons/SearchButton";
 import Title from "../../commons/Title";
 import Header from "../Header";

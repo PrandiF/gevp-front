@@ -20,17 +20,6 @@ type FilterProps = {
   horarioFin: string;
 };
 
-// export const getHorarios = async (page: number = 1) => {
-//   try {
-//     const res = await axios.get(`${USER_URL}?page=${page}`, {
-//       withCredentials: true,
-//     });
-//     return res.data.data;
-//   } catch (error) {
-//     console.log("Error al obtener los horarios:", error);
-//     throw error;
-//   }
-// };
 export const getHorarios = async () => {
   try {
     const res = await axios.get(`${USER_URL}`, {
@@ -93,50 +82,6 @@ export const editHorario = async (id: number, data: HorarioProps) => {
   }
 };
 
-// export const getFilterHorario = async (
-//   filter: FilterProps,
-//   page: number = 1
-// ) => {
-//   // const [response, setResponse] = useState([])
-//   let filterClean: FilterProps = {
-//     gimnasio: filter.gimnasio,
-//     deporte: filter.deporte,
-//     categoria: filter.categoria,
-//     dia: filter.dia,
-//     horarioInicio: filter.horarioInicio,
-//     horarioFin: filter.horarioFin,
-//   };
-
-//   // Construcción de la query string
-//   let stringReq = "";
-//   Object.keys(filterClean).forEach((key) => {
-//     if (filterClean[key as keyof FilterProps]) {
-//       if (stringReq) {
-//         stringReq += `&${key}=${filterClean[key as keyof FilterProps]}`;
-//       } else {
-//         stringReq += `?${key}=${filterClean[key as keyof FilterProps]}`;
-//       }
-//     }
-//   });
-
-//   // Agregando la paginación
-//   if (stringReq) {
-//     stringReq += `&page=${page}`;
-//   } else {
-//     stringReq = `?page=${page}`;
-//   }
-
-//   try {
-//     const res = await axios.get(`${USER_URL}/filter${stringReq}`, {
-//       withCredentials: true,
-//     });
-//     return res.data.data;
-//   } catch (error) {
-//     console.error("Error al filtrar el/los horario/s:", error);
-//     throw error;
-//   }
-// };
-
 export const getFilterHorario = async (filter: FilterProps) => {
   let filterClean: FilterProps = {
     gimnasio: filter.gimnasio,
@@ -147,7 +92,6 @@ export const getFilterHorario = async (filter: FilterProps) => {
     horarioFin: filter.horarioFin,
   };
 
-  // Construcción de la query string
   let stringReq = "";
   Object.keys(filterClean).forEach((key) => {
     if (filterClean[key as keyof FilterProps]) {
