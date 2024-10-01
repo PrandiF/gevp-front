@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USER_URL = `http://localhost:5433/api/evento`;
+const USER_URL = `${import.meta.env.VITE_API_URL_PROD}/evento`;
 
 type EventoProps = {
   gimnasio: string;

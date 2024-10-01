@@ -66,7 +66,29 @@ function TablaConsulta({
             setArrayFilter([]);
             setArrayEmpty(true);
           } else {
-            setArrayFilter(res.data);
+            // Filtrado adicional para incluir el horario seleccionado en el rango del evento (excluyendo horarioFin)
+            const filteredEventos = res.data.filter((evento: EventoProps) => {
+              // Convertir horarios a formato Date para facilitar comparaciones
+              const [inicioHours, inicioMinutes] = evento.horarioInicio.split(":").map(Number);
+              const [finHours, finMinutes] = evento.horarioFin.split(":").map(Number);
+              
+              // Crear fechas con horas y minutos para inicio y fin del evento
+              const inicio = new Date(evento.fecha);
+              inicio.setHours(inicioHours, inicioMinutes, 0, 0);
+              
+              const fin = new Date(evento.fecha);
+              fin.setHours(finHours, finMinutes, 0, 0);
+  
+              // Convertir el horario de filtro a Date
+              const [filterHours, filterMinutes] = filter.horarioInicio.split(":").map(Number);
+              const selectedTime = new Date(evento.fecha);
+              selectedTime.setHours(filterHours, filterMinutes, 0, 0);
+  
+              // Verificar si el horario seleccionado está dentro del rango (excluyendo fin)
+              return selectedTime >= inicio && selectedTime < fin;
+            });
+  
+            setArrayFilter(filteredEventos);
             setArrayEmpty(false);
           }
         });
@@ -76,7 +98,7 @@ function TablaConsulta({
         setArrayEmpty(true);
       }
     }
-  }, [isFilter, pageFilter]);
+  }, [isFilter, pageFilter, filter]);
 
   const isEventPast = (fecha: Date, horarioFin: string) => {
     const now = new Date();
@@ -97,7 +119,7 @@ function TablaConsulta({
           <th className="w-[16%] py-2 rounded-tr-lg">Horario</th>
         </tr>
       </thead>
-      <tbody className="bg-white opacity-90 text-black xl:text-lg md:text-base text-[12px] w-full rounded-lg font-montserrat">
+      <tbody className="bg-white opacity-90 text-black xl:text-lg md:text-base text-[12px] w-full rounded-lg font-montserrat ">
         {arrayEmpty ? (
           <tr>
             <td colSpan={5} className="text-center py-3">

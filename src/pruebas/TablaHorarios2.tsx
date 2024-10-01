@@ -130,7 +130,7 @@ function TablaHorarios2({ filter, isFilter }: FilterProps) {
           </tr>
         </thead>
       </Table>
-      <div className="max-h-[250px] overflow-y-auto">
+      <div className="max-h-[200px] overflow-y-auto">
         <Table className="w-full min-w-full rounded-lg">
           <tbody className="bg-white opacity-90 text-black xl:text-lg md:text-base text-[12px] rounded-lg font-montserrat">
             {arrayEmpty ? (
