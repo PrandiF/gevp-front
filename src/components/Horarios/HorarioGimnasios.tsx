@@ -1,8 +1,8 @@
-import Title from "../commons/Title";
-import BackButton from "../commons/BackButton";
-import Header from "../components/Header";
+import Title from "../../commons/Title";
+import BackButton from "../../commons/BackButton";
+import Header from "../Header";
 import { useParams } from "react-router-dom";
-import Agenda from "../components/Horarios/Agenda";
+import Agenda from "./Agenda";
 
 function HorarioGimnasios() {
   const { gimnasio } = useParams<{ gimnasio: string }>();

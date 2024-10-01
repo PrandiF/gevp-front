@@ -176,7 +176,7 @@ function CargaHorario() {
                       name="dia"
                     />
                     <InputSelect
-                      placeholder="Deporte"
+                      placeholder="Actividad"
                       width="full"
                       options={[
                         "Básquet",
@@ -265,9 +265,9 @@ function CargaHorario() {
                     placeholder="Quien Carga"
                     width="full"
                     options={[
-                      "Franco Prandi",
-                      "Fernando Prandi",
-                      "Leonardo Assandri",
+                      "Claudio Arnossi",
+                      "Julieta Proserpio",
+                      "Gustavo Alfaro",
                     ]}
                     value={horarioData.quienCarga}
                     onChange={handleChange}

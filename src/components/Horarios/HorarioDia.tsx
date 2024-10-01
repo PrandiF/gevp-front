@@ -9,8 +9,7 @@ import BackButton from "../../commons/BackButton";
 import Header from "../Header";
 import { useParams } from "react-router-dom";
 import { useUserStoreLocalStorage } from "../../store/userStore";
-import TablaHorarios2 from "../../pruebas/TablaHorarios2"; //OPCION 1
-// import TablaHorarios from "./TablaHorarios"; //OPCION 2
+import TablaHorarios2 from "./TablaHorarios2";
 
 function HorarioDia() {
   const { role } = useUserStoreLocalStorage();
@@ -70,33 +69,11 @@ function HorarioDia() {
               data-aos-duration="2000"
               data-aos-delay="400"
             >
-              <Title text={`${gimnasio?.split("_").join(" ")} - ${dia}` || ""} /> {/*OPCION 1*/}
-              {/* <Title text={dia || ""} /> OPCION 2 */}
+              <Title
+                text={`${gimnasio?.split("_").join(" ")} - ${dia}` || ""}
+              />
             </div>
             <div className="flex flex-col xl:flex-row xl:gap-5 gap-3 w-[80%] xl:w-auto">
-              {/* <div
-                className="flex  items-center gap-5 h-full w-full "
-                data-aos="fade"
-                data-aos-duration="2000"
-                data-aos-delay="600"
-              >
-                <InputSelect
-                  placeholder="Gimnasio"
-                  options={[
-                    "Gimnasio 1",
-                    "Gimnasio 2",
-                    "Monza",
-                    "Alix",
-                    "Terracita",
-                  ]}
-                  width="full"
-                  value={filterData.gimnasio}
-                  onChange={handleChange}
-                  name="gimnasio"
-                  clean={isClean}
-                />
-              </div> OPCION 2 */}
-
               <div
                 className="relative flex items-center gap-5 h-full w-full"
                 data-aos="fade"
@@ -122,7 +99,7 @@ function HorarioDia() {
                 data-aos-delay="600"
               >
                 <InputSelect
-                  placeholder="Deporte"
+                  placeholder="Actividad"
                   options={[
                     "Básquet",
                     "Voley",
@@ -196,7 +173,7 @@ function HorarioDia() {
                     data-aos-delay="600"
                   >
                     <AddButton
-                      text="Nuevo Entrenamiento"
+                      text="Nueva Actividad"
                       url="/entrenamientos/cargar"
                     />
                   </div>
@@ -206,8 +183,7 @@ function HorarioDia() {
               </div>
             </div>
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">
-                 <TablaHorarios2 filter={filterData} isFilter={isFilter} /> {/*OPCION 1*/}
-               {/* <TablaHorarios filter={filterData} isFilter={isFilter} /> OPCION 2 */}
+              <TablaHorarios2 filter={filterData} isFilter={isFilter} />
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USER_URL = `${import.meta.env.VITE_API_URL_PROD}/evento`;
+const USER_URL = `${import.meta.env.VITE_API_URL_DEV}/evento`;
 
 type EventoProps = {
   gimnasio: string;
@@ -50,6 +50,7 @@ export const getFilterEvento = async (
   page: number = 1
 ) => {
   let filterClean: FilterProps = {
+    deporte: filter.deporte,
     gimnasio: filter.gimnasio,
     fecha: filter.fecha,
     horarioInicio: filter.horarioInicio,

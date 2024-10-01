@@ -33,7 +33,7 @@ function Header() {
           data-aos-delay="300"
           onClick={() => navigate("/inicio")}
         >
-          INICIO
+          Inicio
         </button>
         <button
           className="cursor-pointer hover:underline"
@@ -42,7 +42,7 @@ function Header() {
           data-aos-delay="400"
           onClick={() => navigate("/entrenamientos")}
         >
-          ENTRENAMIENTOS
+          Actividad Deportiva
         </button>
         <button
           className="cursor-pointer hover:underline"
@@ -51,7 +51,7 @@ function Header() {
           data-aos-delay="500"
           onClick={() => navigate("/eventos")}
         >
-          EVENTOS
+          Eventos
         </button>
         <div data-aos="fade" data-aos-duration="2000" data-aos-delay="600">
           <LogoutButton />

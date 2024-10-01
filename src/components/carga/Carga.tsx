@@ -251,9 +251,9 @@ function Carga() {
                       placeholder="Quien Carga"
                       width="full"
                       options={[
-                        "Franco Prandi",
-                        "Fernando Prandi",
-                        "Leonardo Assandri",
+                        "Claudio Arnossi",
+                        "Julieta Proserpio",
+                        "Gustavo Alfaro",
                       ]}
                       value={eventData.quienCarga}
                       onChange={handleChange}
