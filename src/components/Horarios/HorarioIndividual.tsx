@@ -186,9 +186,9 @@ function HorarioIndividual() {
     <div className="relative flex w-full items-center z-20 xl:py-0 xl:pt-[5%] md:py-0 md:pt-[5%] py-[8%]">
       <Header />
       <div className="flex w-full items-start flex-col gap-8 xl:pt-0 pt-[8%]">
-        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[3%] mt-[10%]  rounded-3xl">
+        <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[60%] w-[95%]  items-center gap-10 py-8 mx-auto xl:mt-[5%] xl:mb-[3%] mt-[10%]  rounded-3xl">
           <div
-            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-16 py-5 m-auto rounded-3xl xl:border-2 border border-gray-600"
+            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 w-[90%] px-5 items-center gap-8 py-5 m-auto rounded-3xl xl:border-2 border border-gray-600"
             data-aos="fade"
             data-aos-duration="2600"
             data-aos-delay="400"
@@ -203,7 +203,7 @@ function HorarioIndividual() {
             </div>
             <Title text="Entrenamiento" />
 
-            <div className="flex w-[50%] flex-col items-center justify-center xl:gap-8 md:gap-6 gap-4 mx-auto">
+            <div className="flex w-[50%] flex-col items-center justify-center xl:gap-6 md:gap-6 gap-4 mx-auto">
               <div className="flex w-full  justify-center gap-8">
                 <div className="flex w-full flex-col xl:gap-6 md:gap-6 gap-8">
                   <div className="flex flex-col">

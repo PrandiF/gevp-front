@@ -49,7 +49,7 @@ function Login() {
     <div className="flex w-full h-screen items-center justify-center z-20">
       <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[40%] md:w-[60%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
         <div
-          className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-3 items-center gap-10 py-8 m-auto rounded-3xl"
+          className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-3 items-center gap-10 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
           data-aos="fade"
           data-aos-duration="2200"
           data-aos-delay="200"

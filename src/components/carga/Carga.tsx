@@ -155,9 +155,9 @@ function Carga() {
       <Header />
       {role == "admin" ? (
         <div className="flex w-full items-center flex-col gap-8 xl:pt-0 xl:pb-0 ">
-          <div className="xl:mt-[5%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
+          <div className="xl:mt-[8%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-8 py-8 m-auto rounded-3xl">
             <div
-              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
+              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-8 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
               data-aos="fade"
               data-aos-duration="2500"
               data-aos-delay="400"
@@ -171,7 +171,7 @@ function Carga() {
                 <BackButton />
               </div>
               <Title text="Cargar Evento" />
-              <div className="flex flex-col xl:w-[70%] w-[50%] items-start justify-center xl:gap-8 md:gap-8 gap-3 mx-auto">
+              <div className="flex flex-col xl:w-[70%] w-[50%] items-start justify-center xl:gap-6 md:gap-8 gap-3 mx-auto">
                 <div className="flex w-full  justify-center gap-8">
                   <div className="flex w-full flex-col gap-6">
                     <InputSelect
@@ -262,12 +262,7 @@ function Carga() {
                   </div>
                 </div>
               </div>
-              <div
-                data-aos="fade"
-                data-aos-duration="2000"
-                data-aos-delay="600"
-                className="flex mx-auto"
-              >
+              <div className="flex mx-auto">
                 <Button4 text="Cargar" onClick={handleSubmit} />
               </div>
             </div>
