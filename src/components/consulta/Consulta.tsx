@@ -147,8 +147,8 @@ function Consulta() {
                   options={[
                     "Gimnasio 1",
                     "Gimnasio 2",
-                    "Monza - Gimnasio 3",
-                    "Alix - Gimnasio 4",
+                    "Monza",
+                    "Alix",
                     "Terracita",
                     "Subsuelo",
                     "Salon Social",
