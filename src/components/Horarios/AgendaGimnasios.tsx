@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 const gimnasios = [
   "Gimnasio_1",
   "Gimnasio_2",
-  "Monza - Gimnasio_3",
-  "Alix - Gimnasio_4",
+  "Monza",
+  "Alix",
   "Terracita",
   "Subsuelo",
   "Salon Social",
