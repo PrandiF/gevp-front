@@ -5,6 +5,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import AgendaGimnasios from "./AgendaGimnasios";
+import AddButton from "../../commons/AddButton";
 
 function Horarios() {
   useEffect(() => {
@@ -33,6 +34,7 @@ function Horarios() {
             >
               <Title text="Actividad Deportiva" />
             </div>
+            <AddButton text="Nueva Actividad" url="/entrenamientos/cargar" />
             <div className="flex flex-col items-center px-2 justify-center w-full rounded-lg mb-3">
               <AgendaGimnasios />
             </div>
