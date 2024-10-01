@@ -264,13 +264,15 @@ function IndividualConsulta() {
                       />
                     ) : (
                       <InputSelect
-                        placeholder="Gimnasio"
+                        placeholder="Espacio"
                         options={[
                           "Gimnasio 1",
                           "Gimnasio 2",
-                          "Monza",
-                          "Alix",
+                          "Monza - Gimnasio 3",
+                          "Alix - Gimnasio 4",
                           "Terracita",
+                          "Subsuelo",
+                          "Salon Social",
                         ]}
                         width="full"
                         value={eventData.gimnasio}
@@ -333,7 +335,7 @@ function IndividualConsulta() {
                 <div className="flex w-full flex-col gap-6">
                   <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
-                      Deporte
+                     Actividad
                     </label>
                     {!editar ? (
                       <InputText
@@ -344,7 +346,7 @@ function IndividualConsulta() {
                       />
                     ) : (
                       <InputSelect
-                        placeholder="Deporte"
+                        placeholder="Actividad"
                         options={[
                           "Básquet",
                           "Voley",
@@ -354,6 +356,15 @@ function IndividualConsulta() {
                           "Fútbol",
                           "Zumba",
                           "Comisión Directiva",
+                          "Funcional SportClub",
+                          "Mekitarista",
+                          "Patín",
+                          "Taller de arte",
+                          "Stretching",
+                          "Esc. Artistica",
+                          "Iniciación deportiva",
+                          "Folklore",
+                          "TWD",
                         ]}
                         width="full"
                         value={eventData.deporte}

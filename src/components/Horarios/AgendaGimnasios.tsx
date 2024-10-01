@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 const gimnasios = [
   "Gimnasio_1",
   "Gimnasio_2",
+  "Monza - Gimnasio_3",
+  "Alix - Gimnasio_4",
   "Terracita",
-  "Monza",
-  "Alix",
+  "Subsuelo",
+  "Salon Social",
 ];
 
 const AgendaGimnasios = () => {
@@ -23,7 +25,7 @@ const AgendaGimnasios = () => {
           onClick={() => handleGymClick(gimnasio)}
         >
           <h3 className="xl:text-start md:text-center text-center text-lg text-black font-semibold mb-4">
-          {gimnasio.split('_').join(' ')}
+            {gimnasio.split("_").join(" ")}
           </h3>
         </div>
       ))}

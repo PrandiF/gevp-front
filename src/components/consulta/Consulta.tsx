@@ -108,7 +108,7 @@ function Consulta() {
                 data-aos-delay="600"
               >
                 <InputSelect
-                  placeholder="Deporte"
+                  placeholder="Actividad"
                   options={[
                     "Básquet",
                     "Voley",
@@ -118,6 +118,15 @@ function Consulta() {
                     "Fútbol",
                     "Zumba",
                     "Comisión Directiva",
+                    "Funcional SportClub",
+                    "Mekitarista",
+                    "Patín",
+                    "Taller de arte",
+                    "Stretching",
+                    "Esc. Artistica",
+                    "Iniciación deportiva",
+                    "Folklore",
+                    "TWD",
                   ]}
                   width="full"
                   value={filterData.deporte}
@@ -134,13 +143,15 @@ function Consulta() {
                 data-aos-delay="600"
               >
                 <InputSelect
-                  placeholder="Gimnasio"
+                  placeholder="Espacio"
                   options={[
                     "Gimnasio 1",
                     "Gimnasio 2",
-                    "Monza",
-                    "Alix",
+                    "Monza - Gimnasio 3",
+                    "Alix - Gimnasio 4",
                     "Terracita",
+                    "Subsuelo",
+                    "Salon Social",
                   ]}
                   width="full"
                   value={filterData.gimnasio}

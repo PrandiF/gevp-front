@@ -258,6 +258,17 @@ function HorarioIndividual() {
                             "Gimnasia Rítmica",
                             "Fútbol",
                             "Zumba",
+                            "Comisión Directiva",
+                            "Funcional SportClub",
+                            "Mekitarista",
+                            "Patín",
+                            "Taller de arte",
+                            "Stretching",
+                            "Esc. Artistica",
+                            "Iniciación deportiva",
+                            "Folklore",
+                            "TWD",
+                            "Jornada Extendida",
                           ]}
                           width="full"
                           value={horarioData.deporte}
@@ -290,7 +301,7 @@ function HorarioIndividual() {
                 <div className="flex w-full flex-col xl:gap-6 md:gap-6 gap-8">
                   <div className="flex flex-col">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
-                      Gminasio
+                      Espacio
                     </label>
                     {!editar ? (
                       <InputText
@@ -301,13 +312,15 @@ function HorarioIndividual() {
                       />
                     ) : (
                       <InputSelect
-                        placeholder="Gimnasio"
+                        placeholder="Espacio"
                         options={[
-                          "Gimnasio_1",
-                          "Gimnasio_2",
-                          "Monza",
-                          "Alix",
+                          "Gimnasio 1",
+                          "Gimnasio 2",
+                          "Monza - Gimnasio 3",
+                          "Alix - Gimnasio 4",
                           "Terracita",
+                          "Subsuelo",
+                          "Salon Social",
                         ]}
                         width="full"
                         value={horarioData.gimnasio.split("_").join(" ")}
@@ -336,10 +349,15 @@ function HorarioIndividual() {
                           "Primera B",
                           "U21 A",
                           "U21 B",
+                          "Juveniles",
+                          "Cadetas",
+                          "U18",
                           "U17 A",
                           "U17 B",
+                          "U16",
                           "U15 A",
                           "U15 B",
+                          "U14",
                           "U13 A",
                           "U13 B",
                           "Mini A",
@@ -350,8 +368,29 @@ function HorarioIndividual() {
                           "Escuelita",
                           "Técnica individual",
                           "Femenino",
-                          "Veteranos +54",
-                          "Veteranos +48",
+                          "Veteranos/as",
+                          "Sportclub",
+                          "Elite",
+                          "Equipo",
+                          "Preequipo grande",
+                          "Preequipo mini",
+                          "Avanzada",
+                          "Mekiterapia",
+                          "3/6 años",
+                          "4/5 años",
+                          "6/7 años",
+                          "7/10 años",
+                          "7/13 años",
+                          "8/11 años",
+                          "11/16 años",
+                          "12/15 años",
+                          "Nivel D",
+                          "Grupo 1",
+                          "Grupo 2",
+                          "Grupo 3",
+                          "Arte",
+                          "Jornada Extendida",
+                          "TWD",
                         ]}
                         width="full"
                         value={horarioData.categoria}

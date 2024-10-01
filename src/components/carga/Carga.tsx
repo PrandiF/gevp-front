@@ -175,13 +175,15 @@ function Carga() {
                 <div className="flex w-full  justify-center gap-8">
                   <div className="flex w-full flex-col gap-6">
                     <InputSelect
-                      placeholder="Gimnasio"
+                      placeholder="Espacio"
                       options={[
                         "Gimnasio 1",
                         "Gimnasio 2",
-                        "Monza",
-                        "Alix",
+                        "Monza - Gimnasio 3",
+                        "Alix - Gimnasio 4",
                         "Terracita",
+                        "Subsuelo",
+                        "Salon Social",
                       ]}
                       width="full"
                       value={eventData.gimnasio}
@@ -213,7 +215,7 @@ function Carga() {
                   </div>
                   <div className="flex w-full flex-col gap-6">
                     <InputSelect
-                      placeholder="Deporte"
+                      placeholder="Actividad"
                       width="full"
                       options={[
                         "Básquet",
@@ -224,6 +226,15 @@ function Carga() {
                         "Fútbol",
                         "Zumba",
                         "Comisión Directiva",
+                        "Funcional SportClub",
+                        "Mekitarista",
+                        "Patín",
+                        "Taller de arte",
+                        "Stretching",
+                        "Esc. Artistica",
+                        "Iniciación deportiva",
+                        "Folklore",
+                        "TWD",
                       ]}
                       value={eventData.deporte}
                       onChange={handleChange}

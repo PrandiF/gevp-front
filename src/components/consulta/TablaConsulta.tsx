@@ -35,7 +35,6 @@ function TablaConsulta({
   isFilter,
   pageTotal,
   pageFilter,
-  onCancelFilter, // Recibiendo la función de cancelación del filtro
 }: FilterProps) {
   const navigate = useNavigate();
   const [eventos, setEventos] = useState<EventoProps[]>([]);
@@ -81,7 +80,7 @@ function TablaConsulta({
           setArrayEmpty(true);
         }
       };
-      
+
       fetchFilteredEventos();
     }
   }, [isFilter, pageFilter, filter]);
@@ -96,17 +95,11 @@ function TablaConsulta({
 
   return (
     <>
-      {/* Agregando el botón de cancelar filtro */}
-      {isFilter && (
-        <button onClick={onCancelFilter} className="btn btn-danger mb-2">
-          Cancelar Filtro
-        </button>
-      )}
       <Table className="xl:w-[90%] w-[98%] rounded-lg">
         <thead className="bg-button1-gradient opacity-95 text-white xl:text-lg md:text-base text-[13px] rounded-t-lg">
           <tr className="text-center rounded-t-lg">
-            <th className="w-[16%] py-2 border-r rounded-tl-lg">Gimnasio</th>
-            <th className="w-[16%] py-2 border-r">Deporte</th>
+            <th className="w-[16%] py-2 border-r rounded-tl-lg">Espacio</th>
+            <th className="w-[16%] py-2 border-r">Actividad</th>
             <th className="w-[16%] py-2 border-r">Evento</th>
             <th className="w-[16%] py-2 border-r">Fecha</th>
             <th className="w-[16%] py-2 rounded-tr-lg">Horario</th>
@@ -121,30 +114,43 @@ function TablaConsulta({
             </tr>
           ) : (
             <>
-              {(eventos && !isFilter ? eventos : arrayFilter).map((evento: EventoProps, i) => (
-                <tr
-                  key={i}
-                  className={`text-center ${isEventPast(evento.fecha, evento.horarioFin) ? 'bg-red-200' : ''}`}
-                >
-                  <td className="w-[16%] py-1 border">{evento.gimnasio}</td>
-                  <td className="w-[16%] py-1 border">{evento.deporte}</td>
-                  <td className="w-[16%] py-1 border">
-                    <button
-                      onClick={() => navigate(`/eventos/individual/${evento.id}`)}
-                      className="text-celeste underline"
-                      style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
-                    >
-                      {evento.evento}
-                    </button>
-                  </td>
-                  <td className="py-1 border">
-                    {new Date(new Date(evento.fecha).setDate(new Date(evento.fecha).getDate() + 1)).toLocaleDateString()}
-                  </td>
-                  <td className="w-[16%] py-1 border">
-                    {evento.horarioInicio.slice(0, 5)}hs - {evento.horarioFin.slice(0, 5)}hs
-                  </td>
-                </tr>
-              ))}
+              {(eventos && !isFilter ? eventos : arrayFilter).map(
+                (evento: EventoProps, i) => (
+                  <tr
+                    key={i}
+                    className={`text-center ${
+                      isEventPast(evento.fecha, evento.horarioFin)
+                        ? "bg-red-200"
+                        : ""
+                    }`}
+                  >
+                    <td className="w-[16%] py-1 border">{evento.gimnasio}</td>
+                    <td className="w-[16%] py-1 border">{evento.deporte}</td>
+                    <td className="w-[16%] py-1 border">
+                      <button
+                        onClick={() =>
+                          navigate(`/eventos/individual/${evento.id}`)
+                        }
+                        className="text-celeste underline"
+                        style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                      >
+                        {evento.evento}
+                      </button>
+                    </td>
+                    <td className="py-1 border">
+                      {new Date(
+                        new Date(evento.fecha).setDate(
+                          new Date(evento.fecha).getDate() + 1
+                        )
+                      ).toLocaleDateString()}
+                    </td>
+                    <td className="w-[16%] py-1 border">
+                      {evento.horarioInicio.slice(0, 5)}hs -{" "}
+                      {evento.horarioFin.slice(0, 5)}hs
+                    </td>
+                  </tr>
+                )
+              )}
             </>
           )}
         </tbody>
