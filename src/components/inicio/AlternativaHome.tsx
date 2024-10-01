@@ -14,7 +14,7 @@ function AlternativaHome() {
           className="xl:text-[50px] md:text-[40px] text-[35px] font-bold  absolute inset-0 flex items-center justify-center z-10 text-white hover:scale-110 transition-all duration-300"
           style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}
         >
-          Entrenamientos
+          Actividad Deportiva
         </p>
         <img
           src={entrenamientos}

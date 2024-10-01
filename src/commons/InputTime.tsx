@@ -20,25 +20,25 @@ function InputTime({
   value,
 }: TimePickerProps) {
   const timePickerRef = useRef<HTMLInputElement>(null);
+  const flatpickrInstanceRef = useRef<flatpickr.Instance | null>(null);
 
   useEffect(() => {
     if (timePickerRef.current) {
-      const fp = flatpickr(timePickerRef.current, {
+      flatpickrInstanceRef.current = flatpickr(timePickerRef.current, {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
         defaultDate: value,
-        onChange: (selectedDates, dateStr) => {
+        onChange: (_, dateStr) => {
           if (onChange) {
-            console.log(selectedDates);
             onChange(dateStr);
           }
         },
       });
 
       return () => {
-        fp.destroy();
+        flatpickrInstanceRef.current?.destroy();
       };
     }
   }, [onChange, value]);
@@ -46,6 +46,7 @@ function InputTime({
   useEffect(() => {
     if (clean && timePickerRef.current) {
       timePickerRef.current.value = "";
+      flatpickrInstanceRef.current?.clear();
     }
   }, [clean]);
 

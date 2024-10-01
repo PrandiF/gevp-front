@@ -10,11 +10,10 @@ const daysOfWeek = [
 ];
 
 const Agenda = () => {
-  const {gimnasio} = useParams() //EN OPCION 2 COMENTAR, EN OPCION 1 DESCOMENTAR
+  const {gimnasio} = useParams()
   const navigate = useNavigate();
   const handleDayClick = (day: string) => {
-    navigate(`/entrenamientos/${gimnasio}/${day}`); //OPCION 1
-    // navigate(`/entrenamientos/${day}`); //OPCION 2 
+    navigate(`/entrenamientos/${gimnasio}/${day}`);
   };
 
   return (

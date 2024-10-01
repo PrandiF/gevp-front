@@ -21,6 +21,7 @@ function Consulta() {
   }, []);
 
   const initialFilterData = {
+    deporte: "",
     gimnasio: "",
     horarioInicio: "",
     horarioFin: "",
@@ -31,23 +32,22 @@ function Consulta() {
   const [isFilter, setIsFilter] = useState(false);
   const [pageTotal, setPageTotal] = useState(1);
   const [pageFilter, setPageFilter] = useState(1);
-  const [isClean, setIsClean] = useState(false)
+  const [isClean, setIsClean] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setIsClean(false)
-    isFilter && setIsFilter(false)
+    setIsClean(false);
+    isFilter && setIsFilter(false);
     setFilterData((prevEventoData) => ({
       ...prevEventoData,
       [e.target.name]: e.target.value,
     }));
-    
   };
 
   const handleDateChange = (name: string) => (date: string) => {
-    setIsClean(false)
-    isFilter && setIsFilter(false)
+    setIsClean(false);
+    isFilter && setIsFilter(false);
     setFilterData((prevEventoData) => ({
       ...prevEventoData,
       [name]: date,
@@ -62,8 +62,12 @@ function Consulta() {
     setFilterData(initialFilterData);
     setIsClean(true);
     setIsFilter(false);
-    setPageFilter(1)
+    setPageFilter(1);
     setPageTotal(1);
+  };
+
+  const onCancelFilter = () => {
+    handleCancel();
   };
 
   const functionSetPageTotal = (num: number) => {
@@ -73,6 +77,7 @@ function Consulta() {
   const functionSetPageFilter = (num: number) => {
     setPageFilter(num);
   };
+
   return (
     <div className="relative flex w-full items-start z-20 xl:py-0 xl:pt-[5%] md:py-0 md:pt-[5%] py-[8%]">
       <Header />
@@ -96,6 +101,32 @@ function Consulta() {
               <Title text="Eventos" />
             </div>
             <div className="flex flex-col xl:flex-row gap-5 w-[80%]  xl:w-auto">
+              <div
+                className="flex  items-center gap-5 h-full w-full "
+                data-aos="fade"
+                data-aos-duration="2000"
+                data-aos-delay="600"
+              >
+                <InputSelect
+                  placeholder="Deporte"
+                  options={[
+                    "Básquet",
+                    "Voley",
+                    "Cesto",
+                    "Tenis",
+                    "Gimnasia Rítmica",
+                    "Fútbol",
+                    "Zumba",
+                    "Comisión Directiva",
+                  ]}
+                  width="full"
+                  value={filterData.deporte}
+                  onChange={handleChange}
+                  name="deporte"
+                  clean={isClean}
+                />
+              </div>
+
               <div
                 className="flex  items-center gap-5 h-full w-full "
                 data-aos="fade"
@@ -186,6 +217,7 @@ function Consulta() {
                 pageFilter={pageFilter}
                 filter={filterData}
                 isFilter={isFilter}
+                onCancelFilter={onCancelFilter}
               />
               <Pagination
                 pageTotal={pageTotal}

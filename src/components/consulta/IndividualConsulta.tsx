@@ -56,7 +56,7 @@ function IndividualConsulta() {
       throw new Error("Invalid date");
     }
 
-    const day = String(dateObj.getDate()).padStart(2, "0");
+    const day = String(dateObj.getDate() + 1).padStart(2, "0");
     const month = String(dateObj.getMonth() + 1).padStart(2, "0");
     const year = dateObj.getFullYear();
 
@@ -411,9 +411,9 @@ function IndividualConsulta() {
                         placeholder="Quien Carga"
                         width="full"
                         options={[
-                          "Franco Prandi",
-                          "Fernando Prandi",
-                          "Leonardo Assandri",
+                          "Claudio Arnossi",
+                          "Julieta Proserpio",
+                          "Gustavo Alfaro",
                         ]}
                         value={eventData.quienCarga}
                         onChange={handleChange}

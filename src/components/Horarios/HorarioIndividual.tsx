@@ -201,7 +201,7 @@ function HorarioIndividual() {
             >
               <BackButton />
             </div>
-            <Title text="Entrenamiento" />
+            <Title text="Actividad Deportiva" />
 
             <div className="flex w-[50%] flex-col items-center justify-center xl:gap-6 md:gap-6 gap-4 mx-auto">
               <div className="flex w-full  justify-center gap-8">
@@ -238,7 +238,7 @@ function HorarioIndividual() {
                   <div className="flex w-full flex-col xl:gap-6 md:gap-6 gap-8">
                     <div className="flex flex-col">
                       <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
-                        Deporte
+                        Actividad
                       </label>
                       {!editar ? (
                         <InputText
@@ -249,7 +249,7 @@ function HorarioIndividual() {
                         />
                       ) : (
                         <InputSelect
-                          placeholder="Deporte"
+                          placeholder="Actividad"
                           options={[
                             "Básquet",
                             "Voley",
@@ -321,12 +321,44 @@ function HorarioIndividual() {
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
                       Categoría
                     </label>
-                    <InputText
-                      name="categoria"
-                      value={horarioData.categoria}
-                      onChange={handleChange}
-                      readonly={!editar}
-                    />
+                    {!editar ? (
+                      <InputText
+                        name="categoria"
+                        value={horarioData.categoria}
+                        onChange={handleChange}
+                        readonly={true}
+                      />
+                    ) : (
+                      <InputSelect
+                        placeholder="Categoría"
+                        options={[
+                          "Primera A",
+                          "Primera B",
+                          "U21 A",
+                          "U21 B",
+                          "U17 A",
+                          "U17 B",
+                          "U15 A",
+                          "U15 B",
+                          "U13 A",
+                          "U13 B",
+                          "Mini A",
+                          "Mini B",
+                          "Premini A",
+                          "Premini B",
+                          "Mosquito",
+                          "Escuelita",
+                          "Técnica individual",
+                          "Femenino",
+                          "Veteranos +54",
+                          "Veteranos +48",
+                        ]}
+                        width="full"
+                        value={horarioData.categoria}
+                        onChange={handleChange}
+                        name="categoria"
+                      />
+                    )}
                   </div>
 
                   <div className="flex flex-col">
@@ -356,26 +388,25 @@ function HorarioIndividual() {
                   </label>
                   {!editar ? (
                     <InputText
-                    name="quienCarga"
-                    value={horarioData.quienCarga}
-                    onChange={handleChange}
-                    placeholder="Quien Cargó"
-                  />
+                      name="quienCarga"
+                      value={horarioData.quienCarga}
+                      onChange={handleChange}
+                      placeholder="Quien Cargó"
+                    />
                   ) : (
                     <InputSelect
                       placeholder="Quien Carga"
                       width="full"
                       options={[
-                        "Franco Prandi",
-                        "Fernando Prandi",
-                        "Leonardo Assandri",
+                        "Claudio Arnossi",
+                        "Julieta Proserpio",
+                        "Gustavo Alfaro",
                       ]}
                       value={horarioData.quienCarga}
                       onChange={handleChange}
                       name="quienCarga"
                     />
                   )}
-                  
                 </div>
               </div>
             </div>
