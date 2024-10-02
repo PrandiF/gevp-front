@@ -66,9 +66,6 @@ function Consulta() {
     setPageTotal(1);
   };
 
-  const onCancelFilter = () => {
-    handleCancel();
-  };
 
   const functionSetPageTotal = (num: number) => {
     setPageTotal(num);
@@ -228,7 +225,7 @@ function Consulta() {
                 pageFilter={pageFilter}
                 filter={filterData}
                 isFilter={isFilter}
-                onCancelFilter={onCancelFilter}
+                
               />
               <Pagination
                 pageTotal={pageTotal}

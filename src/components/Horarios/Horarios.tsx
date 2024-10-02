@@ -6,8 +6,10 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import AgendaGimnasios from "./AgendaGimnasios";
 import AddButton from "../../commons/AddButton";
+import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function Horarios() {
+  const { role } = useUserStoreLocalStorage();
   useEffect(() => {
     AOS.init();
   }, []);
@@ -26,14 +28,18 @@ function Horarios() {
             >
               <BackButton />
             </div>
-            <div
-              className="flex text-center"
-              data-aos="fade"
-              data-aos-duration="2000"
-              data-aos-delay="400"
-            >
-              <Title text="Actividad Deportiva" />
-            </div>
+            {role == "admin" ? (
+              <div
+                className="flex text-center"
+                data-aos="fade"
+                data-aos-duration="2000"
+                data-aos-delay="400"
+              >
+                <Title text="Actividad Deportiva" />
+              </div>
+            ) : (
+              ""
+            )}
             <div className="mt-[-10px] mb-[-10px]">
               <AddButton text="Nueva Actividad" url="/entrenamientos/cargar" />
             </div>
