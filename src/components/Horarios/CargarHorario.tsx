@@ -218,8 +218,8 @@ function CargaHorario() {
                     <InputSelect
                       placeholder="Espacio"
                       options={[
-                        "Gimnasio 1",
-                        "Gimnasio 2",
+                        "Gimnasio_1",
+                        "Gimnasio_2",
                         "Monza",
                         "Alix",
                         "Terracita",
@@ -240,6 +240,8 @@ function CargaHorario() {
                         "U21 B",
                         "Juveniles",
                         "Cadetas",
+                        "Infantiles",
+                        "Tira Completa",
                         "U18",
                         "U17 A",
                         "U17 B",
