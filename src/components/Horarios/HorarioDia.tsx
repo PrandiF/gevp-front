@@ -45,8 +45,8 @@ function HorarioDia() {
 
   const handleCancel = () => {
     setFilterData(initialFilterData);
-    setIsFilter(false);
     setIsClean(true);
+    setIsFilter(false);
   };
 
   return (

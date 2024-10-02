@@ -27,7 +27,6 @@ type FilterProps = {
   isFilter: boolean;
   pageTotal: number;
   pageFilter: number;
-  onCancelFilter: () => void; // Nueva prop para manejar el cancelado del filtro
 };
 
 function TablaConsulta({
