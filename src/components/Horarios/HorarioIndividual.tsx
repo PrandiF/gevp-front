@@ -314,8 +314,8 @@ function HorarioIndividual() {
                       <InputSelect
                         placeholder="Espacio"
                         options={[
-                          "Gimnasio 1",
-                          "Gimnasio 2",
+                          "Gimnasio_1",
+                          "Gimnasio_2",
                           "Monza",
                           "Alix",
                           "Terracita",
