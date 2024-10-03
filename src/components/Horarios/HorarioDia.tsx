@@ -81,7 +81,9 @@ function HorarioDia() {
                 data-aos-duration="2000"
                 data-aos-delay="600"
               >
-                <CiClock1 />
+                <div className="text-lg text-gray-500">
+                  <CiClock1 />
+                </div>
                 <InputTime
                   placeholder="Horario"
                   clean={isClean}

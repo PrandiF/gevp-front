@@ -159,26 +159,32 @@ function Consulta() {
               </div>
 
               <div
-                className="relative flex items-center gap-5 h-full w-full"
+                className="relative flex items-center gap-3 h-full w-full"
                 data-aos="fade"
                 data-aos-duration="2000"
                 data-aos-delay="600"
               >
-                <CiCalendar />
+                <div className="text-lg text-gray-500 xl:hidden md:hidden">
+                  <CiCalendar />
+                </div>
+
                 <InputDate
                   placeholder="Fecha"
                   clean={isClean}
                   width="full"
                   onChange={handleDateChange("fecha")}
+                  value={filterData.fecha.toDateString()}
                 />
               </div>
               <div
-                className="relative flex items-center gap-5 h-full w-full"
+                className="relative flex items-center gap-3 h-full w-full"
                 data-aos="fade"
                 data-aos-duration="2000"
                 data-aos-delay="600"
               >
-                <CiClock1 />
+                <div className="text-lg text-gray-500 xl:hidden md:hidden">
+                  <CiClock1 />
+                </div>
                 <InputTime
                   placeholder="Horario"
                   clean={isClean}
