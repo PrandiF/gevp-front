@@ -10,6 +10,7 @@ import Header from "../Header";
 import { useParams } from "react-router-dom";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import TablaHorarios2 from "./TablaHorarios2";
+import { CiClock1 } from "react-icons/ci";
 
 function HorarioDia() {
   const { role } = useUserStoreLocalStorage();
@@ -74,12 +75,13 @@ function HorarioDia() {
               />
             </div>
             <div className="flex flex-col xl:flex-row xl:gap-5 gap-3 w-[80%] xl:w-auto">
-              {/* <div
-                className="relative flex items-center gap-5 h-full w-full"
+              <div
+                className="relative flex items-center gap-2 h-full w-full"
                 data-aos="fade"
                 data-aos-duration="2000"
                 data-aos-delay="600"
-              > */}
+              >
+                <CiClock1 />
                 <InputTime
                   placeholder="Horario"
                   clean={isClean}
@@ -91,7 +93,7 @@ function HorarioDia() {
                     }))
                   }
                 />
-              {/* </div> */}
+              </div>
               <div
                 className="flex  items-center gap-5 h-full w-full "
                 data-aos="fade"
