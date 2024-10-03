@@ -56,6 +56,7 @@ function InputTime({
       placeholder={placeholder}
       ref={timePickerRef}
       className={`w-${width} bg-white rounded-3xl h-[2rem] px-3 border border-celeste outline-none cursor-pointer text-black`}
+      style={{ width: "100%", minWidth: "0" }}
     />
   );
 }

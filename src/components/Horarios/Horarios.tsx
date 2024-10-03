@@ -28,21 +28,24 @@ function Horarios() {
             >
               <BackButton />
             </div>
+            <div
+              className="flex text-center"
+              data-aos="fade"
+              data-aos-duration="2000"
+              data-aos-delay="400"
+            >
+              <Title text="Actividad Deportiva" />
+            </div>
             {role == "admin" ? (
-              <div
-                className="flex text-center"
-                data-aos="fade"
-                data-aos-duration="2000"
-                data-aos-delay="400"
-              >
-                <Title text="Actividad Deportiva" />
+              <div className="mt-[-10px] mb-[-10px]">
+                <AddButton
+                  text="Nueva Actividad"
+                  url="/entrenamientos/cargar"
+                />
               </div>
             ) : (
               ""
             )}
-            <div className="mt-[-10px] mb-[-10px]">
-              <AddButton text="Nueva Actividad" url="/entrenamientos/cargar" />
-            </div>
 
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">
               <AgendaGimnasios />
