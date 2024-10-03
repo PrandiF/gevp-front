@@ -1,1 +1,31 @@
-{"name":"GEVP","short_name":"GEVP","start_url":"/","display":"standalone","background_color":"#06018a","lang":"en","scope":"/","description":"Consulta o carga entrenamientos y eventos en el club GEVP.","theme_color":"#06018a","icons":[{"src":"assets/gevpLogo.png","sizes":"192x192","type":"image/png"},{"src":"assets/gevpLogo-512x512.png","sizes":"512x512","type":"image/png"}]}
+{
+  "name": "GEVP APP",
+  "short_name": "GEVP APP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2c7a9e",
+  "lang": "en",
+  "scope": "/",
+  "description": "Consulta o carga entrenamientos y eventos en el club GEVP.",
+  "theme_color": "#2c7a9e",
+  "icons": [
+    {
+      "src": "/assets/gevpLogo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/gevpLogo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/gevpLogo.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      " purpose": "maskable any"
+    }
+  ]
+}
