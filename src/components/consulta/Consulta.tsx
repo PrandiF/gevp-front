@@ -173,7 +173,6 @@ function Consulta() {
                   clean={isClean}
                   width="full"
                   onChange={handleDateChange("fecha")}
-                  value={filterData.fecha.toString()}
                 />
               </div>
               <div
