@@ -13,6 +13,7 @@ import CancelSearchButton from "../../commons/CancelSearchButton";
 import InputTime from "../../commons/InputTime";
 import AddButton from "../../commons/AddButton";
 import { useUserStoreLocalStorage } from "../../store/userStore";
+import { CiClock1, CiCalendar } from "react-icons/ci";
 
 function Consulta() {
   const { role } = useUserStoreLocalStorage();
@@ -65,7 +66,6 @@ function Consulta() {
     setPageFilter(1);
     setPageTotal(1);
   };
-
 
   const functionSetPageTotal = (num: number) => {
     setPageTotal(num);
@@ -158,25 +158,27 @@ function Consulta() {
                 />
               </div>
 
-              {/* <div
+              <div
                 className="relative flex items-center gap-5 h-full w-full"
                 data-aos="fade"
                 data-aos-duration="2000"
                 data-aos-delay="600"
-              > */}
+              >
+                <CiCalendar />
                 <InputDate
                   placeholder="Fecha"
                   clean={isClean}
                   width="full"
                   onChange={handleDateChange("fecha")}
                 />
-              {/* </div> */}
-              {/* <div
+              </div>
+              <div
                 className="relative flex items-center gap-5 h-full w-full"
                 data-aos="fade"
                 data-aos-duration="2000"
                 data-aos-delay="600"
-              > */}
+              >
+                <CiClock1 />
                 <InputTime
                   placeholder="Horario"
                   clean={isClean}
@@ -188,7 +190,7 @@ function Consulta() {
                     }))
                   }
                 />
-              {/* </div> */}
+              </div>
               <div className="flex xl:gap-4 justify-center items-center xl:w-full md:w-[50%] md:mx-auto">
                 <button
                   onClick={isFilter ? handleCancel : handleSearch}
@@ -225,7 +227,6 @@ function Consulta() {
                 pageFilter={pageFilter}
                 filter={filterData}
                 isFilter={isFilter}
-                
               />
               <Pagination
                 pageTotal={pageTotal}
