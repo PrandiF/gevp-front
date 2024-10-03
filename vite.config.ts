@@ -19,27 +19,27 @@ export default defineConfig({
         short_name: "GEVP",
         description:
           "Consulta o carga entrenamientos y eventos en el club GEVP.",
-        theme_color: "#06018a",
-        background_color: "#06018a",
+        theme_color: "#2c7a9e",
+        background_color: "#2c7a9e",
         display: "standalone",
         scope: "/",
         start_url: "/",
         icons: [
           {
-            src: "assets/gevpLogo.png",
+            src: "/assets/gevpLogo.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "assets/gevpLogo.png",
+            src: "/assets/gevpLogo.png",
             sizes: "512x512",
             type: "image/png",
           },
           {
-            src: "assets/gevpLogo.png",
+            src: "/assets/gevpLogo.png",
             sizes: "180x180",
             type: "image/png",
-          },        
+          },
         ],
       },
     }),
