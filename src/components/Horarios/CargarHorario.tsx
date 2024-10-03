@@ -196,6 +196,9 @@ function CargaHorario() {
                         "Iniciación deportiva",
                         "Folklore",
                         "TWD",
+                        "Yoga",
+                        "Danza Jazz",
+                        "Gimnasia",
                         "Jornada Extendida",
                       ]}
                       value={horarioData.deporte}
@@ -282,6 +285,9 @@ function CargaHorario() {
                         "Arte",
                         "Jornada Extendida",
                         "TWD",
+                        "Yoga",
+                        "Danza Jazz",
+                        "Gimnasia",
                       ]}
                       width="full"
                       value={horarioData.categoria}

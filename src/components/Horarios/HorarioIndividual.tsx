@@ -268,6 +268,9 @@ function HorarioIndividual() {
                             "Iniciación deportiva",
                             "Folklore",
                             "TWD",
+                            "Yoga",
+                            "Danza Jazz",
+                            "Gimnasia",
                             "Jornada Extendida",
                           ]}
                           width="full"
@@ -391,6 +394,9 @@ function HorarioIndividual() {
                           "Arte",
                           "Jornada Extendida",
                           "TWD",
+                          "Yoga",
+                          "Danza Jazz",
+                          "Gimnasia",
                         ]}
                         width="full"
                         value={horarioData.categoria}
