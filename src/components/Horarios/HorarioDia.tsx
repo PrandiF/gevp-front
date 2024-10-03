@@ -74,12 +74,12 @@ function HorarioDia() {
               />
             </div>
             <div className="flex flex-col xl:flex-row xl:gap-5 gap-3 w-[80%] xl:w-auto">
-              <div
+              {/* <div
                 className="relative flex items-center gap-5 h-full w-full"
                 data-aos="fade"
                 data-aos-duration="2000"
                 data-aos-delay="600"
-              >
+              > */}
                 <InputTime
                   placeholder="Horario"
                   clean={isClean}
@@ -91,7 +91,7 @@ function HorarioDia() {
                     }))
                   }
                 />
-              </div>
+              {/* </div> */}
               <div
                 className="flex  items-center gap-5 h-full w-full "
                 data-aos="fade"
