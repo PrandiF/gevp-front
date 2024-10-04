@@ -26,20 +26,20 @@ export default defineConfig({
         start_url: "/",
         icons: [
           {
-            src: "/assets/gevpLogo.png",
+            src: "./assets/gevpLogo.png",
             sizes: "192x192",
             type: "image/png",
             purpose: "maskable any",
             
           },
           {
-            src: "/assets/gevpLogo.png",
+            src: "./assets/gevpLogo.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable any",
           },
           {
-            src: "/assets/gevpLogo.png",
+            src: "./assets/gevpLogo.png",
             sizes: "180x180",
             type: "image/png",
             purpose: "maskable any",
