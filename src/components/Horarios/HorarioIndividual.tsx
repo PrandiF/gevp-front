@@ -437,6 +437,7 @@ function HorarioIndividual() {
                       value={horarioData.quienCarga}
                       onChange={handleChange}
                       placeholder="Quien Cargó"
+                      readonly={true}
                     />
                   ) : (
                     <InputSelect
