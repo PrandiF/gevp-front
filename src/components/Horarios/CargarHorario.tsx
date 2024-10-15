@@ -13,10 +13,12 @@ import {
 import Button4 from "../../commons/Button4";
 import InputTime from "../../commons/InputTime";
 import { useUserStoreLocalStorage } from "../../store/userStore";
+import { ClipLoader } from "react-spinners";
 
 function CargaHorario() {
   const { role } = useUserStoreLocalStorage();
   console.log(role);
+  const [isLoading, setIsLoading] = useState(false);
   const [horarioData, setHorarioData] = useState({
     gimnasio: "",
     deporte: "",
@@ -37,6 +39,8 @@ function CargaHorario() {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     if (
       !horarioData.gimnasio ||
       !horarioData.deporte ||
@@ -46,6 +50,7 @@ function CargaHorario() {
       !horarioData.horarioFin ||
       !horarioData.quienCarga
     ) {
+      setIsLoading(false);
       Report.failure(
         "Error al cargar el entrenamiento",
         "Debe completar todos los campos",
@@ -55,6 +60,7 @@ function CargaHorario() {
     }
 
     if (horarioData.horarioInicio >= horarioData.horarioFin) {
+      setIsLoading(false);
       Report.failure(
         "Error al cargar el entrenamiento",
         "El horario de inicio debe ser anterior al horario de fin.",
@@ -72,6 +78,7 @@ function CargaHorario() {
       );
 
       if (!disponible) {
+        setIsLoading(false);
         Report.failure(
           "Error al cargar el entrenamiento",
           "El horario ya está ocupado.",
@@ -83,6 +90,7 @@ function CargaHorario() {
       const res = await createHorario(horarioData);
 
       if (res) {
+        setIsLoading(false);
         Report.success(
           "Entrenamiento Cargado",
           "Se cargó un nuevo entrenamiento correctamente",
@@ -101,6 +109,7 @@ function CargaHorario() {
           }
         );
       } else {
+        setIsLoading(false);
         Report.failure(
           "Error al cargar el entrenamiento",
           "No se pudo cargar el entrenamiento correctamente",
@@ -120,6 +129,7 @@ function CargaHorario() {
         );
       }
     } catch (error) {
+      setIsLoading(false);
       Report.failure(
         "Error al cargar el entrenamiento",
         "No se pudo cargar el entrenamiento correctamente",
@@ -322,9 +332,14 @@ function CargaHorario() {
                   />
                 </div>
               </div>
-              <div className="flex mx-auto">
+              <button className="flex mx-auto" disabled={isLoading}>
                 <Button4 text="Cargar" onClick={handleSubmit} />
-              </div>
+              </button>
+              {isLoading && (
+                <div className="loading-spinner text-center">
+                  <ClipLoader color="#4D5061" loading={isLoading} size={50} />
+                </div>
+              )}
             </div>
           </div>
         </div>

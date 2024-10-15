@@ -19,6 +19,7 @@ import CancelButton from "../../commons/CancelButton";
 import InputTime from "../../commons/InputTime";
 import Title from "../../commons/Title";
 import { useUserStoreLocalStorage } from "../../store/userStore";
+import { ClipLoader } from "react-spinners";
 
 interface HorarioProps {
   gimnasio: string;
@@ -47,6 +48,7 @@ Confirm.init({
 function HorarioIndividual() {
   const { role } = useUserStoreLocalStorage();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [horarioData, setHorarioData] = useState<HorarioProps>({
     gimnasio: "",
     deporte: "",
@@ -97,14 +99,18 @@ function HorarioIndividual() {
   };
 
   const handleConfirmDeleteHorario = async () => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     if (id) {
       const horarioId = parseInt(id, 10);
       try {
+        setIsLoading(false);
         const res = await deleteHorario(horarioId);
         if (res) {
           navigate("/entrenamientos");
         }
       } catch (error) {
+        setIsLoading(false);
         console.error("Error al eliminar la poliza:", error);
         throw error;
       }
@@ -116,14 +122,18 @@ function HorarioIndividual() {
   }
 
   const handleConfirmEditHorario = async () => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     if (id) {
       const horarioId = parseInt(id, 10);
       try {
+        setIsLoading(false);
         await editHorario(horarioId, horarioData);
         setEditar(false);
         setHorarioData(horarioData);
         setOriginalHorarioData(horarioData);
       } catch (error) {
+        setIsLoading(false);
         setEditar(false);
         throw error;
       }
@@ -468,9 +478,20 @@ function HorarioIndividual() {
                     <DeleteButton onClick={handleDeleteHorario} />
                   </div>
                 ) : (
-                  <div className="flex gap-4 w-full items-center justify-center">
-                    <ConfirmButton onClick={handleEditHorario} />
-                    <CancelButton onClick={handleCancelEdit} />
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <div className="flex gap-4 w-full items-center justify-center">
+                      <ConfirmButton onClick={handleEditHorario} />
+                      <CancelButton onClick={handleCancelEdit} />
+                    </div>
+                    {isLoading && (
+                      <div className="loading-spinner">
+                        <ClipLoader
+                          color="#4D5061"
+                          loading={isLoading}
+                          size={50}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </>

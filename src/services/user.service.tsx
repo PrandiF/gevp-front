@@ -9,12 +9,14 @@ export const login = async (username: string, password: string) => {
       { username, password },
       { withCredentials: true }
     );
-    
-    console.log("Login res.data:", res.data); 
+    console.log(res)
     return res.data;
-  } catch (error) {
-    console.error("Login error:", error);
-    throw error;
+  } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      return "invalid password";
+    } else {
+      throw new Error("Error en la solicitud de login");
+    }
   }
 };
 
