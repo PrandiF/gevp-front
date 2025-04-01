@@ -416,6 +416,8 @@ function HorarioIndividual() {
                           "TWD",
                           "Yoga",
                           "Danza Jazz",
+                          "Gimnasia",
+                          "Femenino",
                         ]}
                         width="full"
                         value={horarioData.categoria}

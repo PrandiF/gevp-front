@@ -201,6 +201,8 @@ function HorarioDia() {
                     "TWD",
                     "Yoga",
                     "Danza Jazz",
+                    "Gimnasia",
+                    "Femenino",
                   ]}
                   width="full"
                   value={filterData.categoria}
