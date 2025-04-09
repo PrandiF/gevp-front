@@ -207,6 +207,8 @@ function CargaHorario() {
                         "Desarrollo Motor",
                         "Psicomotricidad",
                         "Pilates Mat",
+                        "Tai Chi Chuan",
+                        "Colonia Pami",
                       ]}
                       value={horarioData.deporte}
                       onChange={handleChange}
@@ -297,6 +299,8 @@ function CargaHorario() {
                         "Danza Jazz",
                         "Gimnasia",
                         "Femenino",
+                        "Tai Chi Chuan",
+                        "Colonia Pami",
                       ]}
                       width="full"
                       value={horarioData.categoria}
