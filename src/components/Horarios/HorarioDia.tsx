@@ -133,6 +133,8 @@ function HorarioDia() {
                     "Desarrollo Motor",
                     "Psicomotricidad",
                     "Pilates Mat",
+                    "Tai Chi Chuan",
+                    "Colonia Pami",
                   ]}
                   width="full"
                   value={filterData.deporte}
@@ -203,6 +205,8 @@ function HorarioDia() {
                     "Danza Jazz",
                     "Gimnasia",
                     "Femenino",
+                    "Tai Chi Chuan",
+                    "Colonia Pami",
                   ]}
                   width="full"
                   value={filterData.categoria}
