@@ -20,6 +20,7 @@ import CancelButton from "../../commons/CancelButton";
 import InputTime from "../../commons/InputTime";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import Title from "../../commons/Title";
+import { ClipLoader } from "react-spinners";
 
 interface EventProps {
   gimnasio: string;
@@ -64,6 +65,7 @@ function IndividualConsulta() {
   };
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [eventData, setEventData] = useState<EventProps>({
     gimnasio: "",
     deporte: "",
@@ -142,14 +144,18 @@ function IndividualConsulta() {
   };
 
   const handleConfirmDeleteEvent = async () => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     if (id) {
       const eventId = parseInt(id, 10);
       try {
+        setIsLoading(false);
         const res = await deleteEvento(eventId);
         if (res) {
           navigate("/eventos");
         }
       } catch (error) {
+        setIsLoading(false);
         console.error("Error al eliminar la poliza:", error);
         throw error;
       }
@@ -161,14 +167,18 @@ function IndividualConsulta() {
   }
 
   const handleConfirmEditEvent = async () => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     if (id) {
       const eventId = parseInt(id, 10);
       try {
+        setIsLoading(false);
         await editEvento(eventId, eventData);
         setEditar(false);
         setEventData(eventData);
         setOriginalEventData(eventData);
       } catch (error) {
+        setIsLoading(false);
         setEditar(false);
         throw error;
       }
@@ -196,7 +206,7 @@ function IndividualConsulta() {
     );
   };
 
-  const handleEditPoliza = async () => {
+  const handleEditEvent = async () => {
     Confirm.show(
       "Esta a punto de editar la póliza",
       "Desea confirmar?",
@@ -447,9 +457,20 @@ function IndividualConsulta() {
                     <DeleteButton onClick={handleDeleteEvent} />
                   </div>
                 ) : (
-                  <div className="flex gap-4 w-full items-center justify-center">
-                    <ConfirmButton onClick={handleEditPoliza} />
-                    <CancelButton onClick={handleCancelEdit} />
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <div className="flex gap-4 w-full items-center justify-center">
+                      <ConfirmButton onClick={handleEditEvent} />
+                      <CancelButton onClick={handleCancelEdit} />
+                    </div>
+                    {isLoading && (
+                      <div className="loading-spinner">
+                        <ClipLoader
+                          color="#4D5061"
+                          loading={isLoading}
+                          size={50}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </>

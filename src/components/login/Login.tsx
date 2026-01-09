@@ -11,6 +11,7 @@ import Button4 from "../../commons/Button4";
 import BackButton from "../../commons/BackButton";
 function Login() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     AOS.init();
   }, []);
@@ -31,17 +32,36 @@ function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
     try {
       const res = await login(userData.username, userData.password);
-      if (res && res.message === "User has been logged" && res.role) {
-        console.log("User res.data:", res);
+      if (res == "invalid password") {
+        setIsLoading(false);
+        Report.failure(
+          "Error al iniciar sesión",
+          "Contraseña incorrecta",
+          "Ok",
+          () => {
+            setUserData({ username: "", password: "" });
+          }
+        );
+      } else if (res && res.role) {
+        setIsLoading(false);
         loginState(res.role);
         navigate("/inicio");
-      } else {
-        console.error("Unexpected response structure:", res);
       }
     } catch (error) {
-      console.error("Login error:", error);
+      if (!userData.username || !userData.password) {
+        Report.failure(
+          "Error al iniciar sesión",
+          "Debe completar todos los campos",
+          "Ok"
+        );
+      }
+
+      setIsLoading(false);
       throw error;
     }
   };
@@ -88,9 +108,20 @@ function Login() {
               />
             </div>
           </form>
-          <button data-aos="fade" data-aos-duration="2000" data-aos-delay="700">
+
+          <button
+            data-aos="fade"
+            data-aos-duration="2000"
+            data-aos-delay="700"
+            disabled={isLoading}
+          >
             <Button4 text="Iniciar Sesión" onClick={handleSubmit} />
           </button>
+          {isLoading && (
+            <div className="loading-spinner">
+              <ClipLoader color="#4D5061" loading={isLoading} size={50} />
+            </div>
+          )}
         </div>
       </div>
     </div>

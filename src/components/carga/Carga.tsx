@@ -15,11 +15,13 @@ import {
 import Button4 from "../../commons/Button4";
 import InputTime from "../../commons/InputTime";
 import { useUserStoreLocalStorage } from "../../store/userStore";
+import { ClipLoader } from "react-spinners";
 
 function Carga() {
   const { role } = useUserStoreLocalStorage();
 
   console.log("Role in component:", role);
+  const [isLoading, setIsLoading] = useState(false);
   const [eventData, setEventData] = useState({
     gimnasio: "",
     deporte: "",
@@ -49,6 +51,8 @@ function Carga() {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     if (
       !eventData.gimnasio ||
       !eventData.deporte ||
@@ -59,6 +63,7 @@ function Carga() {
       !eventData.horarioFin ||
       !eventData.quienCarga
     ) {
+      setIsLoading(false);
       Report.failure(
         "Error al cargar el evento",
         "Debe completar todos los campos",
@@ -68,6 +73,7 @@ function Carga() {
     }
 
     if (eventData.horarioInicio >= eventData.horarioFin) {
+      setIsLoading(false);
       Report.failure(
         "Error al cargar el evento",
         "El horario de inicio debe ser anterior al horario de fin.",
@@ -85,6 +91,7 @@ function Carga() {
       );
 
       if (!disponible) {
+        setIsLoading(false);
         Report.failure(
           "Error al cargar el evento",
           "El horario ya está ocupado.",
@@ -96,6 +103,7 @@ function Carga() {
       const res = await createEvento(eventData);
 
       if (res) {
+        setIsLoading(false);
         Report.success(
           "Evento Cargado",
           "Se cargó un nuevo evento correctamente",
@@ -116,6 +124,7 @@ function Carga() {
           }
         );
       } else {
+        setIsLoading(false);
         Report.failure(
           "Error al cargar el evento",
           "No se pudo cargar el evento correctamente",
@@ -137,6 +146,7 @@ function Carga() {
         );
       }
     } catch (error) {
+      setIsLoading(false);
       Report.failure(
         "Error al cargar el evento",
         "No se pudo cargar el evento correctamente",
@@ -287,9 +297,14 @@ function Carga() {
                   </div>
                 </div>
               </div>
-              <div className="flex mx-auto">
+              <button className="flex mx-auto" disabled={isLoading}>
                 <Button4 text="Cargar" onClick={handleSubmit} />
-              </div>
+              </button>
+              {isLoading && (
+                <div className="loading-spinner text-center">
+                  <ClipLoader color="#4D5061" loading={isLoading} size={50} />
+                </div>
+              )}
             </div>
           </div>
         </div>
