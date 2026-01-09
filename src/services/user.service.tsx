@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USER_URL = `${import.meta.env.VITE_API_URL_DEV}/usuario`;
+const USER_URL = `https://gevp-back-api.onrender.com/api/usuario`;
 
 export const login = async (username: string, password: string) => {
   try {
