@@ -281,6 +281,7 @@ function HorarioIndividual() {
                             "Pilates Mat",
                             "Tai Chi Chuan",
                             "Colonia Pami",
+                            "Chi Kung",
                           ]}
                           width="full"
                           value={horarioData.deporte}
@@ -412,6 +413,7 @@ function HorarioIndividual() {
                           "Femenino",
                           "Tai Chi Chuan",
                           "Colonia Pami",
+                          "Chi Kung",
                         ]}
                         width="full"
                         value={horarioData.categoria}
@@ -471,7 +473,7 @@ function HorarioIndividual() {
                 </div>
               </div>
             </div>
-            {role == "admin" ? (
+            {role == "employee" ? (
               <>
                 {!editar ? (
                   <div className="flex gap-4 w-full items-center justify-center">

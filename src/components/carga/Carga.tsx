@@ -153,7 +153,7 @@ function Carga() {
   return (
     <div className="relative flex w-full h-screen items-center z-20">
       <Header />
-      {role == "admin" ? (
+      {role == "employee" ? (
         <div className="flex w-full items-center flex-col gap-8 xl:pt-0 xl:pb-0 ">
           <div className="xl:mt-[8%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-8 py-8 m-auto rounded-3xl">
             <div
@@ -218,11 +218,15 @@ function Carga() {
                       placeholder="Actividad"
                       width="full"
                       options={[
-                        "Básquet",
-                        "Voley",
+                        "Básquet Masculino",
+                        "Básquet Femenino",
+                        "Voley Masculino",
+                        "Voley Femenino",
                         "Cesto",
                         "Tenis",
-                        "Gimnasia Rítmica",
+                        "Gimnasia Rítmica/Danza",
+                        "Gimnasia Aeróbica",
+                        "Gimnasia Suave",
                         "Fútbol",
                         "Zumba",
                         "Comisión Directiva",
@@ -235,6 +239,16 @@ function Carga() {
                         "Iniciación deportiva",
                         "Folklore",
                         "TWD",
+                        "Yoga",
+                        "Danza Jazz",
+                        "Gimnasia",
+                        "Jornada Extendida",
+                        "Desarrollo Motor",
+                        "Psicomotricidad",
+                        "Pilates Mat",
+                        "Tai Chi Chuan",
+                        "Colonia Pami",
+                        "Chi Kung",
                       ]}
                       value={eventData.deporte}
                       onChange={handleChange}
@@ -279,7 +293,7 @@ function Carga() {
             </div>
           </div>
         </div>
-      ) : role == "employee" ? (
+      ) : role == "socio" ? (
         <div className="xl:mt-[10%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
           <div
             data-aos="fade"
@@ -297,7 +311,7 @@ function Carga() {
             </div>
 
             <p className="text-black xl:text-2xl md:text-2xl text-xl xl:text-start md:text-start text-center">
-              Lo siento, debes ser administrador para cargar un nuevo evento
+              Lo siento, debes ser empleado del club para cargar un nuevo evento
             </p>
           </div>
         </div>

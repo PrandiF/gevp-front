@@ -135,6 +135,7 @@ function HorarioDia() {
                     "Pilates Mat",
                     "Tai Chi Chuan",
                     "Colonia Pami",
+                    "Chi Kung",
                   ]}
                   width="full"
                   value={filterData.deporte}
@@ -207,6 +208,7 @@ function HorarioDia() {
                     "Femenino",
                     "Tai Chi Chuan",
                     "Colonia Pami",
+                    "Chi Kung",
                   ]}
                   width="full"
                   value={filterData.categoria}
@@ -231,7 +233,7 @@ function HorarioDia() {
                     <SearchButton />
                   )}
                 </button>
-                {role == "admin" ? (
+                {role == "employee" ? (
                   <div
                     className="xl:w-fit w-full flex h-full justify-center items-center"
                     data-aos="fade"

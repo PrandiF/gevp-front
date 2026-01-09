@@ -8,6 +8,7 @@ import { login } from "../../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import Button4 from "../../commons/Button4";
+import BackButton from "../../commons/BackButton";
 function Login() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -54,6 +55,14 @@ function Login() {
           data-aos-duration="2200"
           data-aos-delay="200"
         >
+          <div
+            data-aos="fade"
+            data-aos-duration="2000"
+            data-aos-delay="600"
+            className="relative flex ml-0 w-full px-5"
+          >
+            <BackButton />
+          </div>
           <div data-aos="fade" data-aos-duration="2000" data-aos-delay="400">
             <img
               src={logo}

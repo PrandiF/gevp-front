@@ -17,6 +17,7 @@ import HorarioDia from "./components/Horarios/HorarioDia";
 import HorarioIndividual from "./components/Horarios/HorarioIndividual";
 import CargaHorario from "./components/Horarios/CargarHorario";
 import HorarioGimnasios from "./components/Horarios/HorarioGimnasios";
+import AuthSelector from "./components/AuthSelector";
 
 function App() {
   const { isAuthenticated } = useUserStoreLocalStorage();
@@ -55,7 +56,11 @@ function App() {
               />
             </>
           ) : (
-            <Route path="/" element={<Login />} />
+            <>
+              {" "}
+              <Route path="/" element={<AuthSelector />} />
+              <Route path="/login" element={<Login />} />
+            </>
           )}
         </Routes>
       </Router>
