@@ -1,3 +1,4 @@
+import logo from "../assets/Group 21.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -12,7 +13,7 @@ function HeaderLogin() {
       data-aos-duration="2000"
       data-aos-delay="200"
     >
-      <img src="/assets/Group 21.png" className="xl:w-[300px] w-[180px]" />
+      <img src={logo} className="xl:w-[300px] w-[180px]" />
     </div>
   );
 }

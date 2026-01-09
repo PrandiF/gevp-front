@@ -1,3 +1,4 @@
+import logo from "../../assets/gevpLogo.png";
 import InputText from "../../commons/InputText";
 import InputPsw from "../../commons/InputPsw";
 import AOS from "aos";
@@ -87,7 +88,7 @@ function Login() {
           </div>
           <div data-aos="fade" data-aos-duration="2000" data-aos-delay="400">
             <img
-              src="/assets/gevpLogo.png"
+              src={logo}
               className="xlL:w-[15%] md:w-[20%] w-[25%] flex mx-auto"
             />
           </div>

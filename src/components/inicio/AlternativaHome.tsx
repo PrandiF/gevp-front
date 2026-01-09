@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import entrenamientos from "../../assets/entrenamientos3.jpg";
+import eventos from "../../assets/eventos2.jpg";
 
 function AlternativaHome() {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ function AlternativaHome() {
           Actividad Deportiva
         </p>
         <img
-          src="/assets/entrenamientos3.jpg"
+          src={entrenamientos}
           className="flex w-full xl:h-screen h-full object-cover"
           style={{
             filter: "brightness(0.5) sepia(1) hue-rotate(180deg) saturate(2)",
@@ -42,7 +44,7 @@ function AlternativaHome() {
           Eventos
         </p>
         <img
-          src="/assets/eventos2.jpg"
+          src={eventos}
           className="flex w-full xl:h-screen h-full object-cover"
           style={{
             filter: "brightness(0.3) sepia(1) hue-rotate(180deg) saturate(1)",
