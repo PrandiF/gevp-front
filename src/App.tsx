@@ -1,5 +1,4 @@
 import "./index.css";
-import imageBackground from "/assets/fondo7.jpg";
 import {
   BrowserRouter as Router,
   Route,
@@ -24,7 +23,7 @@ function App() {
   return (
     <div className="relative min-h-screen w-full font-roboto scroll-smooth flex flex-col font-montserrat">
       <img
-        src={imageBackground}
+        src="/assets/fondo7.jpg"
         alt="fondo"
         className="flex absolute  top-0 left-0 inset-0 w-screen h-full object-cover"
       />

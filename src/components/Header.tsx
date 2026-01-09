@@ -1,4 +1,3 @@
-import logo from "/assets/gevpLogo.png";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -21,7 +20,7 @@ function Header() {
         onClick={() => navigate("/inicio")}
       >
         <img
-          src={logo}
+          src="/assets/gevpLogo.png"
           className="xl:w-[90px] md:w-[70px] w-[50px] cursor-pointer"
         />
       </button>

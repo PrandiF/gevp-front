@@ -9,8 +9,6 @@ import {
   BsFillArrowRightSquareFill,
 } from "react-icons/bs";
 import Card from "./Card";
-import entrenamientosImg from "/assets/entrenamientos2.png";
-import eventosImg from "/assets/eventos.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -53,13 +51,17 @@ function RespnosiveCards() {
         >
           <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center items-center">
             <Card
-              img={entrenamientosImg}
+              img="/assets/entrenamientos2.png"
               text="Entrenamientos"
               buttonHref="/entrenamientos"
             />
           </SwiperSlide>
           <SwiperSlide className="w-[80%] h-[90%] relative flex justify-center items-center">
-            <Card img={eventosImg} text="Eventos" buttonHref="/eventos" />
+            <Card
+              img="/assets/eventos.png"
+              text="Eventos"
+              buttonHref="/eventos"
+            />
           </SwiperSlide>
         </Swiper>
         <div className="swiper-button-next-serv absolute right-12 top-[50%] transform  z-10">
