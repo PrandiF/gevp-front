@@ -445,7 +445,7 @@ function IndividualConsulta() {
                 </div>
               </div>
             </div>
-            {role == "admin" && !isEnded ? (
+            {role == "employee" && !isEnded ? (
               <>
                 {!editar ? (
                   <div className="flex gap-4 w-full items-center justify-center">
@@ -474,13 +474,13 @@ function IndividualConsulta() {
                   </div>
                 )}
               </>
-            ) : role == "admin" && isEnded ? (
+            ) : role == "employee" && isEnded ? (
               <div className="flex w-full items-start justify-center">
                 <p className="text-red-600 text-lg  font-semibold">
                   Evento Finalizdo
                 </p>
               </div>
-            ) : role == "employee" && isEnded ? (
+            ) : role == "socio" && isEnded ? (
               <div className="flex w-full items-start justify-center">
                 <p className="text-red-600 text-lg font-semibold">
                   Evento Finalizdo

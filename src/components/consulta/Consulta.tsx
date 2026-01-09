@@ -212,7 +212,7 @@ function Consulta() {
                     <SearchButton />
                   )}
                 </button>
-                {role == "admin" ? (
+                {role == "employee" ? (
                   <div
                     className="xl:w-fit w-full flex h-full justify-center items-center"
                     data-aos="fade"

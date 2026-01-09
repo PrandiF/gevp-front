@@ -8,9 +8,9 @@ import { login } from "../../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import Button4 from "../../commons/Button4";
+import BackButton from "../../commons/BackButton";
+import { Report } from "notiflix";
 import { ClipLoader } from "react-spinners";
-import { Report } from "notiflix/build/notiflix-report-aio";
-
 function Login() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -32,40 +32,41 @@ function Login() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    try {
-      const res = await login(userData.username, userData.password);
-      if (res == "invalid password") {
-        setIsLoading(false);
-        Report.failure(
-          "Error al iniciar sesión",
-          "Contraseña incorrecta",
-          "Ok",
-          () => {
-            setUserData({ username: "", password: "" });
-          }
-        );
-      } else if (res && res.role) {
-        setIsLoading(false);
-        loginState(res.role);
-        navigate("/inicio");
-      }
-    } catch (error) {
-      if (!userData.username || !userData.password) {
-        Report.failure(
-          "Error al iniciar sesión",
-          "Debe completar todos los campos",
-          "Ok"
-        );
-      }
-
-      setIsLoading(false);
-      throw error;
+    if (!userData.username || !userData.password) {
+      Report.failure(
+        "Error al iniciar sesión",
+        "Debe completar todos los campos",
+        "Ok"
+      );
+      return;
     }
+
+    setIsLoading(true);
+
+    setTimeout(async () => {
+      try {
+        const res = await login(userData.username, userData.password);
+
+        if (res === "invalid password") {
+          Report.failure(
+            "Error al iniciar sesión",
+            "Contraseña incorrecta",
+            "Ok",
+            () => setUserData({ username: "", password: "" })
+          );
+        } else if (res?.role) {
+          loginState(res.role);
+          navigate("/inicio");
+        }
+      } catch (error) {
+        Report.failure("Error", "Usuario o contraseña incorrectos", "Ok");
+      } finally {
+        setIsLoading(false);
+      }
+    }, 1200); // ⏱️ delay “iniciando sesión…”
   };
 
   return (
@@ -77,6 +78,14 @@ function Login() {
           data-aos-duration="2200"
           data-aos-delay="200"
         >
+          <div
+            data-aos="fade"
+            data-aos-duration="2000"
+            data-aos-delay="600"
+            className="relative flex ml-0 w-full px-5"
+          >
+            <BackButton />
+          </div>
           <div data-aos="fade" data-aos-duration="2000" data-aos-delay="400">
             <img
               src={logo}
@@ -112,8 +121,9 @@ function Login() {
             <Button4 text="Iniciar Sesión" onClick={handleSubmit} />
           </button>
           {isLoading && (
-            <div className="loading-spinner">
+            <div className="loading-spinner flex flex-col items-center">
               <ClipLoader color="#4D5061" loading={isLoading} size={50} />
+              <p className="mt-3 text-sm text-gray-600">Iniciando sesión…</p>
             </div>
           )}
         </div>

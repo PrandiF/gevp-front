@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USER_URL = `${import.meta.env.VITE_API_URL_PROD}/horario`;
+const USER_URL = `${import.meta.env.VITE_API_URL_DEV}/horario`;
 
 type HorarioProps = {
   gimnasio: string;

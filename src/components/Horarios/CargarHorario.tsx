@@ -146,7 +146,7 @@ function CargaHorario() {
   return (
     <div className="relative flex w-full h-screen items-center z-20">
       <Header />
-      {role == "admin" ? (
+      {role == "employee" ? (
         <div className="flex w-full items-center justify-center flex-col gap-8 xl:pt-0 xl:pb-0 pt-[8%]">
           <div className="xl:mt-[8%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center  gap-8 py-8 m-auto rounded-3xl">
             <div
@@ -219,6 +219,7 @@ function CargaHorario() {
                         "Pilates Mat",
                         "Tai Chi Chuan",
                         "Colonia Pami",
+                        "Chi Kung",
                       ]}
                       value={horarioData.deporte}
                       onChange={handleChange}
@@ -311,6 +312,7 @@ function CargaHorario() {
                         "Femenino",
                         "Tai Chi Chuan",
                         "Colonia Pami",
+                        "Chi Kung",
                       ]}
                       width="full"
                       value={horarioData.categoria}
@@ -356,7 +358,7 @@ function CargaHorario() {
             </div>
           </div>
         </div>
-      ) : role == "employee" ? (
+      ) : role == "socio" ? (
         <div className="xl:mt-[10%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
           <div
             data-aos="fade"
@@ -374,7 +376,7 @@ function CargaHorario() {
             </div>
 
             <p className="text-black xl:text-2xl md:text-2xl text-xl xl:text-start md:text-start text-center">
-              Lo siento, debes ser administrador para cargar un nuevo
+              Lo siento, debes ser empleado del club para cargar un nuevo
               entrenamiento
             </p>
           </div>
