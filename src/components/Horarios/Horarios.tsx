@@ -12,6 +12,7 @@ function Horarios() {
   const { role } = useUserStoreLocalStorage();
   useEffect(() => {
     AOS.init();
+    console.log(role);
   }, []);
 
   return (

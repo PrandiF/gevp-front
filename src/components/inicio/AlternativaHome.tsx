@@ -1,9 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import entrenamientos from "../../assets/entrenamientos3.webp";
 import eventos from "../../assets/eventos2.webp";
+import { useUserStoreLocalStorage } from "../../store/userStore";
+import { useEffect } from "react";
 
 function AlternativaHome() {
   const navigate = useNavigate();
+  const { role } = useUserStoreLocalStorage();
+
+  useEffect(() => {
+    console.log(role);
+  }, []);
+
   return (
     <div className="relative flex xl:flex-row  flex-col w-full h-screen">
       <div
