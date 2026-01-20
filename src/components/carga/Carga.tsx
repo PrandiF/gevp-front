@@ -163,7 +163,7 @@ function Carga() {
   return (
     <div className="relative flex w-full h-screen items-center z-20">
       <Header />
-      {role == "employee" ? (
+      {role == "empleado" ? (
         <div className="flex w-full items-center flex-col gap-8 xl:pt-0 xl:pb-0 ">
           <div className="xl:mt-[8%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-8 py-8 m-auto rounded-3xl">
             <div

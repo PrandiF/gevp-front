@@ -3,15 +3,15 @@ import { useEffect } from "react";
 
 interface UserState {
   isAuthenticated: boolean;
-  role: "employee" | "socio" | null;
-  loginState: (role: "employee" | "socio") => void;
+  role: "empleado" | "socio" | null;
+  loginState: (role: "empleado" | "socio") => void;
   logoutState: () => void;
 }
 
 const useUserStore = create<UserState>((set) => ({
   isAuthenticated: false,
   role: null,
-  loginState: (role: "employee" | "socio") => {
+  loginState: (role: "empleado" | "socio") => {
     set({ isAuthenticated: true, role });
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("userRole", role);
@@ -30,7 +30,7 @@ export const useUserStoreLocalStorage = () => {
     const isAuthenticatedFromStorage =
       localStorage.getItem("isAuthenticated") === "true";
     const roleFromStorage = localStorage.getItem("userRole") as
-      | "employee"
+      | "empleado"
       | "socio"
       | null;
 
