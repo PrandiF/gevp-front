@@ -49,8 +49,7 @@ Confirm.init({
 
 function IndividualConsulta() {
   const [isEnded, setIsEnded] = useState(false);
-  const role = useUserStoreLocalStorage((state) => state.role);
-  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const { role, hasHydrated } = useUserStoreLocalStorage();
 
   // Espera la hidratación antes de renderizar
   if (!hasHydrated) return null;
@@ -454,7 +453,7 @@ function IndividualConsulta() {
                 </div>
               </div>
             </div>
-            {role == "empleado" && !isEnded ? (
+            {role === "empleado" && !isEnded ? (
               <>
                 {!editar ? (
                   <div className="flex gap-4 w-full items-center justify-center">

@@ -8,8 +8,7 @@ import "aos/dist/aos.css";
 
 function AlternativaHome() {
   const navigate = useNavigate();
-  const role = useUserStoreLocalStorage((state) => state.role);
-  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const { role, hasHydrated } = useUserStoreLocalStorage();
 
   // Espera la hidratación antes de renderizar
   if (!hasHydrated) return null;

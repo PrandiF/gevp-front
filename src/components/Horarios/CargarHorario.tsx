@@ -16,8 +16,7 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
 
 function CargaHorario() {
-  const role = useUserStoreLocalStorage((state) => state.role);
-  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const { role, hasHydrated } = useUserStoreLocalStorage();
 
   // Espera la hidratación antes de renderizar
   if (!hasHydrated) return null;

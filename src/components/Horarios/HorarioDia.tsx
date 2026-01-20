@@ -13,8 +13,7 @@ import TablaHorarios2 from "./TablaHorarios2";
 import { CiClock1 } from "react-icons/ci";
 
 function HorarioDia() {
-  const role = useUserStoreLocalStorage((state) => state.role);
-  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const { role, hasHydrated } = useUserStoreLocalStorage();
 
   // Espera la hidratación antes de renderizar
   if (!hasHydrated) return null;
@@ -242,7 +241,7 @@ function HorarioDia() {
                     <SearchButton />
                   )}
                 </button>
-                {role == "empleado" ? (
+                {role == "empleado" && (
                   <div
                     className="xl:w-fit w-full flex h-full justify-center items-center"
                     data-aos="fade"
@@ -254,8 +253,6 @@ function HorarioDia() {
                       url="/entrenamientos/cargar"
                     />
                   </div>
-                ) : (
-                  ""
                 )}
               </div>
             </div>

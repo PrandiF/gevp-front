@@ -9,8 +9,7 @@ import AddButton from "../../commons/AddButton";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function Horarios() {
-  const role = useUserStoreLocalStorage((state) => state.role);
-  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const { role, hasHydrated } = useUserStoreLocalStorage();
 
   // Espera la hidratación antes de renderizar
   if (!hasHydrated) return null;
@@ -50,15 +49,13 @@ function Horarios() {
             >
               <Title text="Actividad Deportiva" />
             </div>
-            {role == "empleado" ? (
+            {role === "empleado" && (
               <div className="mt-[-10px] mb-[-10px]">
                 <AddButton
                   text="Nueva Actividad"
                   url="/entrenamientos/cargar"
                 />
               </div>
-            ) : (
-              ""
             )}
 
             <div className="flex flex-col items-center px-4 justify-center w-full rounded-lg mb-3">

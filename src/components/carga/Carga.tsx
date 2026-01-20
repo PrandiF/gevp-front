@@ -18,8 +18,7 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
 
 function Carga() {
-  const role = useUserStoreLocalStorage((state) => state.role);
-  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const { role, hasHydrated } = useUserStoreLocalStorage();
 
   // Espera la hidratación antes de renderizar
   if (!hasHydrated) return null;
@@ -317,30 +316,31 @@ function Carga() {
             </div>
           </div>
         </div>
-      ) : role == "socio" ? (
-        <div className="xl:mt-[10%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
-          <div
-            data-aos="fade"
-            data-aos-duration="2500"
-            data-aos-delay="400"
-            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
-          >
-            <div
-              className="flex mr-auto"
-              data-aos="fade"
-              data-aos-duration="2000"
-              data-aos-delay="400"
-            >
-              <BackButton />
-            </div>
-
-            <p className="text-black xl:text-2xl md:text-2xl text-xl xl:text-start md:text-start text-center">
-              Lo siento, debes ser empleado del club para cargar un nuevo evento
-            </p>
-          </div>
-        </div>
       ) : (
-        ""
+        role == "socio" && (
+          <div className="xl:mt-[10%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
+            <div
+              data-aos="fade"
+              data-aos-duration="2500"
+              data-aos-delay="400"
+              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
+            >
+              <div
+                className="flex mr-auto"
+                data-aos="fade"
+                data-aos-duration="2000"
+                data-aos-delay="400"
+              >
+                <BackButton />
+              </div>
+
+              <p className="text-black xl:text-2xl md:text-2xl text-xl xl:text-start md:text-start text-center">
+                Lo siento, debes ser empleado del club para cargar un nuevo
+                evento
+              </p>
+            </div>
+          </div>
+        )
       )}
     </div>
   );

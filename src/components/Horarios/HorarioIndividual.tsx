@@ -46,8 +46,7 @@ Confirm.init({
 });
 
 function HorarioIndividual() {
-  const role = useUserStoreLocalStorage((state) => state.role);
-  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const { role, hasHydrated } = useUserStoreLocalStorage();
 
   // Espera la hidratación antes de renderizar
   if (!hasHydrated) return null;
@@ -492,7 +491,7 @@ function HorarioIndividual() {
                 </div>
               </div>
             </div>
-            {role == "empleado" ? (
+            {role === "empleado" && (
               <>
                 {!editar ? (
                   <div className="flex gap-4 w-full items-center justify-center">
@@ -521,8 +520,6 @@ function HorarioIndividual() {
                   </div>
                 )}
               </>
-            ) : (
-              ""
             )}
           </div>
         </div>
