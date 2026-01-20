@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import entrenamientos from "../../assets/entrenamientos3.jpg";
-import eventos from "../../assets/eventos2.jpg";
+import entrenamientos from "../../assets/entrenamientos3.webp";
+import eventos from "../../assets/eventos2.webp";
 
 function AlternativaHome() {
   const navigate = useNavigate();

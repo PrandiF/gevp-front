@@ -1,5 +1,5 @@
 import "./index.css";
-import imageBackground from "./assets/fondo7.jpg";
+import imageBackground from "./assets/fondo7.webp";
 import {
   BrowserRouter as Router,
   Route,

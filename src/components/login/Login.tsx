@@ -1,4 +1,4 @@
-import logo from "../../assets/gevpLogo.png";
+import logo from "../../assets/gevpLogo.webp";
 import InputText from "../../commons/InputText";
 import InputPsw from "../../commons/InputPsw";
 import AOS from "aos";
