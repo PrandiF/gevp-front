@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 function AlternativaHome() {
   const navigate = useNavigate();
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
 
   useEffect(() => {
     console.log(role);

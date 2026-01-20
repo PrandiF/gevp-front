@@ -49,7 +49,7 @@ Confirm.init({
 
 function IndividualConsulta() {
   const [isEnded, setIsEnded] = useState(false);
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
   const formatDate = (date: Date | string): string => {
     const dateObj = typeof date === "string" ? new Date(date) : date;
 

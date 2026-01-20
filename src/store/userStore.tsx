@@ -1,16 +1,18 @@
 import { create } from "zustand";
-import { useEffect } from "react";
 
 interface UserState {
   isAuthenticated: boolean;
   role: "empleado" | "socio" | null;
+  hasHydrated: boolean;
   loginState: (role: "empleado" | "socio") => void;
   logoutState: () => void;
+  hydrate: () => void;
 }
 
-const useUserStore = create<UserState>((set) => ({
+export const useUserStoreLocalStorage = create<UserState>((set) => ({
   isAuthenticated: false,
   role: null,
+  hasHydrated: false,
 
   loginState: (role) => {
     set({ isAuthenticated: true, role });
@@ -20,27 +22,21 @@ const useUserStore = create<UserState>((set) => ({
 
   logoutState: () => {
     set({ isAuthenticated: false, role: null });
-    localStorage.setItem("isAuthenticated", "false");
+    localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("userRole");
   },
-}));
 
-export const useUserStoreLocalStorage = () => {
-  const store = useUserStore();
-
-  useEffect(() => {
-    const isAuthenticatedFromStorage =
-      localStorage.getItem("isAuthenticated") === "true";
-    const roleFromStorage = localStorage.getItem("userRole") as
+  hydrate: () => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    const role = localStorage.getItem("userRole") as
       | "empleado"
       | "socio"
       | null;
 
-    // 🔒 Hidratamos SOLO si hay datos reales
-    if (isAuthenticatedFromStorage && roleFromStorage) {
-      store.loginState(roleFromStorage);
+    if (isAuthenticated && role) {
+      set({ isAuthenticated: true, role, hasHydrated: true });
+    } else {
+      set({ hasHydrated: true });
     }
-  }, []);
-
-  return store;
-};
+  },
+}));

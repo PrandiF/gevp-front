@@ -46,7 +46,7 @@ Confirm.init({
 });
 
 function HorarioIndividual() {
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [horarioData, setHorarioData] = useState<HorarioProps>({

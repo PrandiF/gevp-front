@@ -16,7 +16,7 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { CiClock1, CiCalendar } from "react-icons/ci";
 
 function Consulta() {
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
   useEffect(() => {
     AOS.init();
   }, []);

@@ -9,11 +9,15 @@ import AddButton from "../../commons/AddButton";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function Horarios() {
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
   useEffect(() => {
     AOS.init();
     console.log(role);
   }, []);
+
+  useEffect(() => {
+    console.log("ROLE ACTUAL:", role);
+  }, [role]);
 
   return (
     <div className=" flex w-full items-start z-20 py-[8%]">

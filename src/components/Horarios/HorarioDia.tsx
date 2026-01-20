@@ -13,7 +13,7 @@ import TablaHorarios2 from "./TablaHorarios2";
 import { CiClock1 } from "react-icons/ci";
 
 function HorarioDia() {
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
   const initialFilterData = {
     gimnasio: "",
     horarioInicio: "",

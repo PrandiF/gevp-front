@@ -18,9 +18,22 @@ import HorarioIndividual from "./components/Horarios/HorarioIndividual";
 import CargaHorario from "./components/Horarios/CargarHorario";
 import HorarioGimnasios from "./components/Horarios/HorarioGimnasios";
 import AuthSelector from "./components/AuthSelector";
+import { useEffect } from "react";
 
 function App() {
-  const { isAuthenticated } = useUserStoreLocalStorage();
+  const isAuthenticated = useUserStoreLocalStorage(
+    (state) => state.isAuthenticated
+  );
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+  const hydrate = useUserStoreLocalStorage((state) => state.hydrate);
+
+  useEffect(() => {
+    hydrate();
+  }, []);
+
+  if (!hasHydrated) {
+    return null; // o spinner
+  }
   return (
     <div className="relative min-h-screen w-full font-roboto scroll-smooth flex flex-col font-montserrat">
       <img

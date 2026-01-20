@@ -18,7 +18,7 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
 
 function Carga() {
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
 
   console.log("Role in component:", role);
   const [isLoading, setIsLoading] = useState(false);
