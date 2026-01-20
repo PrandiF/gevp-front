@@ -11,11 +11,13 @@ interface UserState {
 const useUserStore = create<UserState>((set) => ({
   isAuthenticated: false,
   role: null,
-  loginState: (role: "empleado" | "socio") => {
+
+  loginState: (role) => {
     set({ isAuthenticated: true, role });
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("userRole", role);
   },
+
   logoutState: () => {
     set({ isAuthenticated: false, role: null });
     localStorage.setItem("isAuthenticated", "false");
@@ -34,13 +36,11 @@ export const useUserStoreLocalStorage = () => {
       | "socio"
       | null;
 
-    if (
-      store.isAuthenticated !== isAuthenticatedFromStorage ||
-      store.role !== roleFromStorage
-    ) {
-      store.loginState(roleFromStorage || "socio");
+    // 🔒 Hidratamos SOLO si hay datos reales
+    if (isAuthenticatedFromStorage && roleFromStorage) {
+      store.loginState(roleFromStorage);
     }
-  }, [store.isAuthenticated, store.role]);
+  }, []);
 
   return store;
 };
