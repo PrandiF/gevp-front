@@ -2,9 +2,9 @@ import { create } from "zustand";
 
 interface UserState {
   isAuthenticated: boolean;
-  role: "empleado" | "socio" | null;
+  role: "admin" | "socio" | null;
   hasHydrated: boolean;
-  loginState: (role: "empleado" | "socio") => void;
+  loginState: (role: "admin" | "socio") => void;
   logoutState: () => void;
   hydrate: () => void;
 }
@@ -28,10 +28,7 @@ export const useUserStoreLocalStorage = create<UserState>((set) => ({
 
   hydrate: () => {
     const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-    const role = localStorage.getItem("userRole") as
-      | "empleado"
-      | "socio"
-      | null;
+    const role = localStorage.getItem("userRole") as "admin" | "socio" | null;
 
     if (isAuthenticated && role) {
       set({ isAuthenticated: true, role, hasHydrated: true });

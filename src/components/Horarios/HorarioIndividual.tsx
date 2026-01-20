@@ -491,7 +491,7 @@ function HorarioIndividual() {
                 </div>
               </div>
             </div>
-            {role === "empleado" && (
+            {role === "admin" && (
               <>
                 {!editar ? (
                   <div className="flex gap-4 w-full items-center justify-center">

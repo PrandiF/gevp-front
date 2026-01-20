@@ -49,7 +49,7 @@ function Horarios() {
             >
               <Title text="Actividad Deportiva" />
             </div>
-            {role === "empleado" && (
+            {role === "admin" && (
               <div className="mt-[-10px] mb-[-10px]">
                 <AddButton
                   text="Nueva Actividad"

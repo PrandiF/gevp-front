@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USER_URL = `${import.meta.env.VITE_API_URL_DEV}/horario`;
+const USER_URL = `https://gevp-back-api.onrender.com/api/horario`;
 
 type HorarioProps = {
   gimnasio: string;
@@ -37,7 +37,7 @@ export const createHorario = async (horarioData: HorarioProps) => {
     const res = await axios.post(
       `${USER_URL}`,
       { ...horarioData },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     return res.data;
   } catch (error) {
@@ -73,7 +73,7 @@ export const editHorario = async (id: number, data: HorarioProps) => {
     const res = await axios.put(
       `${USER_URL}/${id}`,
       { ...data },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     return res.data;
   } catch (error) {
@@ -118,7 +118,7 @@ export const verificarHorarioDisponible = async (
   gimnasio: string,
   dia: string,
   horarioInicio: string,
-  horarioFin: string
+  horarioFin: string,
 ): Promise<boolean> => {
   try {
     const response = await axios.post(
@@ -129,7 +129,7 @@ export const verificarHorarioDisponible = async (
         horarioInicio,
         horarioFin,
       },
-      { withCredentials: true }
+      { withCredentials: true },
     );
 
     console.log("Respuesta del servidor:", response.data);

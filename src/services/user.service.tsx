@@ -7,7 +7,7 @@ export const login = async (username: string, password: string) => {
     const res = await axios.post(
       `${USER_URL}/login`,
       { username, password },
-      { withCredentials: true }
+      { withCredentials: true },
     );
 
     console.log("Login res.data:", res.data);
@@ -23,7 +23,7 @@ export const socioLogin = async () => {
     const res = await axios.post(
       `${USER_URL}/socio`,
       {},
-      { withCredentials: true }
+      { withCredentials: true },
     );
 
     console.log("Login res.data:", res.data);
@@ -44,7 +44,7 @@ export const logout = async () => {
       {},
       {
         withCredentials: true,
-      }
+      },
     );
     return res.data;
   } catch (error) {

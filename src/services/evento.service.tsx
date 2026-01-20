@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USER_URL = `${import.meta.env.VITE_API_URL_DEV}/evento`;
+const USER_URL = `https://gevp-back-api.onrender.com/api/evento`;
 
 type EventoProps = {
   gimnasio: string;
@@ -47,7 +47,7 @@ export const getEvento = async () => {
 
 export const getFilterEvento = async (
   filter: FilterProps,
-  page: number = 1
+  page: number = 1,
 ) => {
   let filterClean: FilterProps = {
     deporte: filter.deporte,
@@ -99,7 +99,7 @@ export const createEvento = async (eventoData: EventoProps) => {
     const res = await axios.post(
       `${USER_URL}`,
       { ...eventoData },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     console.log("Nuevo evento:", res.data);
     return res.data;
@@ -138,7 +138,7 @@ export const editEvento = async (id: number, data: EventoProps) => {
     const res = await axios.put(
       `${USER_URL}/${id}`,
       { ...data },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     return res.data;
   } catch (error) {
@@ -151,7 +151,7 @@ export const verificarHorarioDisponible = async (
   gimnasio: string,
   fecha: Date,
   horarioInicio: string,
-  horarioFin: string
+  horarioFin: string,
 ): Promise<boolean> => {
   try {
     const response = await axios.post(
@@ -162,7 +162,7 @@ export const verificarHorarioDisponible = async (
         horarioInicio,
         horarioFin,
       },
-      { withCredentials: true }
+      { withCredentials: true },
     );
 
     console.log("Respuesta del servidor:", response.data);
