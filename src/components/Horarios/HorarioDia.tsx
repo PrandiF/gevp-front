@@ -13,15 +13,8 @@ import TablaHorarios2 from "./TablaHorarios2";
 import { CiClock1 } from "react-icons/ci";
 
 function HorarioDia() {
-  const { role, hasHydrated } = useUserStoreLocalStorage();
+  const { role } = useUserStoreLocalStorage();
 
-  // Espera la hidratación antes de renderizar
-  if (!hasHydrated) return null;
-
-  // Inicializa AOS solo cuando hay datos de localStorage
-  // useEffect(() => {
-  //   AOS.init();
-  // }, [hasHydrated]);
   const initialFilterData = {
     gimnasio: "",
     horarioInicio: "",

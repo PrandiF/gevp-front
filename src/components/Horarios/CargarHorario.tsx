@@ -16,15 +16,8 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
 
 function CargaHorario() {
-  const { role, hasHydrated } = useUserStoreLocalStorage();
+  const { role } = useUserStoreLocalStorage();
 
-  // Espera la hidratación antes de renderizar
-  if (!hasHydrated) return null;
-
-  // Inicializa AOS solo cuando hay datos de localStorage
-  useEffect(() => {
-    AOS.init();
-  }, [hasHydrated]);
   console.log(role);
   const [isLoading, setIsLoading] = useState(false);
   const [horarioData, setHorarioData] = useState({

@@ -4,9 +4,7 @@ import SearchButton from "../../commons/SearchButton";
 import Title from "../../commons/Title";
 import Header from "../Header";
 import TablaConsulta from "./TablaConsulta";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Pagination from "./Pagination";
 import InputSelect from "../../commons/InputSelect";
 import CancelSearchButton from "../../commons/CancelSearchButton";
@@ -16,15 +14,7 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { CiClock1, CiCalendar } from "react-icons/ci";
 
 function Consulta() {
-  const { role, hasHydrated } = useUserStoreLocalStorage();
-
-  // Espera la hidratación antes de renderizar
-  if (!hasHydrated) return null;
-
-  // Inicializa AOS solo cuando hay datos de localStorage
-  useEffect(() => {
-    AOS.init();
-  }, [hasHydrated]);
+  const { role } = useUserStoreLocalStorage();
 
   const initialFilterData = {
     deporte: "",

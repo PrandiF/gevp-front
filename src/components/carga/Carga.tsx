@@ -18,15 +18,7 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
 
 function Carga() {
-  const { role, hasHydrated } = useUserStoreLocalStorage();
-
-  // Espera la hidratación antes de renderizar
-  if (!hasHydrated) return null;
-
-  // Inicializa AOS solo cuando hay datos de localStorage
-  useEffect(() => {
-    AOS.init();
-  }, [hasHydrated]);
+  const { role } = useUserStoreLocalStorage();
 
   console.log("Role in component:", role);
   const [isLoading, setIsLoading] = useState(false);

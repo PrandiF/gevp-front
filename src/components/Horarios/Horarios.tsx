@@ -9,23 +9,12 @@ import AddButton from "../../commons/AddButton";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function Horarios() {
-  const { role, hasHydrated } = useUserStoreLocalStorage();
+  const { role } = useUserStoreLocalStorage();
 
-  // Espera la hidratación antes de renderizar
-  if (!hasHydrated) return null;
-
-  // Inicializa AOS solo cuando hay datos de localStorage
-  useEffect(() => {
-    AOS.init();
-  }, [hasHydrated]);
   useEffect(() => {
     AOS.init();
     console.log(role);
   }, []);
-
-  useEffect(() => {
-    console.log("ROLE ACTUAL:", role);
-  }, [role]);
 
   return (
     <div className=" flex w-full items-start z-20 py-[8%]">

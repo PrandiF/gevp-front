@@ -46,15 +46,8 @@ Confirm.init({
 });
 
 function HorarioIndividual() {
-  const { role, hasHydrated } = useUserStoreLocalStorage();
+  const { role } = useUserStoreLocalStorage();
 
-  // Espera la hidratación antes de renderizar
-  if (!hasHydrated) return null;
-
-  // Inicializa AOS solo cuando hay datos de localStorage
-  useEffect(() => {
-    AOS.init();
-  }, [hasHydrated]);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [horarioData, setHorarioData] = useState<HorarioProps>({
