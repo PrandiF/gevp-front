@@ -3,10 +3,21 @@ import entrenamientos from "../../assets/entrenamientos3.webp";
 import eventos from "../../assets/eventos2.webp";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function AlternativaHome() {
   const navigate = useNavigate();
   const role = useUserStoreLocalStorage((state) => state.role);
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+
+  // Espera la hidratación antes de renderizar
+  if (!hasHydrated) return null;
+
+  // Inicializa AOS solo cuando hay datos de localStorage
+  useEffect(() => {
+    AOS.init();
+  }, [hasHydrated]);
 
   useEffect(() => {
     console.log(role);

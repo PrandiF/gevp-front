@@ -14,6 +14,15 @@ import { CiClock1 } from "react-icons/ci";
 
 function HorarioDia() {
   const role = useUserStoreLocalStorage((state) => state.role);
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+
+  // Espera la hidratación antes de renderizar
+  if (!hasHydrated) return null;
+
+  // Inicializa AOS solo cuando hay datos de localStorage
+  // useEffect(() => {
+  //   AOS.init();
+  // }, [hasHydrated]);
   const initialFilterData = {
     gimnasio: "",
     horarioInicio: "",
@@ -30,7 +39,7 @@ function HorarioDia() {
   const [isClean, setIsClean] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setIsClean(false);
     isFilter && setIsFilter(false);

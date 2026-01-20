@@ -47,6 +47,15 @@ Confirm.init({
 
 function HorarioIndividual() {
   const role = useUserStoreLocalStorage((state) => state.role);
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+
+  // Espera la hidratación antes de renderizar
+  if (!hasHydrated) return null;
+
+  // Inicializa AOS solo cuando hay datos de localStorage
+  useEffect(() => {
+    AOS.init();
+  }, [hasHydrated]);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [horarioData, setHorarioData] = useState<HorarioProps>({
@@ -141,7 +150,7 @@ function HorarioIndividual() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setHorarioData((prevHorarioData) => ({
       ...prevHorarioData,
@@ -157,7 +166,7 @@ function HorarioIndividual() {
       "No",
       () => {
         handleConfirmDeleteHorario();
-      }
+      },
     );
   };
 
@@ -170,7 +179,7 @@ function HorarioIndividual() {
 
       () => {
         handleConfirmEditHorario();
-      }
+      },
     );
   };
 
@@ -188,7 +197,7 @@ function HorarioIndividual() {
 
       () => {
         handleConfirmCancelEdit();
-      }
+      },
     );
   };
 

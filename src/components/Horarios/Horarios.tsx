@@ -10,6 +10,15 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 
 function Horarios() {
   const role = useUserStoreLocalStorage((state) => state.role);
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+
+  // Espera la hidratación antes de renderizar
+  if (!hasHydrated) return null;
+
+  // Inicializa AOS solo cuando hay datos de localStorage
+  useEffect(() => {
+    AOS.init();
+  }, [hasHydrated]);
   useEffect(() => {
     AOS.init();
     console.log(role);

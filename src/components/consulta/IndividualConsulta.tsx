@@ -50,6 +50,15 @@ Confirm.init({
 function IndividualConsulta() {
   const [isEnded, setIsEnded] = useState(false);
   const role = useUserStoreLocalStorage((state) => state.role);
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+
+  // Espera la hidratación antes de renderizar
+  if (!hasHydrated) return null;
+
+  // Inicializa AOS solo cuando hay datos de localStorage
+  useEffect(() => {
+    AOS.init();
+  }, [hasHydrated]);
   const formatDate = (date: Date | string): string => {
     const dateObj = typeof date === "string" ? new Date(date) : date;
 
@@ -186,7 +195,7 @@ function IndividualConsulta() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setEventData((prevEventData) => ({
       ...prevEventData,
@@ -202,7 +211,7 @@ function IndividualConsulta() {
       "No",
       () => {
         handleConfirmDeleteEvent();
-      }
+      },
     );
   };
 
@@ -215,7 +224,7 @@ function IndividualConsulta() {
 
       () => {
         handleConfirmEditEvent();
-      }
+      },
     );
   };
 
@@ -233,7 +242,7 @@ function IndividualConsulta() {
 
       () => {
         handleConfirmCancelEdit();
-      }
+      },
     );
   };
 

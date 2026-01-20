@@ -16,7 +16,16 @@ import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
 
 function CargaHorario() {
-  const { role } = useUserStoreLocalStorage();
+  const role = useUserStoreLocalStorage((state) => state.role);
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+
+  // Espera la hidratación antes de renderizar
+  if (!hasHydrated) return null;
+
+  // Inicializa AOS solo cuando hay datos de localStorage
+  useEffect(() => {
+    AOS.init();
+  }, [hasHydrated]);
   console.log(role);
   const [isLoading, setIsLoading] = useState(false);
   const [horarioData, setHorarioData] = useState({
@@ -30,7 +39,7 @@ function CargaHorario() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setHorarioData((prevHorarioData) => ({
       ...prevHorarioData,
@@ -54,7 +63,7 @@ function CargaHorario() {
       Report.failure(
         "Error al cargar el entrenamiento",
         "Debe completar todos los campos",
-        "Volver"
+        "Volver",
       );
       return;
     }
@@ -64,7 +73,7 @@ function CargaHorario() {
       Report.failure(
         "Error al cargar el entrenamiento",
         "El horario de inicio debe ser anterior al horario de fin.",
-        "Volver"
+        "Volver",
       );
       return;
     }
@@ -74,7 +83,7 @@ function CargaHorario() {
         horarioData.gimnasio,
         horarioData.dia,
         horarioData.horarioInicio,
-        horarioData.horarioFin
+        horarioData.horarioFin,
       );
 
       if (!disponible) {
@@ -82,7 +91,7 @@ function CargaHorario() {
         Report.failure(
           "Error al cargar el entrenamiento",
           "El horario ya está ocupado.",
-          "Volver"
+          "Volver",
         );
         return;
       }
@@ -106,7 +115,7 @@ function CargaHorario() {
               horarioFin: "",
             });
             window.location.reload();
-          }
+          },
         );
       } else {
         setIsLoading(false);
@@ -125,7 +134,7 @@ function CargaHorario() {
               horarioFin: "",
             });
             window.location.reload();
-          }
+          },
         );
       }
     } catch (error) {
@@ -133,7 +142,7 @@ function CargaHorario() {
       Report.failure(
         "Error al cargar el entrenamiento",
         "No se pudo cargar el entrenamiento correctamente",
-        "Volver"
+        "Volver",
       );
       throw error;
     }

@@ -19,6 +19,15 @@ import { ClipLoader } from "react-spinners";
 
 function Carga() {
   const role = useUserStoreLocalStorage((state) => state.role);
+  const hasHydrated = useUserStoreLocalStorage((state) => state.hasHydrated);
+
+  // Espera la hidratación antes de renderizar
+  if (!hasHydrated) return null;
+
+  // Inicializa AOS solo cuando hay datos de localStorage
+  useEffect(() => {
+    AOS.init();
+  }, [hasHydrated]);
 
   console.log("Role in component:", role);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +44,7 @@ function Carga() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setEventData((prevEventData) => ({
       ...prevEventData,
@@ -67,7 +76,7 @@ function Carga() {
       Report.failure(
         "Error al cargar el evento",
         "Debe completar todos los campos",
-        "Volver"
+        "Volver",
       );
       return;
     }
@@ -77,7 +86,7 @@ function Carga() {
       Report.failure(
         "Error al cargar el evento",
         "El horario de inicio debe ser anterior al horario de fin.",
-        "Volver"
+        "Volver",
       );
       return;
     }
@@ -87,7 +96,7 @@ function Carga() {
         eventData.gimnasio,
         eventData.fecha,
         eventData.horarioInicio,
-        eventData.horarioFin
+        eventData.horarioFin,
       );
 
       if (!disponible) {
@@ -95,7 +104,7 @@ function Carga() {
         Report.failure(
           "Error al cargar el evento",
           "El horario ya está ocupado.",
-          "Volver"
+          "Volver",
         );
         return;
       }
@@ -121,7 +130,7 @@ function Carga() {
               estado: "",
             });
             window.location.reload();
-          }
+          },
         );
       } else {
         setIsLoading(false);
@@ -142,7 +151,7 @@ function Carga() {
               estado: "",
             });
             window.location.reload();
-          }
+          },
         );
       }
     } catch (error) {
@@ -150,7 +159,7 @@ function Carga() {
       Report.failure(
         "Error al cargar el evento",
         "No se pudo cargar el evento correctamente",
-        "Volver"
+        "Volver",
       );
       throw error;
     }
