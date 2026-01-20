@@ -9,14 +9,15 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: [
-        "assets/gevpLogo.png",
-        "assets/entrenamientos2.png",
-        "assets/eventos.png",
+        "assets/gevpLogo.webp",
+        "assets/entrenamientos3.webp",
+        "assets/eventos2.webp",
+        "assets/fondo7.webp",
         "apple-touch-icon.png",
       ],
       manifest: {
-        name: "GEVP APP",
-        short_name: "GEVP APP",
+        name: "GEVP Horarios",
+        short_name: "GEVP Horarios",
         description:
           "Consulta o carga entrenamientos y eventos en el club GEVP.",
         theme_color: "#2c7a9e",
@@ -26,22 +27,21 @@ export default defineConfig({
         start_url: "/",
         icons: [
           {
-            src: "./assets/gevpLogo.png",
+            src: "./assets/gevpLogo.webp",
             sizes: "192x192",
-            type: "image/png",
+            type: "image/webp",
             purpose: "maskable any",
-            
           },
           {
-            src: "./assets/gevpLogo.png",
+            src: "./assets/gevpLogo.webp",
             sizes: "512x512",
-            type: "image/png",
+            type: "image/webp",
             purpose: "maskable any",
           },
           {
-            src: "./assets/gevpLogo.png",
+            src: "./assets/gevpLogo.webp",
             sizes: "180x180",
-            type: "image/png",
+            type: "image/webp",
             purpose: "maskable any",
           },
         ],
