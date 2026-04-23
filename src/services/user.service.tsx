@@ -10,6 +10,13 @@ export const login = async (username: string, password: string) => {
       { withCredentials: true },
     );
 
+    const { token } = res.data;
+
+    // 🔥 guardar token para fallback Safari
+    if (token) {
+      localStorage.setItem("token", token);
+    }
+
     console.log("Login res.data:", res.data);
     return res.data;
   } catch (error) {
@@ -17,20 +24,6 @@ export const login = async (username: string, password: string) => {
     throw error;
   }
 };
-
-// export const entrenadorLogin = async (sport: string) => {
-//   try {
-//     const res = await axios.post(
-//       `${USER_URL}/entrenador`,
-//       { sport }, // 👈 ENVIAMOS DEPORTE
-//       { withCredentials: true },
-//     );
-
-//     return res.data;
-//   } catch (error: any) {
-//     throw new Error("Error en login entrenador");
-//   }
-// };
 
 export const logout = async () => {
   try {
@@ -41,6 +34,10 @@ export const logout = async () => {
         withCredentials: true,
       },
     );
+
+    // 🧹 limpiar token al hacer logout
+    localStorage.removeItem("token");
+
     return res.data;
   } catch (error) {
     throw error;
