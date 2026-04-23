@@ -1,0 +1,204 @@
+/* =====================================================
+   GOOGLE CALENDAR STYLE PACK
+   FullCalendar + Tailwind Friendly
+===================================================== */
+
+/* ---------- CONTENEDOR GENERAL ---------- */
+
+.fc {
+  font-family: Inter, system-ui, sans-serif;
+  --fc-border-color: #e5e7eb;
+  --fc-today-bg-color: #e8f0fe;
+}
+
+/* ---------- TOOLBAR (HEADER) ---------- */
+
+.fc-toolbar {
+  padding: 10px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 4px;
+}
+
+.fc-toolbar-title {
+  font-size: 20px !important;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* botones estilo google */
+
+.fc-button {
+  background: white !important;
+  border: 1px solid #dadce0 !important;
+  color: #3c4043 !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  margin-right: 4px;
+}
+
+.fc-button:hover {
+  background: #f1f3f4 !important;
+}
+
+.fc-button-active {
+  background: #e8f0fe !important;
+  color: #1967d2 !important;
+  border-color: #d2e3fc !important;
+}
+
+/* ---------- GRID ---------- */
+
+.fc-scrollgrid {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.fc-col-header-cell {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #374151;
+  padding: 10px 0;
+}
+
+.fc-timegrid-slot {
+  height: 48px !important;
+}
+
+.fc-timegrid-axis {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* líneas suaves */
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border-color: #eef2f7;
+}
+
+/* ---------- HOY (like Google Calendar) ---------- */
+
+.fc-day-today {
+  background: #e8f0fe !important;
+}
+
+.fc-highlight {
+  background: #e8f0fe !important;
+}
+
+/* ---------- EVENTOS ---------- */
+
+.fc-event {
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  transition: all 0.15s ease;
+}
+
+/* barra izquierda estilo google */
+.fc-event::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 8px 0 0 8px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* hover */
+.fc-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+/* ---------- HORAS ---------- */
+
+.fc-timegrid-slot-label {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+/* línea actual */
+.fc-timegrid-now-indicator-line {
+  border-color: #ea4335;
+  border-width: 2px;
+}
+
+.fc-timegrid-now-indicator-arrow {
+  border-top-color: #ea4335;
+  border-bottom-color: #ea4335;
+}
+
+/* ---------- SCROLL ---------- */
+
+.fc-scroller::-webkit-scrollbar {
+  width: 8px;
+}
+
+.fc-scroller::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 8px;
+}
+
+.fc-scroller::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ===== CUSTOM TITLE (Google Style) ===== */
+
+.fc-customTitle-button {
+  background: transparent !important;
+  border: none !important;
+  pointer-events: none; /* no clickeable */
+
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+
+  cursor: default !important;
+  padding-left: 4px !important;
+}
+
+.fc-customTitle-button:hover {
+  background: transparent !important;
+}
+
+/* ---------- SELECT FILTRO ---------- */
+
+#sport-filter {
+  background: white;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #3c4043;
+}
+
+#sport-filter:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+  .fc-toolbar {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fc-toolbar-title {
+    font-size: 16px !important;
+  }
+}

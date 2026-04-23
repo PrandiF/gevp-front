@@ -7,7 +7,7 @@ type EventoProps = {
   id: number;
   gimnasio: string;
   deporte: string;
-  nombreSocio: string;
+  nombreentrenador: string;
   evento: string;
   fecha: Date;
   horarioInicio: string;
@@ -18,7 +18,7 @@ type FilterProps = {
   filter: {
     gimnasio: string;
     deporte?: string;
-    nombreSocio?: string;
+    nombreentrenador?: string;
     evento?: string;
     fecha: Date;
     horarioInicio: string;
@@ -139,8 +139,8 @@ function TablaConsulta({
                     <td className="py-1 border">
                       {new Date(
                         new Date(evento.fecha).setDate(
-                          new Date(evento.fecha).getDate() + 1
-                        )
+                          new Date(evento.fecha).getDate() + 1,
+                        ),
                       ).toLocaleDateString()}
                     </td>
                     <td className="w-[16%] py-1 border">
@@ -148,7 +148,7 @@ function TablaConsulta({
                       {evento.horarioFin.slice(0, 5)}hs
                     </td>
                   </tr>
-                )
+                ),
               )}
             </>
           )}

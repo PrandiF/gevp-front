@@ -5,11 +5,12 @@ const USER_URL = `https://gevp-back-api.onrender.com/api/horario`;
 type HorarioProps = {
   gimnasio: string;
   deporte: string;
-  dia: string;
   categoria: string;
-  quienCarga: string;
-  horarioInicio: string;
-  horarioFin: string;
+  start: string; // ISO string
+  end: string; // ISO string
+  // quienCarga: string;
+  tipoDeActividad: string;
+  recurrence: boolean;
 };
 type FilterProps = {
   gimnasio: string;
@@ -34,14 +35,16 @@ export const getHorarios = async () => {
 
 export const createHorario = async (horarioData: HorarioProps) => {
   try {
-    const res = await axios.post(
-      `${USER_URL}`,
-      { ...horarioData },
-      { withCredentials: true },
-    );
+    const res = await axios.post(`${USER_URL}`, horarioData, {
+      withCredentials: true,
+    });
+
     return res.data;
-  } catch (error) {
-    console.log("Error al crear el horario:", error);
+  } catch (error: any) {
+    if (error.response?.status === 409) {
+      throw new Error("El horario ya está ocupado");
+    }
+
     throw error;
   }
 };
@@ -114,34 +117,28 @@ export const getFilterHorario = async (filter: FilterProps) => {
   }
 };
 
-export const verificarHorarioDisponible = async (
-  gimnasio: string,
-  dia: string,
-  horarioInicio: string,
-  horarioFin: string,
-): Promise<boolean> => {
+export const cancelarSerieCompleta = async (horarioId: string) => {
   try {
-    const response = await axios.post(
-      `${USER_URL}/disponibilidad`,
-      {
-        gimnasio,
-        dia,
-        horarioInicio,
-        horarioFin,
-      },
-      { withCredentials: true },
-    );
+    const res = await axios.delete(`${USER_URL}/serie/${horarioId}`, {
+      withCredentials: true,
+    });
 
-    console.log("Respuesta del servidor:", response.data);
-
-    if (response.data && typeof response.data.disponible === "boolean") {
-      return response.data.disponible;
-    } else {
-      console.error("Respuesta inesperada del servidor:", response.data);
-      return false;
-    }
+    return res.data;
   } catch (error) {
-    console.error("Error al verificar la disponibilidad:", error);
-    return false;
+    console.error("Error al cancelar serie completa:", error);
+    throw error;
+  }
+};
+
+export const cancelarInstance = async (instanceId: string) => {
+  try {
+    const res = await axios.delete(`${USER_URL}/instance/${instanceId}`, {
+      withCredentials: true,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Error al cancelar instancia:", error);
+    throw error;
   }
 };

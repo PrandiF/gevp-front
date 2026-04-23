@@ -18,24 +18,19 @@ export const login = async (username: string, password: string) => {
   }
 };
 
-export const socioLogin = async () => {
-  try {
-    const res = await axios.post(
-      `${USER_URL}/socio`,
-      {},
-      { withCredentials: true },
-    );
+// export const entrenadorLogin = async (sport: string) => {
+//   try {
+//     const res = await axios.post(
+//       `${USER_URL}/entrenador`,
+//       { sport }, // 👈 ENVIAMOS DEPORTE
+//       { withCredentials: true },
+//     );
 
-    console.log("Login res.data:", res.data);
-    return res.data;
-  } catch (error: any) {
-    if (error.response && error.response.status === 401) {
-      return "invalid password";
-    } else {
-      throw new Error("Error en la solicitud de login");
-    }
-  }
-};
+//     return res.data;
+//   } catch (error: any) {
+//     throw new Error("Error en login entrenador");
+//   }
+// };
 
 export const logout = async () => {
   try {

@@ -28,7 +28,7 @@ interface EventProps {
   fecha: Date;
   horarioInicio: string;
   horarioFin: string;
-  nombreSocio: string;
+  nombreentrenador: string;
   evento: string;
   quienCarga: string;
 }
@@ -73,7 +73,7 @@ function IndividualConsulta() {
     fecha: new Date(),
     horarioInicio: "",
     horarioFin: "",
-    nombreSocio: "",
+    nombreentrenador: "",
     evento: "",
     quienCarga: "",
   });
@@ -84,7 +84,7 @@ function IndividualConsulta() {
     fecha: new Date(),
     horarioInicio: "",
     horarioFin: "",
-    nombreSocio: "",
+    nombreentrenador: "",
     evento: "",
     quienCarga: "",
   });
@@ -333,11 +333,11 @@ function IndividualConsulta() {
 
                   <div className="flex flex-col ">
                     <label className="text-sm text-start text-[#7c8087] font-semibold ml-1 mt-[-13px]">
-                      Nombre Socio
+                      Nombre entrenador
                     </label>
                     <InputText
-                      name="nombreSocio"
-                      value={eventData.nombreSocio}
+                      name="nombreentrenador"
+                      value={eventData.nombreentrenador}
                       onChange={handleChange}
                       readonly={!editar}
                     />
@@ -481,7 +481,7 @@ function IndividualConsulta() {
                   Evento Finalizdo
                 </p>
               </div>
-            ) : role == "socio" && isEnded ? (
+            ) : role == "entrenador" && isEnded ? (
               <div className="flex w-full items-start justify-center">
                 <p className="text-red-600 text-lg font-semibold">
                   Evento Finalizdo
