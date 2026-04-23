@@ -5,7 +5,7 @@ const USER_URL = `https://gevp-back-api.onrender.com/api/evento`;
 type EventoProps = {
   gimnasio: string;
   deporte: string;
-  nombreSocio: string;
+  nombreentrenador: string;
   evento: string;
   fecha: Date;
   quienCarga: string;
@@ -16,7 +16,7 @@ type EventoProps = {
 type FilterProps = {
   gimnasio: string;
   deporte?: string;
-  nombreSocio?: string;
+  nombreentrenador?: string;
   evento?: string;
   fecha: Date | null;
   horarioInicio: string;

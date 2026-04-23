@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 type InputSelectProps = {
   options: string[];
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  placeholder?: string;
+  placeholder?: string | null;
   width?: string;
   value?: string;
   clean?: boolean;
   name: string;
   readonly?: boolean;
+  disabled?: boolean;
 };
 
 function InputSelect({
@@ -20,6 +21,7 @@ function InputSelect({
   clean,
   name,
   readonly,
+  disabled,
 }: InputSelectProps) {
   const [selected, setSelected] = useState(value || "");
 
@@ -43,7 +45,7 @@ function InputSelect({
         className={`w-${width} bg-white rounded-3xl h-[2rem] px-3 border border-celeste outline-none cursor-pointer ${
           selected === "" ? "text-[#b4b9c3]" : "text-black"
         }`}
-        disabled={readonly}
+        disabled={readonly || disabled}
       >
         <option value="" disabled>
           {placeholder}

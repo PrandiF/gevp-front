@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { login } from "../../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { useUserStoreLocalStorage } from "../../store/userStore";
-import Button4 from "../../commons/Button4";
 import BackButton from "../../commons/BackButton";
 import { Report } from "notiflix";
 import { ClipLoader } from "react-spinners";
+import ButtonSubmit from "../../commons/ButtonSubmit";
 function Login() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ function Login() {
       Report.failure(
         "Error al iniciar sesión",
         "Debe completar todos los campos",
-        "Ok"
+        "Ok",
       );
       return;
     }
@@ -55,10 +55,10 @@ function Login() {
             "Error al iniciar sesión",
             "Contraseña incorrecta",
             "Ok",
-            () => setUserData({ username: "", password: "" })
+            () => setUserData({ username: "", password: "" }),
           );
         } else if (res?.role) {
-          loginState(res.role);
+          loginState(res.role, res.deporte);
           navigate("/inicio");
         }
       } catch (error) {
@@ -93,7 +93,10 @@ function Login() {
             />
           </div>
 
-          <form className="xl:w-[60%] flex flex-col gap-6">
+          <form
+            className="xl:w-[60%] flex flex-col gap-6"
+            onSubmit={handleSubmit}
+          >
             <div data-aos="fade" data-aos-duration="2000" data-aos-delay="600">
               <InputText
                 placeholder="Usuario"
@@ -110,16 +113,9 @@ function Login() {
                 name="password"
               />
             </div>
+            <ButtonSubmit text="Iniciar Sesión" submit />
           </form>
 
-          <button
-            data-aos="fade"
-            data-aos-duration="2000"
-            data-aos-delay="700"
-            disabled={isLoading}
-          >
-            <Button4 text="Iniciar Sesión" onClick={handleSubmit} />
-          </button>
           {isLoading && (
             <div className="loading-spinner flex flex-col items-center">
               <ClipLoader color="#4D5061" loading={isLoading} size={50} />

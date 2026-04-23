@@ -9,15 +9,16 @@ import {
 import Login from "./components/login/Login";
 import Home from "./components/inicio/Home";
 import Carga from "./components/carga/Carga";
-import Consulta from "./components/consulta/Consulta";
-import IndividualConsulta from "./components/consulta/IndividualConsulta";
+// import Consulta from "./components/consulta/Consulta";
+// import IndividualConsulta from "./components/consulta/IndividualConsulta";
 import { useUserStoreLocalStorage } from "./store/userStore";
-import Horarios from "./components/Horarios/Horarios";
-import HorarioDia from "./components/Horarios/HorarioDia";
-import HorarioIndividual from "./components/Horarios/HorarioIndividual";
-import CargaHorario from "./components/Horarios/CargarHorario";
-import HorarioGimnasios from "./components/Horarios/HorarioGimnasios";
-import AuthSelector from "./components/AuthSelector";
+// import Horarios from "./components/Horarios/Horarios";
+// import HorarioDia from "./components/Horarios/HorarioDia";
+// import HorarioIndividual from "./components/Horarios/HorarioIndividual";
+// import CargaHorario from "./components/Horarios/CargarHorario";
+// import HorarioGimnasios from "./components/Horarios/HorarioGimnasios";
+// import AuthSelector from "./components/AuthSelector";
+import ClubCalendar from "./components/calendar/ClubCalendar";
 
 function App() {
   const isAuthenticated = useUserStoreLocalStorage(
@@ -35,34 +36,31 @@ function App() {
         <Routes>
           {isAuthenticated ? (
             <>
-              <Route path="/" element={<Navigate to="/inicio" replace />} />
-              <Route path="/inicio" element={<Home />} />
-              <Route path="/eventos/cargar" element={<Carga />} />
-              <Route path="/eventos" element={<Consulta />} />
+              {/* Home solo para admin */}
+              {useUserStoreLocalStorage.getState().role === "admin" && (
+                <Route path="/inicio" element={<Home />} />
+              )}
+
+              <Route path="/cargar" element={<Carga />} />
+              <Route path="/calendario" element={<ClubCalendar />} />
+
+              {/* fallback: cualquier ruta desconocida va a calendario para entrenadores o a inicio para admin */}
               <Route
-                path="/eventos/individual/:id"
-                element={<IndividualConsulta />}
-              />
-              <Route path="/entrenamientos" element={<Horarios />} />
-              <Route path="/entrenamientos/cargar" element={<CargaHorario />} />
-              <Route
-                path="/entrenamientos/:gimnasio"
-                element={<HorarioGimnasios />}
-              />
-              <Route
-                path="/entrenamientos/:gimnasio/:dia"
-                element={<HorarioDia />}
-              />
-              <Route
-                path="/entrenamientos/individual/:id"
-                element={<HorarioIndividual />}
+                path="*"
+                element={
+                  useUserStoreLocalStorage.getState().role === "admin" ? (
+                    <Navigate to="/inicio" replace />
+                  ) : (
+                    <Navigate to="/calendario" replace />
+                  )
+                }
               />
             </>
           ) : (
             <>
-              {" "}
-              <Route path="/" element={<AuthSelector />} />
-              <Route path="/login" element={<Login />} />
+              {/* <Route path="/" element={<AuthSelector />} /> */}
+              <Route path="/" element={<Login />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </>
           )}
         </Routes>

@@ -4,59 +4,49 @@ import "flatpickr/dist/flatpickr.min.css";
 
 type TimePickerProps = {
   placeholder?: string;
-  onChange?: (date: string) => void;
+  onChange?: (time: string) => void;
+  value?: string; // formato "HH:mm"
   width?: string;
-  clean?: boolean;
-  readonly?: boolean;
-  value?: string;
 };
 
 function InputTime({
   placeholder,
   onChange,
-  width = "full",
-  clean,
-  readonly,
   value,
+  width = "full",
 }: TimePickerProps) {
-  const timePickerRef = useRef<HTMLInputElement>(null);
-  const flatpickrInstanceRef = useRef<flatpickr.Instance | null>(null);
+  const ref = useRef<HTMLInputElement>(null);
+  const fp = useRef<flatpickr.Instance | null>(null);
 
   useEffect(() => {
-    if (timePickerRef.current) {
-      flatpickrInstanceRef.current = flatpickr(timePickerRef.current, {
+    if (ref.current) {
+      fp.current = flatpickr(ref.current, {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
         time_24hr: true,
-        defaultDate: value,
+        defaultDate: value || undefined,
         onChange: (_, dateStr) => {
-          if (onChange) {
-            onChange(dateStr);
-          }
+          if (onChange) onChange(dateStr);
         },
+        allowInput: true, // permite escribir con teclado sin borrar
       });
 
-      return () => {
-        flatpickrInstanceRef.current?.destroy();
-      };
+      return () => fp.current?.destroy();
     }
-  }, [onChange, value]);
+  }, [onChange]);
 
   useEffect(() => {
-    if (clean && timePickerRef.current) {
-      timePickerRef.current.value = "";
-      flatpickrInstanceRef.current?.clear();
+    if (fp.current && value) {
+      fp.current.setDate(value, false, "H:i");
     }
-  }, [clean]);
+  }, [value]);
 
   return (
     <input
-      readOnly={readonly}
+      ref={ref}
       placeholder={placeholder}
-      ref={timePickerRef}
-      className={`w-${width} bg-white rounded-3xl h-[2rem] px-3 border border-celeste outline-none cursor-pointer text-black`}
-      style={{ width: "100%", minWidth: "0" }}
+      className={`w-${width} bg-white rounded-3xl h-[2.5rem] px-3 border border-celeste outline-none text-black`}
     />
   );
 }

@@ -181,7 +181,6 @@ function Consulta() {
                 </div>
                 <InputTime
                   placeholder="Horario"
-                  clean={isClean}
                   width="full"
                   onChange={(time) =>
                     setFilterData((prevFilterData) => ({

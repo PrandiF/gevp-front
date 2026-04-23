@@ -16,13 +16,13 @@ function AlternativaHome() {
     <div className="relative flex xl:flex-row  flex-col w-full h-screen">
       <div
         className="relative xl:w-1/2  h-full overflow-hidden cursor-pointer hover:brightness-75 transition-all duration-300"
-        onClick={() => navigate("/entrenamientos")}
+        onClick={() => navigate("/calendario")}
       >
         <p
           className="xl:text-[50px] md:text-[40px] text-[35px] font-bold  absolute inset-0 flex items-center justify-center z-10 text-white hover:scale-110 transition-all duration-300"
           style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}
         >
-          Actividad Deportiva
+          Calendario
         </p>
         <img
           src={entrenamientos}
@@ -43,13 +43,13 @@ function AlternativaHome() {
 
       <div
         className="relative xl:w-1/2 h-full overflow-hidden cursor-pointer hover:brightness-75 transition-all duration-300"
-        onClick={() => navigate("/eventos")}
+        onClick={() => navigate("/cargar")}
       >
         <p
-          className="xl:text-[50px] md:text-[40px] text-[35px] font-bold  absolute inset-0 flex items-center justify-center z-10 text-white hover:scale-110 transition-all duration-300"
+          className="xl:text-[50px] xl:text-start text-center md:text-[40px] text-[35px] font-bold  absolute inset-0 flex items-center justify-center z-10 text-white hover:scale-110 transition-all duration-300"
           style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}
         >
-          Eventos
+          Nueva actividad
         </p>
         <img
           src={eventos}

@@ -8,31 +8,72 @@ import { Report } from "notiflix/build/notiflix-report-aio";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
-import {
-  createEvento,
-  verificarHorarioDisponible,
-} from "../../services/evento.service";
+import { createHorario } from "../../services/horarios.service";
 import Button4 from "../../commons/Button4";
 import InputTime from "../../commons/InputTime";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
+
+const allSports = [
+  "Básquet",
+  "Voley Femenino",
+  "Voley Masculino",
+  "Cesto",
+  "Gimnasia Rítmica",
+  "No Federados",
+  "Otras Actividades",
+];
 
 function Carga() {
-  const { role } = useUserStoreLocalStorage();
-
-  console.log("Role in component:", role);
+  const { role, sport } = useUserStoreLocalStorage();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
   const [eventData, setEventData] = useState({
     gimnasio: "",
     deporte: "",
-    nombreSocio: "",
-    fecha: new Date(),
-    quienCarga: "",
-    horarioInicio: "",
-    horarioFin: "",
-    evento: "",
+    nombreentrenador: "",
+    // quienCarga: "",
+    tipoDeActividad: "",
+    start: "",
+    end: "",
+    categoria: "",
     estado: "",
+    repetir: "", // nuevo campo para el select
   });
+
+  // Convierte fecha + hora a ISO string
+  const buildDateTime = (date: Date | string, time: string) => {
+    if (!date || !time) return "";
+
+    const [year, month, day] =
+      typeof date === "string"
+        ? date.split("T")[0].split("-")
+        : [
+            date.getFullYear(),
+            String(date.getMonth() + 1).padStart(2, "0"),
+            String(date.getDate()).padStart(2, "0"),
+          ];
+
+    const [hours, minutes] = time.split(":");
+
+    if (!hours || !minutes) return "";
+
+    // 🔥 CLAVE: no usamos new Date() acá
+    return `${year}-${month}-${day}T${hours}:${minutes}:00`;
+  };
+
+  const sportOptions = role === "entrenador" && sport ? [sport] : allSports;
+
+  useEffect(() => {
+    if (role === "entrenador" && sport) {
+      setEventData((prev) => ({
+        ...prev,
+        deporte: sport,
+      }));
+    }
+  }, [role, sport]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -43,25 +84,25 @@ function Carga() {
     }));
   };
 
-  const handleDateChange = (name: string) => (date: string) => {
-    setEventData((prevEventData) => ({
-      ...prevEventData,
-      [name]: date,
-    }));
-  };
+  // const handleDateChange = (name: string) => (date: string) => {
+  //   setEventData((prevEventData) => ({
+  //     ...prevEventData,
+  //     [name]: date,
+  //   }));
+  // };
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Validaciones básicas
     if (
       !eventData.gimnasio ||
       !eventData.deporte ||
-      !eventData.fecha ||
-      !eventData.nombreSocio ||
-      !eventData.evento ||
-      !eventData.horarioInicio ||
-      !eventData.horarioFin ||
-      !eventData.quienCarga
+      !eventData.categoria ||
+      !eventData.start ||
+      !eventData.end ||
+      // !eventData.quienCarga ||
+      !eventData.tipoDeActividad
     ) {
       setIsLoading(false);
       Report.failure(
@@ -72,10 +113,10 @@ function Carga() {
       return;
     }
 
-    if (eventData.horarioInicio >= eventData.horarioFin) {
+    if (eventData.start >= eventData.end) {
       setIsLoading(false);
       Report.failure(
-        "Error al cargar el evento",
+        "Error al cargar el entrenamiento",
         "El horario de inicio debe ser anterior al horario de fin.",
         "Volver",
       );
@@ -83,76 +124,54 @@ function Carga() {
     }
 
     try {
-      const disponible = await verificarHorarioDisponible(
-        eventData.gimnasio,
-        eventData.fecha,
-        eventData.horarioInicio,
-        eventData.horarioFin,
-      );
+      // Preparar datos para el back
+      const horarioData = {
+        gimnasio: eventData.gimnasio,
+        deporte: eventData.deporte,
+        categoria: eventData.categoria,
+        start: eventData.start,
+        end: eventData.end,
+        // quienCarga: eventData.quienCarga,
+        tipoDeActividad: eventData.tipoDeActividad,
+        recurrence: eventData.repetir === "Sí",
+      };
 
-      if (!disponible) {
-        setIsLoading(false);
-        Report.failure(
-          "Error al cargar el evento",
-          "El horario ya está ocupado.",
-          "Volver",
-        );
-        return;
-      }
-
-      const res = await createEvento(eventData);
+      const res = await createHorario(horarioData);
 
       if (res) {
         setIsLoading(false);
         Report.success(
-          "Evento Cargado",
-          "Se cargó un nuevo evento correctamente",
+          "Actividad Cargada",
+          "Se cargó una nueva actividad correctamente",
           "Ok",
           () => {
             setEventData({
               gimnasio: "",
               deporte: "",
-              nombreSocio: "",
-              fecha: new Date(),
-              quienCarga: "",
-              horarioInicio: "",
-              horarioFin: "",
-              evento: "",
+              nombreentrenador: "",
+              // quienCarga: "",
+              tipoDeActividad: "",
+              start: "",
+              end: "",
+              categoria: "",
               estado: "",
+              repetir: "No",
             });
-            window.location.reload();
-          },
-        );
-      } else {
-        setIsLoading(false);
-        Report.failure(
-          "Error al cargar el evento",
-          "No se pudo cargar el evento correctamente",
-          "Volver",
-          () => {
-            setEventData({
-              gimnasio: "",
-              deporte: "",
-              nombreSocio: "",
-              fecha: new Date(),
-              quienCarga: "",
-              horarioInicio: "",
-              horarioFin: "",
-              evento: "",
-              estado: "",
-            });
-            window.location.reload();
+            navigate("/calendario");
           },
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
-      Report.failure(
-        "Error al cargar el evento",
-        "No se pudo cargar el evento correctamente",
-        "Volver",
-      );
-      throw error;
+
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "No se pudo cargar la actividad correctamente";
+
+      Report.failure("Error al cargar la actividad", message, "Volver");
+
+      console.error(error);
     }
   };
 
@@ -160,180 +179,189 @@ function Carga() {
     AOS.init();
   }, []);
 
+  if (role !== "admin" && role !== "entrenador") {
+    return (
+      <div className="xl:mt-[10%] mt-[15%] flex relative flex-col bg-[#fff] bg-opacity-90 z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
+        <div
+          data-aos="fade"
+          data-aos-duration="2500"
+          data-aos-delay="400"
+          className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
+        >
+          <div
+            className="flex mr-auto"
+            data-aos="fade"
+            data-aos-duration="2000"
+            data-aos-delay="400"
+          >
+            <BackButton />
+          </div>
+          <p className="text-black xl:text-2xl md:text-2xl text-xl xl:text-start md:text-start text-center">
+            Lo siento, debes pertenecer al departamento físico para cargar una
+            nueva actividad
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex w-full h-screen items-center z-20">
       <Header />
-      {role == "admin" ? (
-        <div className="flex w-full items-center flex-col gap-8 xl:pt-0 xl:pb-0 ">
-          <div className="xl:mt-[8%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-8 py-8 m-auto rounded-3xl">
+      <div className="flex w-full items-center flex-col gap-8 xl:pt-0 xl:pb-0 ">
+        <div className="xl:mt-[8%] mt-[10%] flex relative flex-col bg-[#fff] bg-opacity-90 z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-8 py-8 m-auto rounded-3xl">
+          <div
+            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[70%] w-[90%] px-5 items-center gap-8 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
+            data-aos="fade"
+            data-aos-duration="2500"
+            data-aos-delay="400"
+          >
             <div
-              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-8 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
+              className="flex mr-auto"
               data-aos="fade"
-              data-aos-duration="2500"
+              data-aos-duration="2000"
               data-aos-delay="400"
             >
-              <div
-                className="flex mr-auto"
-                data-aos="fade"
-                data-aos-duration="2000"
-                data-aos-delay="400"
-              >
-                <BackButton />
-              </div>
-              <Title text="Cargar Evento" />
-              <div className="flex flex-col xl:w-[70%] w-[50%] items-start justify-center xl:gap-6 md:gap-8 gap-3 mx-auto">
-                <div className="flex w-full  justify-center gap-8">
-                  <div className="flex w-full flex-col gap-6">
-                    <InputSelect
-                      placeholder="Espacio"
-                      options={[
-                        "Gimnasio 1",
-                        "Gimnasio 2",
-                        "Monza",
-                        "Alix",
-                        "Terracita",
-                        "Subsuelo",
-                        "Salon Social",
-                      ]}
-                      width="full"
-                      value={eventData.gimnasio}
-                      onChange={handleChange}
-                      name="gimnasio"
-                    />
-                    <InputDate
-                      placeholder="Fecha"
-                      width="full"
-                      onChange={handleDateChange("fecha")}
-                    />
-                    <InputTime
-                      placeholder="Horario Inicio"
-                      width="full"
-                      onChange={(time) =>
-                        setEventData((prevEventData) => ({
-                          ...prevEventData,
-                          horarioInicio: time,
-                        }))
-                      }
-                      value={eventData.horarioInicio}
-                    />
-                    <InputText
-                      placeholder="Nombre Socio"
-                      value={eventData.nombreSocio}
-                      onChange={handleChange}
-                      name="nombreSocio"
-                    />
-                  </div>
-                  <div className="flex w-full flex-col gap-6">
-                    <InputSelect
-                      placeholder="Actividad"
-                      width="full"
-                      options={[
-                        "Básquet Masculino",
-                        "Básquet Femenino",
-                        "Voley Masculino",
-                        "Voley Femenino",
-                        "Cesto",
-                        "Tenis",
-                        "Gimnasia Rítmica/Danza",
-                        "Gimnasia Aeróbica",
-                        "Gimnasia Suave",
-                        "Fútbol",
-                        "Zumba",
-                        "Comisión Directiva",
-                        "Funcional SportClub",
-                        "Mekitarista",
-                        "Patín",
-                        "Taller de arte",
-                        "Stretching",
-                        "Esc. Artistica",
-                        "Iniciación deportiva",
-                        "Folklore",
-                        "TWD",
-                        "Yoga",
-                        "Danza Jazz",
-                        "Gimnasia",
-                        "Jornada Extendida",
-                        "Desarrollo Motor",
-                        "Psicomotricidad",
-                        "Pilates Mat",
-                        "Tai Chi Chuan",
-                        "Colonia Pami",
-                        "Chi Kung",
-                      ]}
-                      value={eventData.deporte}
-                      onChange={handleChange}
-                      name="deporte"
-                    />
-                    <InputText
-                      placeholder="Evento"
-                      name="evento"
-                      value={eventData.evento}
-                      onChange={handleChange}
-                      width="full"
-                    />
-                    <InputTime
-                      placeholder="Horario Fin"
-                      width="full"
-                      onChange={(time) =>
-                        setEventData((prevEventData) => ({
-                          ...prevEventData,
-                          horarioFin: time,
-                        }))
-                      }
-                      value={eventData.horarioFin}
-                    />
-                    <InputSelect
-                      placeholder="Quien Carga"
-                      width="full"
-                      options={[
-                        "Claudio Arnossi",
-                        "Julieta Proserpio",
-                        "Gustavo Alfaro",
-                      ]}
-                      value={eventData.quienCarga}
-                      onChange={handleChange}
-                      name="quienCarga"
-                    />
-                  </div>
-                </div>
-              </div>
-              <button className="flex mx-auto" disabled={isLoading}>
-                <Button4 text="Cargar" onClick={handleSubmit} />
-              </button>
-              {isLoading && (
-                <div className="loading-spinner text-center">
-                  <ClipLoader color="#4D5061" loading={isLoading} size={50} />
-                </div>
-              )}
+              <BackButton />
             </div>
+            <Title text="Cargar Actividad" />
+            <div className="flex flex-col xl:w-[70%] md:w-[70%] w-[50%] items-start justify-center xl:gap-6 md:gap-8 gap-3 mx-auto">
+              <div className="flex w-full justify-center gap-8">
+                <div className="flex w-full flex-col gap-6">
+                  <InputSelect
+                    placeholder="Gimnasio"
+                    options={[
+                      "Gimnasio 1",
+                      "Gimnasio 2",
+                      "Monza",
+                      "Alix",
+                      "Terracita",
+                      "Subsuelo",
+                      "Salón Social",
+                    ]}
+                    width="full"
+                    value={eventData.gimnasio}
+                    onChange={handleChange}
+                    name="gimnasio"
+                  />
+                  <InputDate
+                    placeholder="Fecha"
+                    width="full"
+                    onChange={(date) =>
+                      setEventData((prev) => ({
+                        ...prev,
+                        start: buildDateTime(
+                          date,
+                          prev.start ? prev.start.split("T")[1] : "00:00",
+                        ),
+                        end: buildDateTime(
+                          date,
+                          prev.end ? prev.end.split("T")[1] : "01:00",
+                        ),
+                      }))
+                    }
+                  />
+
+                  <InputTime
+                    placeholder="Hora Inicio"
+                    value={
+                      eventData.start
+                        ? eventData.start.split("T")[1].slice(0, 5)
+                        : ""
+                    }
+                    onChange={(time) =>
+                      setEventData((prev) => ({
+                        ...prev,
+                        start: buildDateTime(prev.start, time),
+                      }))
+                    }
+                  />
+
+                  {/* <InputSelect
+                    placeholder="Quien Carga"
+                    width="full"
+                    options={[
+                      "Departamento Físico",
+                      "Entrenador/a Basquet",
+                      "Entrenador/a Cesto",
+                      "Entrenador/a Voley",
+                      "Entrenador/a Futbol",
+                      "Entrenador/a Gimnasia Rítmica",
+                    ]}
+                    value={eventData.quienCarga}
+                    onChange={handleChange}
+                    name="quienCarga"
+                  /> */}
+                  <InputSelect
+                    placeholder="Tipo de actividad"
+                    width="full"
+                    options={[
+                      "Entrenamiento",
+                      "Partido",
+                      "Partidos inferiores",
+                    ]}
+                    value={eventData.tipoDeActividad}
+                    onChange={handleChange}
+                    name="tipoDeActividad"
+                  />
+                </div>
+                <div className="flex w-full flex-col gap-6">
+                  <InputSelect
+                    placeholder={
+                      role === "entrenador" ? sport : "Seleccionar actividad"
+                    }
+                    width="full"
+                    options={sportOptions}
+                    value={eventData.deporte}
+                    onChange={handleChange}
+                    name="deporte"
+                    disabled={role === "entrenador"} // 🔒 bloqueado
+                  />
+                  <InputText
+                    placeholder="Categoría/Actividad"
+                    name="categoria"
+                    value={eventData.categoria}
+                    onChange={handleChange}
+                    width="full"
+                  />
+                  <InputTime
+                    placeholder="Hora Fin"
+                    value={
+                      eventData.end
+                        ? eventData.end.split("T")[1].slice(0, 5)
+                        : ""
+                    }
+                    onChange={(time) =>
+                      setEventData((prev) => ({
+                        ...prev,
+                        end: buildDateTime(prev.end, time),
+                      }))
+                    }
+                  />
+
+                  {/* NUEVO CAMPO REPETIR */}
+                  <InputSelect
+                    placeholder="Repetir"
+                    width="full"
+                    options={["Sí", "No"]}
+                    value={eventData.repetir}
+                    onChange={handleChange}
+                    name="repetir"
+                  />
+                </div>
+              </div>
+            </div>
+            <button className="flex mx-auto" disabled={isLoading}>
+              <Button4 text="Cargar" onClick={handleSubmit} />
+            </button>
+            {isLoading && (
+              <div className="loading-spinner text-center">
+                <ClipLoader color="#4D5061" loading={isLoading} size={50} />
+              </div>
+            )}
           </div>
         </div>
-      ) : (
-        role == "socio" && (
-          <div className="xl:mt-[10%] flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
-            <div
-              data-aos="fade"
-              data-aos-duration="2500"
-              data-aos-delay="400"
-              className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-5 items-center gap-10 py-8 m-auto rounded-3xl"
-            >
-              <div
-                className="flex mr-auto"
-                data-aos="fade"
-                data-aos-duration="2000"
-                data-aos-delay="400"
-              >
-                <BackButton />
-              </div>
-
-              <p className="text-black xl:text-2xl md:text-2xl text-xl xl:text-start md:text-start text-center">
-                Lo siento, debes ser empleado del club para cargar un nuevo
-                evento
-              </p>
-            </div>
-          </div>
-        )
-      )}
+      </div>
     </div>
   );
 }
