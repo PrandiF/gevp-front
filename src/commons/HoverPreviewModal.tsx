@@ -32,24 +32,36 @@ export default function EventHoverPreview({
 
   const [modalLeft, setModalLeft] = useState(position.x);
 
+  // true = flecha a la izquierda
+  // false = flecha a la derecha
+  const [arrowLeft, setArrowLeft] = useState(false);
+
   useEffect(() => {
-    const modalWidth = 256; // w-64 = 256px
+    const modalWidth = 256; // w-64
     const margin = 16;
 
-    // posición normal: a la izquierda del evento
+    // posición normal -> modal a la izquierda del evento
     let left = position.x - 438;
 
-    // si se corta a la izquierda, mostrarlo a la derecha
+    // flecha del lado derecho por defecto
+    let shouldArrowBeLeft = false;
+
+    // si no entra a la izquierda
     if (left < margin) {
+      // mover modal a la derecha del evento
       left = position.x + 20;
+
+      // mover flecha al lado izquierdo
+      shouldArrowBeLeft = true;
     }
 
-    // si igualmente se pasa del borde derecho
+    // evitar overflow derecho
     if (left + modalWidth > window.innerWidth - margin) {
       left = window.innerWidth - modalWidth - margin;
     }
 
     setModalLeft(left);
+    setArrowLeft(shouldArrowBeLeft);
   }, [position]);
 
   useEffect(() => {
@@ -98,7 +110,9 @@ export default function EventHoverPreview({
 
       {/* flecha */}
       <div
-        className="absolute left-[-8px] top-5 w-4 h-4 rotate-45"
+        className={`absolute top-5 w-4 h-4 rotate-45 ${
+          arrowLeft ? "left-[-8px]" : "right-[-8px]"
+        }`}
         style={{ backgroundColor: bgColor }}
       />
 
@@ -117,24 +131,21 @@ export default function EventHoverPreview({
 
         <div className="flex gap-2">
           <p className="text-sm mt-1 opacity-90">
-            {new Date(event.start).toLocaleTimeString([], {
+            {`${new Date(event.start).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
               hour12: false,
-            })}
-            hs
+            })} hs`}
           </p>
           -
           <p className="text-sm mt-1 opacity-90">
-            {new Date(event.end).toLocaleTimeString([], {
+            {`${new Date(event.end).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
               hour12: false,
-            })}
-            hs
+            })} hs`}
           </p>
         </div>
-
         <button
           onClick={(e) => {
             e.stopPropagation();
