@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   event: any;
@@ -28,10 +28,29 @@ export default function EventHoverPreview({
   const sport = event.deporte;
   const bgColor = sportColors[sport] || "#1E88E5";
 
-  const eventDate = new Date(event.start);
-  const isSunday = eventDate.getDay() === 0;
-
   const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const [modalLeft, setModalLeft] = useState(position.x);
+
+  useEffect(() => {
+    const modalWidth = 256; // w-64 = 256px
+    const margin = 16;
+
+    // posición normal: a la izquierda del evento
+    let left = position.x - 438;
+
+    // si se corta a la izquierda, mostrarlo a la derecha
+    if (left < margin) {
+      left = position.x + 20;
+    }
+
+    // si igualmente se pasa del borde derecho
+    if (left + modalWidth > window.innerWidth - margin) {
+      left = window.innerWidth - modalWidth - margin;
+    }
+
+    setModalLeft(left);
+  }, [position]);
 
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => {
@@ -65,7 +84,7 @@ export default function EventHoverPreview({
       style={{
         backgroundColor: bgColor,
         top: position.y,
-        left: isSunday ? position.x : position.x - 438,
+        left: modalLeft,
       }}
       onClick={(e) => e.stopPropagation()}
     >
@@ -79,9 +98,7 @@ export default function EventHoverPreview({
 
       {/* flecha */}
       <div
-        className={`absolute ${
-          isSunday ? "left-[-8px]" : "right-[-8px]"
-        } top-5 w-4 h-4 rotate-45`}
+        className="absolute left-[-8px] top-5 w-4 h-4 rotate-45"
         style={{ backgroundColor: bgColor }}
       />
 
@@ -105,6 +122,7 @@ export default function EventHoverPreview({
               minute: "2-digit",
               hour12: false,
             })}
+            hs
           </p>
           -
           <p className="text-sm mt-1 opacity-90">
@@ -113,6 +131,7 @@ export default function EventHoverPreview({
               minute: "2-digit",
               hour12: false,
             })}
+            hs
           </p>
         </div>
 
