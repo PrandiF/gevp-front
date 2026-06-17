@@ -158,6 +158,7 @@ export default function ClubCalendar() {
         title: " ",
         start: new Date(event.start),
         end: new Date(event.end),
+        display: "block",
 
         extendedProps: {
           ...event,
