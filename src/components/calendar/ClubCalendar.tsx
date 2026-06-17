@@ -250,29 +250,38 @@ export default function ClubCalendar() {
       </h2>
 
       {role === "admin" && (
-        <div className="flex items-center gap-2">
-          <select
-            value={selectedGym}
-            onChange={(e) => setSelectedGym(e.target.value)}
-            className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
-          >
-            {CLUB_GYMS.map((gym) => (
-              <option key={gym.value} value={gym.value}>
-                {gym.label}
-              </option>
-            ))}
-          </select>
-          <select
-            value={selectedSport}
-            onChange={(e) => setSelectedSport(e.target.value)}
-            className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
-          >
-            {CLUB_SPORTS.map((sport) => (
-              <option key={sport.value} value={sport.value}>
-                {sport.label}
-              </option>
-            ))}
-          </select>
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col">
+            <label className="text-xs text-gray-500 mb-1">Gimnasio</label>
+
+            <select
+              value={selectedGym}
+              onChange={(e) => setSelectedGym(e.target.value)}
+              className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
+            >
+              {CLUB_GYMS.map((gym) => (
+                <option key={gym.value} value={gym.value}>
+                  {gym.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-xs text-gray-500 mb-1">Deporte</label>
+
+            <select
+              value={selectedSport}
+              onChange={(e) => setSelectedSport(e.target.value)}
+              className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
+            >
+              {CLUB_SPORTS.map((sport) => (
+                <option key={sport.value} value={sport.value}>
+                  {sport.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       )}
     </div>
@@ -329,7 +338,7 @@ export default function ClubCalendar() {
                   </div>
                   <div className="truncate">{e.categoria}</div>
                   <div className="opacity-90 truncate">{e.gimnasio}</div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 text-center">
                     <p className="text-sm mt-1 opacity-90">
                       {`${new Date(e.start).toLocaleTimeString([], {
                         hour: "2-digit",
