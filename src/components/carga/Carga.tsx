@@ -29,6 +29,9 @@ function Carga() {
   const { role, sport } = useUserStoreLocalStorage();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
   const [eventData, setEventData] = useState({
     gimnasio: "",
@@ -43,26 +46,15 @@ function Carga() {
     repetir: "", // nuevo campo para el select
   });
 
-  // Convierte fecha + hora a ISO string
-  const buildDateTime = (date: Date | string, time: string) => {
-    if (!date || !time) return "";
+  useEffect(() => {
+    if (!selectedDate) return;
 
-    const [year, month, day] =
-      typeof date === "string"
-        ? date.split("T")[0].split("-")
-        : [
-            date.getFullYear(),
-            String(date.getMonth() + 1).padStart(2, "0"),
-            String(date.getDate()).padStart(2, "0"),
-          ];
-
-    const [hours, minutes] = time.split(":");
-
-    if (!hours || !minutes) return "";
-
-    // 🔥 CLAVE: no usamos new Date() acá
-    return `${year}-${month}-${day}T${hours}:${minutes}:00`;
-  };
+    setEventData((prev) => ({
+      ...prev,
+      start: startTime ? `${selectedDate}T${startTime}:00` : "",
+      end: endTime ? `${selectedDate}T${endTime}:00` : "",
+    }));
+  }, [selectedDate, startTime, endTime]);
 
   const sportOptions = role === "entrenador" && sport ? [sport] : allSports;
 
@@ -247,34 +239,22 @@ function Carga() {
                   <InputDate
                     placeholder="Fecha"
                     width="full"
-                    onChange={(date) =>
-                      setEventData((prev) => ({
-                        ...prev,
-                        start: buildDateTime(
-                          date,
-                          prev.start ? prev.start.split("T")[1] : "00:00",
-                        ),
-                        end: buildDateTime(
-                          date,
-                          prev.end ? prev.end.split("T")[1] : "01:00",
-                        ),
-                      }))
-                    }
+                    onChange={(date: string) => {
+                      setSelectedDate(date.split("T")[0]);
+                    }}
                   />
 
                   <InputTime
                     placeholder="Hora Inicio"
-                    value={
-                      eventData.start
-                        ? eventData.start.split("T")[1].slice(0, 5)
-                        : ""
-                    }
-                    onChange={(time) =>
+                    value={startTime}
+                    onChange={(time) => {
+                      setStartTime(time);
+
                       setEventData((prev) => ({
                         ...prev,
-                        start: buildDateTime(prev.start, time),
-                      }))
-                    }
+                        start: selectedDate ? `${selectedDate}T${time}:00` : "",
+                      }));
+                    }}
                   />
 
                   {/* <InputSelect
@@ -326,17 +306,15 @@ function Carga() {
                   />
                   <InputTime
                     placeholder="Hora Fin"
-                    value={
-                      eventData.end
-                        ? eventData.end.split("T")[1].slice(0, 5)
-                        : ""
-                    }
-                    onChange={(time) =>
+                    value={endTime}
+                    onChange={(time) => {
+                      setEndTime(time);
+
                       setEventData((prev) => ({
                         ...prev,
-                        end: buildDateTime(prev.end, time),
-                      }))
-                    }
+                        end: selectedDate ? `${selectedDate}T${time}:00` : "",
+                      }));
+                    }}
                   />
 
                   {/* NUEVO CAMPO REPETIR */}
