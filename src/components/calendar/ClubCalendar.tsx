@@ -48,6 +48,21 @@ const CLUB_SPORTS = [
 ];
 
 /* =========================
+   GIMNASIOS DEL CLUB
+========================= */
+
+const CLUB_GYMS = [
+  { value: "all", label: "Todos" },
+  { value: "Gimnasio 1", label: "Gimnasio 1" },
+  { value: "Gimnasio 2", label: "Gimnasio 2" },
+  { value: "Monza", label: "Monza" },
+  { value: "Alix", label: "Alix" },
+  { value: "Terracita", label: "Terracita" },
+  { value: "Subsuelo", label: "Subsuelo" },
+  { value: "Salón Social", label: "Salón Social" },
+];
+
+/* =========================
    COLOR POR DEPORTE
 ========================= */
 
@@ -74,6 +89,7 @@ export default function ClubCalendar() {
   const { sport: sportFromUrl } = useParams();
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedSport, setSelectedSport] = useState<string>("all");
+  const [selectedGym, setSelectedGym] = useState<string>("all");
 
   const [hoveredEvent, setHoveredEvent] = useState<any | null>(null);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
@@ -142,34 +158,34 @@ export default function ClubCalendar() {
   ========================= */
 
   const calendarEvents = useMemo(() => {
-    return events.map((event) => {
-      // 🔎 DEBUG CLAVE
-      console.log("📦 EVENT DESDE BACK:", event);
-      console.log("🆔 event.id:", event.id);
-      console.log("🔁 recurringEventId:", event.recurringEventId);
+    return events
+      .filter((event) => {
+        const sportMatch =
+          selectedSport === "all" || event.deporte === selectedSport;
 
-      const isInstance = event.id?.includes("_");
+        const gymMatch =
+          selectedGym === "all" || event.gimnasio === selectedGym;
 
-      console.log("📌 Es instancia?:", isInstance);
-      console.log("🧩 ID FINAL QUE USA FULLCALENDAR:", event.id);
+        return sportMatch && gymMatch;
+      })
+      .map((event) => {
+        return {
+          id: event.id,
+          title: " ",
+          start: new Date(event.start),
+          end: new Date(event.end),
+          display: "block",
 
-      return {
-        id: event.id, // ⚠️ este tiene que ser instanceId si es recurrente
-        title: " ",
-        start: new Date(event.start),
-        end: new Date(event.end),
-        display: "block",
+          extendedProps: {
+            ...event,
+            baseId: event.recurringEventId ?? event.id,
+          },
 
-        extendedProps: {
-          ...event,
-          baseId: event.recurringEventId ?? event.id,
-        },
-
-        backgroundColor: sportColors[event.deporte ?? ""] || "#546E7A",
-        borderColor: sportColors[event.deporte ?? ""] || "#546E7A",
-      };
-    });
-  }, [events]);
+          backgroundColor: sportColors[event.deporte ?? ""] || "#546E7A",
+          borderColor: sportColors[event.deporte ?? ""] || "#546E7A",
+        };
+      });
+  }, [events, selectedSport, selectedGym]);
 
   /* =========================
      TITULO
@@ -234,17 +250,30 @@ export default function ClubCalendar() {
       </h2>
 
       {role === "admin" && (
-        <select
-          value={selectedSport}
-          onChange={(e) => setSelectedSport(e.target.value)}
-          className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
-        >
-          {CLUB_SPORTS.map((sport) => (
-            <option key={sport.value} value={sport.value}>
-              {sport.label}
-            </option>
-          ))}
-        </select>
+        <div className="flex items-center gap-2">
+          <select
+            value={selectedGym}
+            onChange={(e) => setSelectedGym(e.target.value)}
+            className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
+          >
+            {CLUB_GYMS.map((gym) => (
+              <option key={gym.value} value={gym.value}>
+                {gym.label}
+              </option>
+            ))}
+          </select>
+          <select
+            value={selectedSport}
+            onChange={(e) => setSelectedSport(e.target.value)}
+            className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
+          >
+            {CLUB_SPORTS.map((sport) => (
+              <option key={sport.value} value={sport.value}>
+                {sport.label}
+              </option>
+            ))}
+          </select>
+        </div>
       )}
     </div>
   );
@@ -300,6 +329,23 @@ export default function ClubCalendar() {
                   </div>
                   <div className="truncate">{e.categoria}</div>
                   <div className="opacity-90 truncate">{e.gimnasio}</div>
+                  <div className="flex gap-2">
+                    <p className="text-sm mt-1 opacity-90">
+                      {`${new Date(e.start).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false,
+                      })} hs`}
+                    </p>
+                    -
+                    <p className="text-sm mt-1 opacity-90">
+                      {`${new Date(e.end).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false,
+                      })} hs`}
+                    </p>
+                  </div>
                 </div>
               );
             }}
