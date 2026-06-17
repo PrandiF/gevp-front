@@ -14,24 +14,28 @@ function InputTime({
   step = 1800, // 30 minutos
 }: TimePickerProps) {
   return (
-    <input
-      type="time"
-      value={value || ""}
-      onChange={(e) => onChange?.(e.target.value)}
-      step={step}
-      className={`w-${width}
-    bg-white
-    rounded-3xl
-    h-[2.5rem]
-    px-3
-    border
-    border-celeste
-    outline-none
-    text-black
-    focus:ring-2
-    focus:ring-celeste
-  `}
-    />
+    <div className="flex flex-col gap-1">
+      <label className="text-sm text-gray-600">{placeholder}</label>
+
+      <input
+        type="time"
+        value={value || ""}
+        onChange={(e) => onChange?.(e.target.value)}
+        step={step}
+        className={`w-${width}
+      bg-white
+      rounded-3xl
+      h-[2.5rem]
+      px-3
+      border
+      border-celeste
+      outline-none
+      text-black
+      focus:ring-2
+      focus:ring-celeste
+    `}
+      />
+    </div>
   );
 }
 
