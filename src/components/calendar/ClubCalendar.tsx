@@ -169,20 +169,15 @@ export default function ClubCalendar() {
         return sportMatch && gymMatch;
       })
       .map((event) => {
-        const start = new Date(event.start).toISOString();
-        const end = new Date(event.end).toISOString();
-
         return {
           id: event.id,
           title: " ",
-          start,
-          end,
+          start: event.start,
+          end: event.end,
           display: "block",
 
           extendedProps: {
             ...event,
-            start,
-            end,
           },
 
           backgroundColor: sportColors[event.deporte ?? ""] || "#546E7A",
@@ -335,28 +330,37 @@ export default function ClubCalendar() {
             eventContent={(arg) => {
               const e = arg.event.extendedProps;
 
+              const start = arg.event.start;
+              const end = arg.event.end;
+
               return (
                 <div className="text-xs leading-tight px-1 text-white">
                   <div className="font-semibold truncate">
                     {e.deporte?.toUpperCase()}
                   </div>
+
                   <div className="truncate">{e.categoria}</div>
                   <div className="opacity-90 truncate">{e.gimnasio}</div>
+
                   <div className="flex gap-2 text-center">
                     <p className="text-sm mt-1 opacity-90">
-                      {`${new Date(e.start).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: false,
-                      })} hs`}
+                      {start
+                        ? start.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                          })
+                        : "--"}
                     </p>
                     -
                     <p className="text-sm mt-1 opacity-90">
-                      {`${new Date(e.end).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: false,
-                      })} hs`}
+                      {end
+                        ? end.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                          })
+                        : "--"}
                     </p>
                   </div>
                 </div>
