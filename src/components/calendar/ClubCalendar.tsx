@@ -375,11 +375,12 @@ export default function ClubCalendar() {
             eventClick={(info) => {
               const rect = info.el.getBoundingClientRect();
 
-              const original = events.find((e) => e.id === info.event.id);
-
-              if (!original) return;
-
-              setHoveredEvent(original);
+              setHoveredEvent({
+                ...info.event.extendedProps,
+                id: info.event.id,
+                start: info.event.start?.toISOString(),
+                end: info.event.end?.toISOString(),
+              });
 
               setHoverPosition({
                 x: rect.right + 10,
