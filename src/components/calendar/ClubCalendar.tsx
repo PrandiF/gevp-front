@@ -179,11 +179,11 @@ export default function ClubCalendar() {
           end,
           display: "block",
 
-          extendedProps: {
-            ...event,
-            start,
-            end,
-          },
+          // extendedProps: {
+          //   ...event,
+          //   start,
+          //   end,
+          // },
 
           backgroundColor: sportColors[event.deporte ?? ""] || "#546E7A",
           borderColor: sportColors[event.deporte ?? ""] || "#546E7A",
@@ -375,11 +375,11 @@ export default function ClubCalendar() {
             eventClick={(info) => {
               const rect = info.el.getBoundingClientRect();
 
-              setHoveredEvent({
-                ...info.event.extendedProps,
-                start: info.event.start?.toISOString(),
-                end: info.event.end?.toISOString(),
-              });
+              const original = events.find((e) => e.id === info.event.id);
+
+              if (!original) return;
+
+              setHoveredEvent(original);
 
               setHoverPosition({
                 x: rect.right + 10,
