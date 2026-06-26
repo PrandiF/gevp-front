@@ -153,7 +153,7 @@ export default function EventHoverPreview({
             onClick={(e) => {
               e.stopPropagation();
 
-              navigate("/carga", {
+              navigate("/cargar", {
                 state: {
                   event,
                 },
