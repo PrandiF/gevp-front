@@ -179,11 +179,11 @@ export default function ClubCalendar() {
           end,
           display: "block",
 
-          // extendedProps: {
-          //   ...event,
-          //   start,
-          //   end,
-          // },
+          extendedProps: {
+            ...event,
+            start,
+            end,
+          },
 
           backgroundColor: sportColors[event.deporte ?? ""] || "#546E7A",
           borderColor: sportColors[event.deporte ?? ""] || "#546E7A",
