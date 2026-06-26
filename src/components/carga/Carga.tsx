@@ -51,25 +51,34 @@ function Carga() {
   const editingEvent = location.state?.event;
   const isEditing = !!editingEvent;
 
+  const safeISO = (value: any) => {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return null;
+    return d.toISOString();
+  };
+
   useEffect(() => {
     if (!editingEvent) return;
 
-    setSelectedDate(editingEvent.start.split("T")[0]);
+    const start = safeISO(editingEvent.start);
+    const end = safeISO(editingEvent.end);
 
-    setStartTime(editingEvent.start.slice(11, 16));
+    if (!start || !end) return;
 
-    setEndTime(editingEvent.end.slice(11, 16));
+    setSelectedDate(start.split("T")[0]);
+    setStartTime(start.slice(11, 16));
+    setEndTime(end.slice(11, 16));
 
     setEventData({
-      gimnasio: editingEvent.gimnasio,
-      deporte: editingEvent.deporte,
-      categoria: editingEvent.categoria,
-      tipoDeActividad: editingEvent.tipoDeActividad,
-      repetir: "",
+      gimnasio: editingEvent.gimnasio ?? "",
+      deporte: editingEvent.deporte ?? "",
+      categoria: editingEvent.categoria ?? "",
+      tipoDeActividad: editingEvent.tipoDeActividad ?? "",
+      repetir: editingEvent.repetir ?? "No",
       estado: "",
       nombreentrenador: "",
-      start: editingEvent.start,
-      end: editingEvent.end,
+      start,
+      end,
     });
   }, [editingEvent]);
 

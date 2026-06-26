@@ -169,16 +169,20 @@ export default function ClubCalendar() {
         return sportMatch && gymMatch;
       })
       .map((event) => {
+        const start = new Date(event.start).toISOString();
+        const end = new Date(event.end).toISOString();
+
         return {
           id: event.id,
           title: " ",
-          start: new Date(event.start),
-          end: new Date(event.end),
+          start,
+          end,
           display: "block",
 
           extendedProps: {
             ...event,
-            baseId: event.recurringEventId ?? event.id,
+            start,
+            end,
           },
 
           backgroundColor: sportColors[event.deporte ?? ""] || "#546E7A",
@@ -371,7 +375,11 @@ export default function ClubCalendar() {
             eventClick={(info) => {
               const rect = info.el.getBoundingClientRect();
 
-              setHoveredEvent(info.event.extendedProps);
+              setHoveredEvent({
+                ...info.event.extendedProps,
+                start: info.event.start?.toISOString(),
+                end: info.event.end?.toISOString(),
+              });
 
               setHoverPosition({
                 x: rect.right + 10,
