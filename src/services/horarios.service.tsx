@@ -11,6 +11,9 @@ type HorarioProps = {
   // quienCarga: string;
   tipoDeActividad: string;
   recurrence: boolean;
+
+  editMode?: "series" | "single";
+  instanceId?: string;
 };
 type FilterProps = {
   gimnasio: string;
@@ -71,16 +74,23 @@ export const deleteHorario = async (id: number) => {
   }
 };
 
-export const editHorario = async (id: number, data: HorarioProps) => {
+export const editHorario = async (
+  id: number | string,
+  horarioData: HorarioProps,
+) => {
   try {
-    const res = await axios.put(
-      `${USER_URL}/${id}`,
-      { ...data },
-      { withCredentials: true },
-    );
+    const res = await axios.put(`${USER_URL}/${id}`, horarioData, {
+      withCredentials: true,
+    });
+
     return res.data;
-  } catch (error) {
-    console.log("Error al editar el horario:", error);
+  } catch (error: any) {
+    console.error("Error al editar el horario:", error);
+
+    if (error.response?.status === 409) {
+      throw new Error("No se pudo editar el horario");
+    }
+
     throw error;
   }
 };
