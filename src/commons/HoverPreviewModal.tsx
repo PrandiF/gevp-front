@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface Props {
   event: any;
@@ -26,7 +26,7 @@ export default function EventHoverPreview({
   onCancelClick,
 }: Props) {
   if (!event) return null;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const sport = event.deporte;
   const bgColor = sportColors[sport] || "#1E88E5";
 
@@ -148,7 +148,7 @@ export default function EventHoverPreview({
             })} hs`}
           </p>
         </div>
-        <div className="flex flex-col gap-2 w-full px-4">
+        {/* <div className="flex flex-col gap-2 w-full px-4">
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -162,17 +162,17 @@ export default function EventHoverPreview({
             className="mt-2 bg-blue-500 hover:bg-blue-600 transition rounded-lg px-3 py-2 text-sm font-semibold w-full"
           >
             Editar actividad
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onCancelClick();
-            }}
-            className="mt-4 bg-white/20 hover:bg-white/30 transition rounded-lg px-3 py-2 text-sm font-semibold w-full"
-          >
-            Cancelar actividad
-          </button>
-        </div>
+          </button> */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onCancelClick();
+          }}
+          className="mt-4 bg-white/20 hover:bg-white/30 transition rounded-lg px-3 py-2 text-sm font-semibold w-full"
+        >
+          Cancelar actividad
+        </button>
+        {/* </div> */}
       </div>
     </div>
   );
