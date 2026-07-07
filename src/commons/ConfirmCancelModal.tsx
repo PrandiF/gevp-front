@@ -30,6 +30,7 @@ export default function ConfirmCancelModal({
     setIsLoading(true);
     try {
       await onDeleteSingle();
+      onClose();
     } catch (err) {
       console.error(err);
     } finally {
@@ -41,6 +42,7 @@ export default function ConfirmCancelModal({
     setIsLoading(true);
     try {
       await onDeleteSeries();
+      onClose();
     } catch (err) {
       console.error(err);
     } finally {

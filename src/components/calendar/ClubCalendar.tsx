@@ -203,16 +203,14 @@ export default function ClubCalendar() {
   const handleCancelTraining = async () => {
     if (!selectedEvent) return;
 
+    const seriesId = selectedEvent.recurringEventId ?? selectedEvent.id;
+
+    setConfirmOpen(false);
+    setSelectedEvent(null);
+
     try {
-      // 🔥 usamos el ID REAL de Google
-      const seriesId = selectedEvent.recurringEventId ?? selectedEvent.id;
-
       await cancelarSerieCompleta(seriesId);
-
       await loadEvents();
-
-      setConfirmOpen(false);
-      setSelectedEvent(null);
     } catch (err) {
       console.error("Error cancelando serie:", err);
     }
@@ -225,14 +223,14 @@ export default function ClubCalendar() {
   const handleCancelSingle = async () => {
     if (!selectedEvent) return;
 
+    const eventId = selectedEvent.id;
+
+    setConfirmOpen(false);
+    setSelectedEvent(null);
+
     try {
-      // Google espera el instanceId completo
-      await cancelarInstance(selectedEvent.id);
-
+      await cancelarInstance(eventId);
       await loadEvents();
-
-      setConfirmOpen(false);
-      setSelectedEvent(null);
     } catch (err) {
       console.error("Error cancelando instancia:", err);
     }
