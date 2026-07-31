@@ -295,8 +295,8 @@ function Carga() {
                     placeholder="Fecha"
                     width="full"
                     value={selectedDate}
-                    onChange={(date: string) => {
-                      setSelectedDate(date.split("T")[0]);
+                    onChange={(date) => {
+                      setSelectedDate(date);
                     }}
                   />
 
