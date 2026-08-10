@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const USER_URL = `https://gevp-back-api.onrender.com/api/horario`;
+import API_URL from "../config/api";
+
+const USER_URL = `${API_URL}/horario`;
 
 type HorarioProps = {
   gimnasio: string;

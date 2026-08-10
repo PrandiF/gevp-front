@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const USER_URL = `https://gevp-back-api.onrender.com/api/evento`;
+import API_URL from "../config/api";
+
+const USER_URL = `${API_URL}/evento`;
 
 type EventoProps = {
   gimnasio: string;

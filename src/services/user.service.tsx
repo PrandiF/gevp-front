@@ -1,6 +1,7 @@
 import axios from "axios";
+import API_URL from "../config/api";
 
-const USER_URL = `https://gevp-back-api.onrender.com/api/usuario`;
+const USER_URL = `${API_URL}/usuario`;
 
 export const login = async (username: string, password: string) => {
   try {

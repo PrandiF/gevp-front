@@ -1,15 +1,12 @@
 import axios from "axios";
-
-const API = "https://gevp-back-api.onrender.com/api";
+import API_URL from "../config/api";
 
 export const getEvents = async (sport?: string) => {
   const url = sport
-    ? `${API}/calendar/events?sport=${sport}`
-    : `${API}/calendar/events`;
+    ? `${API_URL}/calendar/events?sport=${sport}`
+    : `${API_URL}/calendar/events`;
 
   const res = await axios.get(url);
 
-  console.log("RESPUESTA AXIOS COMPLETA:", res);
-  console.log("DATA:", res.data);
   return res.data;
 };

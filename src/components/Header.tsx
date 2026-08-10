@@ -24,7 +24,7 @@ function Header() {
       >
         <img
           src={logo}
-          className="xl:w-[90px] md:w-[70px] w-[50px] cursor-pointer"
+          className="h-16 md:h-20 xl:h-24  w-auto object-contain"
         />
       </button>
 
