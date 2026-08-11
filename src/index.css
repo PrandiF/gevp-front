@@ -82,3 +82,53 @@
 .animate-scaleIn {
   animation: scaleIn 0.18s ease-out;
 }
+
+/* ===========================
+   CUSTOM TIME PICKER
+=========================== */
+
+.custom-time-picker {
+  width: 100%;
+}
+
+.custom-time-picker .react-time-picker__wrapper {
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  padding: 0 14px;
+  background: white;
+  transition: 0.2s;
+}
+
+.custom-time-picker:hover .react-time-picker__wrapper {
+  border-color: #1d91d9;
+}
+
+.custom-time-picker:focus-within .react-time-picker__wrapper {
+  border-color: #1d91d9;
+  box-shadow: 0 0 0 4px rgb(219 234 254);
+}
+
+.custom-time-picker input {
+  color: #1f2937;
+  font-size: 15px;
+  outline: none;
+}
+
+.custom-time-picker input::placeholder {
+  color: #9ca3af;
+}
+
+.custom-time-picker button {
+  color: #64748b;
+}
+
+.custom-time-picker button:hover {
+  color: #157cbc;
+}
+
+.custom-time-picker .react-time-picker__clock {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}

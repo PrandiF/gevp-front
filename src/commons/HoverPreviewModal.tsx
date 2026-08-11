@@ -1,4 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  HiOutlineMapPin,
+  HiOutlineClock,
+  HiOutlineClipboardDocumentList,
+  HiOutlinePencilSquare,
+  HiOutlineXMark,
+} from "react-icons/hi2";
+
+import { MdSports } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 // import { useNavigate } from "react-router-dom";
 
@@ -19,12 +29,33 @@ const sportColors: Record<string, string> = {
   "Otras Actividades": "#00c0b3",
 };
 
+const sportIcons: Record<string, React.ReactNode> = {
+  Básquet: "🏀",
+  "Voley Femenino": "🏐",
+  "Voley Masculino": "🏐",
+  Cesto: "🏐",
+  "Gimnasia Rítmica": "🤸",
+  "Otras Actividades": "🏋️",
+};
 export default function EventHoverPreview({
   event,
   position,
   onClose,
   onCancelClick,
 }: Props) {
+  const navigate = useNavigate();
+
+  const startTime = new Date(event.start).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  const endTime = new Date(event.end).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
   if (!event) return null;
   // const navigate = useNavigate();
   const sport = event.deporte;
@@ -94,61 +125,67 @@ export default function EventHoverPreview({
   return (
     <div
       ref={modalRef}
-      className="fixed z-50 w-64 rounded-xl shadow-2xl text-white"
+      className="fixed z-50 w-72 overflow-hidden rounded-2xl text-white shadow-[0_20px_60px_rgba(15,23,42,.25)]"
       style={{
-        backgroundColor: bgColor,
+        background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
         top: position.y,
         left: modalLeft,
       }}
       onClick={(e) => e.stopPropagation()}
     >
-      {/* botón cerrar */}
-      <button
-        onClick={onClose}
-        className="absolute top-2 right-3 text-white/80 hover:text-white text-xl font-bold"
-      >
-        ×
-      </button>
-
-      {/* flecha */}
+      {/* Flecha */}
       <div
-        className={`absolute top-5 w-4 h-4 rotate-45 ${
+        className={`absolute top-5 h-4 w-4 rotate-45 ${
           arrowLeft ? "left-[-8px]" : "right-[-8px]"
         }`}
-        style={{ backgroundColor: bgColor }}
+        style={{
+          background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
+        }}
       />
 
-      <div className="p-4">
-        <p className="text-xs opacity-80 tracking-wide">
-          {event.tipoDeActividad?.toUpperCase()}
-        </p>
+      {/* Cerrar */}
+      <button
+        onClick={onClose}
+        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-white/15"
+      >
+        <HiOutlineXMark size={20} />
+      </button>
 
-        <p className="text-xs opacity-80 tracking-wide">
-          {event.deporte?.toUpperCase()}
-        </p>
-
-        <h3 className="font-bold text-lg">{event.categoria}</h3>
-
-        <p className="text-sm mt-1 opacity-90">{event.gimnasio}</p>
-
-        <div className="flex gap-2">
-          <p className="text-sm mt-1 opacity-90">
-            {`${new Date(event.start).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })} hs`}
+      <div className="p-5">
+        {/* Header */}
+        <div className="pr-8">
+          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider opacity-80">
+            {sportIcons[event.deporte] ?? <MdSports size={14} />}
+            <span>{event.deporte}</span>
           </p>
-          -
-          <p className="text-sm mt-1 opacity-90">
-            {`${new Date(event.end).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })} hs`}
-          </p>
+
+          <h3 className="mt-2 text-2xl font-bold leading-tight">
+            {event.categoria}
+          </h3>
         </div>
-        {/* <div className="flex flex-col gap-2 w-full px-4">
+
+        {/* Información */}
+        <div className="mt-6 space-y-3 text-sm">
+          <div className="flex items-center gap-2 opacity-95">
+            <HiOutlineMapPin size={17} />
+            <span>{event.gimnasio}</span>
+          </div>
+
+          <div className="flex items-center gap-2 opacity-95">
+            <HiOutlineClock size={17} />
+            <span>
+              {startTime} hs - {endTime} hs
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 opacity-95">
+            <HiOutlineClipboardDocumentList size={17} />
+            <span>{event.tipoDeActividad}</span>
+          </div>
+        </div>
+
+        {/* Botones */}
+        <div className="mt-6 flex gap-3">
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -159,20 +196,27 @@ export default function EventHoverPreview({
                 },
               });
             }}
-            className="mt-2 bg-blue-500 hover:bg-blue-600 transition rounded-lg px-3 py-2 text-sm font-semibold w-full"
+            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${
+              true
+                ? "cursor-not-allowed bg-white/10 text-white/50"
+                : "bg-white/20 hover:bg-white/30"
+            }`}
+            disabled
           >
-            Editar actividad
-          </button> */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onCancelClick();
-          }}
-          className="mt-4 bg-white/20 hover:bg-white/30 transition rounded-lg px-3 py-2 text-sm font-semibold w-full"
-        >
-          Cancelar actividad
-        </button>
-        {/* </div> */}
+            <HiOutlinePencilSquare size={17} />
+            Editar
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onCancelClick();
+            }}
+            className="flex flex-1 items-center justify-center rounded-xl bg-red-500/80 px-3 py-2.5 text-sm font-semibold transition hover:bg-red-500"
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -15,6 +15,15 @@ import {
   cancelarInstance,
 } from "../../services/horarios.service";
 import { useParams, Navigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import {
+  HiOutlineAdjustmentsHorizontal,
+  HiOutlineBuildingOffice2,
+  HiOutlineCalendarDays,
+  HiOutlineMapPin,
+  HiOutlineClipboardDocumentList,
+} from "react-icons/hi2";
+import { IoBasketballOutline } from "react-icons/io5";
 
 /* =========================
    TYPES
@@ -30,6 +39,7 @@ type CalendarEvent = {
   gimnasio: string | null;
   quienCarga: string | null;
   recurringEventId?: string;
+  tipoDeActividad: string | null;
 };
 
 /* =========================
@@ -74,6 +84,15 @@ const sportColors: Record<string, string> = {
   Básquet: "#0066CC",
   "No Federados": "#F44336",
   "Otras Actividades": "#00c0b3",
+};
+
+const sportIcons: Record<string, string> = {
+  Básquet: "🏀",
+  "Voley Femenino": "🏐",
+  "Voley Masculino": "🏐",
+  Cesto: "🏐",
+  "Gimnasia Rítmica": "🤸",
+  "Otras Actividades": "🏋️",
 };
 
 const isRecurringInstance = (eventId: string) => {
@@ -236,48 +255,108 @@ export default function ClubCalendar() {
     }
   };
 
+  const clearFilters = () => {
+    setSelectedGym("all");
+    setSelectedSport("all");
+  };
+
   /* =========================
      HEADER CUSTOM
   ========================= */
 
   const CalendarHeader = () => (
-    <div className="flex items-center justify-between mb-4 px-2">
-      <h2 className="xl:text-xl font-semibold text-gray-800">
-        {calendarTitle}
-      </h2>
-
-      {role === "admin" && (
-        <div className="flex items-center gap-4">
-          <div className="flex flex-col">
-            <label className="text-xs text-gray-500 mb-1">Gimnasio</label>
-
-            <select
-              value={selectedGym}
-              onChange={(e) => setSelectedGym(e.target.value)}
-              className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
-            >
-              {CLUB_GYMS.map((gym) => (
-                <option key={gym.value} value={gym.value}>
-                  {gym.label}
-                </option>
-              ))}
-            </select>
+    <div className="mb-5 flex items-center justify-between">
+      {/* Título */}
+      <div className="rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-md shadow-sm px-5 py-4">
+        <div className="rounded-xl bg-[#157cbc]/10 p-2">
+          <div className="flex items-center gap-3">
+            <HiOutlineCalendarDays className="text-2xl text-[#157cbc]" />
+            <h2 className="text-2xl font-bold tracking-tight text-slate-800">
+              {calendarTitle}
+            </h2>
           </div>
+        </div>
 
-          <div className="flex flex-col">
-            <label className="text-xs text-gray-500 mb-1">Deporte</label>
+        <div>
+          <p className="mt-1 text-slate-500">
+            Entrenamientos, partidos y disponibilidad de espacios deportivos.
+          </p>
+        </div>
+      </div>
 
-            <select
-              value={selectedSport}
-              onChange={(e) => setSelectedSport(e.target.value)}
-              className="px-3 py-2 rounded-md border border-gray-300 text-sm shadow-sm focus:ring-2 focus:ring-blue-500 text-black cursor-pointer"
-            >
-              {CLUB_SPORTS.map((sport) => (
-                <option key={sport.value} value={sport.value}>
-                  {sport.label}
-                </option>
-              ))}
-            </select>
+      {/* Filtros */}
+      {role === "admin" && (
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+          <div className="mb-4 flex items-start justify-between">
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50">
+                <HiOutlineAdjustmentsHorizontal
+                  className="text-[#157cbc]"
+                  size={18}
+                />
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-slate-700">Filtros</p>
+
+                <p className="text-xs text-slate-500">
+                  Filtrá actividades por gimnasio o deporte.
+                </p>
+              </div>
+            </div>
+
+            {(selectedGym !== "all" || selectedSport !== "all") && (
+              <button
+                onClick={clearFilters}
+                className="rounded-lg px-3 py-1 text-xs font-semibold text-[#157cbc] transition hover:bg-blue-50 hover:text-[#0f6ca6]"
+              >
+                Limpiar
+              </button>
+            )}
+          </div>
+          <div className="flex items-end gap-5">
+            {/* Gimnasio */}
+            <div className="flex flex-col gap-1">
+              <label className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <HiOutlineBuildingOffice2
+                  size={15}
+                  className="text-[#157cbc]"
+                />
+                Gimnasio
+              </label>
+
+              <select
+                value={selectedGym}
+                onChange={(e) => setSelectedGym(e.target.value)}
+                className="w-40 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-[#157cbc] hover:shadow-md focus:border-[#157cbc] focus:outline-none focus:ring-4 focus:ring-blue-100 cursor-pointer"
+              >
+                {CLUB_GYMS.map((gym) => (
+                  <option key={gym.value} value={gym.value}>
+                    {gym.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Deporte */}
+            <div className="flex flex-col gap-1">
+              <label className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <IoBasketballOutline size={15} className="text-[#157cbc]" />
+                Deporte
+              </label>
+
+              <select
+                value={selectedSport}
+                onChange={(e) => setSelectedSport(e.target.value)}
+                className="w-40 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-[#157cbc] hover:shadow-md focus:border-[#157cbc] focus:outline-none focus:ring-4 focus:ring-blue-100 cursor-pointer"
+              >
+                {CLUB_SPORTS.map((sport) => (
+                  <option key={sport.value} value={sport.value}>
+                    {sport.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       )}
@@ -297,99 +376,122 @@ export default function ClubCalendar() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col z-10 gap-8">
+    <div className="h-screen flex flex-col overflow-hidden z-10">
       <Header />
 
-      <div className="flex flex-col items-center w-full px-4 py-4 xl:mt-[6%] mt-[15%]">
-        <div className="w-full  bg-white rounded-xl shadow-md p-4 relative">
+      <div className="flex-1 min-h-0 flex flex-col items-center w-full px-4 pt-28 pb-4">
+        <div className="flex-1 min-h-0 w-full rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-6 overflow-hidden relative flex flex-col">
           <CalendarHeader />
 
           {loading && (
             <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-50">
-              Actualizando calendario...
+              <ClipLoader size={45} color="#157cbc" />
+
+              <p className="mt-3 font-medium text-slate-600">
+                Actualizando calendario...
+              </p>
             </div>
           )}
 
-          <FullCalendar
-            key={calendarKey}
-            timeZone="local"
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="timeGridWeek"
-            locale={esLocale}
-            height="80vh"
-            nowIndicator
-            allDaySlot={false}
-            expandRows
-            stickyHeaderDates
-            slotMinTime="08:00:00"
-            slotMaxTime="23:00:00"
-            slotDuration="00:30:00"
-            events={calendarEvents}
-            eventContent={(arg) => {
-              const e = arg.event.extendedProps;
+          <div className="flex-1 min-h-0">
+            <FullCalendar
+              key={calendarKey}
+              timeZone="local"
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="timeGridWeek"
+              locale={esLocale}
+              height="100%"
+              nowIndicator
+              allDaySlot={false}
+              expandRows
+              stickyHeaderDates
+              slotMinTime="08:00:00"
+              slotMaxTime="24:00:00"
+              slotDuration="00:30:00"
+              events={calendarEvents}
+              eventContent={(arg) => {
+                const e = arg.event.extendedProps;
 
-              const start = arg.event.start;
-              const end = arg.event.end;
+                const start = arg.event.start;
+                const end = arg.event.end;
 
-              return (
-                <div className="text-xs leading-tight px-1 text-white">
-                  <div className="font-semibold truncate">
-                    {e.deporte?.toUpperCase()}
+                const startTime = start
+                  ? start.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })
+                  : "--";
+
+                const endTime = end
+                  ? end.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })
+                  : "--";
+
+                return (
+                  <div className="flex h-full flex-col justify-between overflow-hidden p-1.5 text-white">
+                    <div>
+                      <p className="flex items-center gap-1 truncate text-[11px] font-bold uppercase tracking-wide">
+                        <span>{sportIcons[e.deporte] ?? "🏟️"}</span>
+                        <span>{e.deporte}</span>
+                      </p>
+
+                      <p className="mt-0.5 truncate text-[12px] font-medium">
+                        {e.categoria}
+                      </p>
+
+                      <div className="mt-1 flex items-center gap-1 opacity-80">
+                        <HiOutlineMapPin size={11} className="flex-shrink-0" />
+                        <span className="truncate">{e.gimnasio}</span>
+                      </div>
+
+                      {e.tipoDeActividad && (
+                        <div className="mt-1 flex items-center gap-1 opacity-80">
+                          <HiOutlineClipboardDocumentList
+                            size={11}
+                            className="flex-shrink-0"
+                          />
+                          <span className="truncate">{e.tipoDeActividad}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-2 text-[11px] font-semibold opacity-95">
+                      {startTime} — {endTime}
+                    </div>
                   </div>
+                );
+              }}
+              eventTimeFormat={{
+                hour: "2-digit",
+                minute: "2-digit",
+                meridiem: false,
+              }}
+              headerToolbar={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay",
+              }}
+              eventClick={(info) => {
+                const rect = info.el.getBoundingClientRect();
 
-                  <div className="truncate">{e.categoria}</div>
-                  <div className="opacity-90 truncate">{e.gimnasio}</div>
+                setHoveredEvent({
+                  ...info.event.extendedProps,
+                  id: info.event.id,
+                  start: info.event.start?.toISOString(),
+                  end: info.event.end?.toISOString(),
+                });
 
-                  <div className="flex gap-2 text-center">
-                    <p className="text-sm mt-1 opacity-90">
-                      {start
-                        ? start.toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: false,
-                          })
-                        : "--"}
-                    </p>
-                    -
-                    <p className="text-sm mt-1 opacity-90">
-                      {end
-                        ? end.toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: false,
-                          })
-                        : "--"}
-                    </p>
-                  </div>
-                </div>
-              );
-            }}
-            eventTimeFormat={{
-              hour: "2-digit",
-              minute: "2-digit",
-              meridiem: false,
-            }}
-            headerToolbar={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay",
-            }}
-            eventClick={(info) => {
-              const rect = info.el.getBoundingClientRect();
-
-              setHoveredEvent({
-                ...info.event.extendedProps,
-                id: info.event.id,
-                start: info.event.start?.toISOString(),
-                end: info.event.end?.toISOString(),
-              });
-
-              setHoverPosition({
-                x: rect.right + 10,
-                y: rect.top,
-              });
-            }}
-          />
+                setHoverPosition({
+                  x: rect.right + 10,
+                  y: rect.top,
+                });
+              }}
+            />
+          </div>
         </div>
       </div>
 

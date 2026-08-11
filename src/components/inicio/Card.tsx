@@ -1,27 +1,64 @@
 import { useNavigate } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa";
 
 type CardProps = {
-  img?: string;
-  text: string;
+  image: string;
+  title: string;
+  description: string;
   buttonHref: string;
+  buttonText: string;
+  icon?: React.ReactNode;
+  overlayColor?: string;
 };
 
-function Card({ text, buttonHref, img }: CardProps) {
+function Card({
+  image,
+  title,
+  description,
+  buttonHref,
+  buttonText,
+  icon,
+  overlayColor = "bg-[#0b3e67]/55",
+}: CardProps) {
   const navigate = useNavigate();
+
   return (
     <div
-      onClick={() => navigate(`${buttonHref}`)}
-      className="filter grayscale relative xl:w-[230px] xl:h-[350px] md:w-[230px] md:h-[300px] h-[250px] bg-cover bg-center group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out cursor-pointer"
-      style={{ backgroundImage: `url(${img})` }}
+      onClick={() => navigate(buttonHref)}
+      className="group relative w-full xl:w-1/2 h-full overflow-hidden cursor-pointer"
     >
-      <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:opacity-75 transition duration-300 ease-in-out"></div>
-      <div className="relative w-full h-full px-4 sm:px-6 lg:px-4 flex justify-center items-center">
-        <h3 className="text-center">
-          <p className="text-white text-2xl font-bold text-center mx-8">
-            <span className="absolute inset-0"></span>
-            {text}
-          </p>
-        </h3>
+      {/* Imagen */}
+      <img
+        src={image}
+        alt={title}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+
+      {/* Overlay */}
+      <div
+        className={`absolute inset-0 ${overlayColor} transition-all duration-500 group-hover:bg-black/55`}
+      />
+
+      {/* Contenido */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-10 z-10">
+        {icon && (
+          <div className="mb-8 text-white text-7xl drop-shadow-lg transition-all duration-300 group-hover:-translate-y-2">
+            {icon}
+          </div>
+        )}
+
+        <h2 className="text-4xl xl:text-5xl font-bold tracking-tight text-white drop-shadow-lg transition-all duration-300 group-hover:-translate-y-2">
+          {title}
+        </h2>
+
+        <p className="mt-6 max-w-md text-base xl:text-lg leading-7 text-white/90 transition-all duration-300 group-hover:-translate-y-2">
+          {description}
+        </p>
+
+        <div className="mt-10 flex items-center gap-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-md px-6 py-3 text-white font-semibold opacity-0 translate-y-6 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <span>{buttonText}</span>
+          <FaArrowRight className="text-sm" />
+        </div>
       </div>
     </div>
   );

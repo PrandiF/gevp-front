@@ -2,20 +2,19 @@ import React, { useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { Spanish } from "flatpickr/dist/l10n/es.js";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 interface DatePickerProps {
   placeholder?: string;
   onChange?: (date: string) => void;
-  width?: string;
   clean?: boolean;
   readonly?: boolean;
-  value?: string; // formato YYYY-MM-DD
+  value?: string;
 }
 
 const InputDate: React.FC<DatePickerProps> = ({
   placeholder,
   onChange,
-  width = "full",
   clean = false,
   readonly = false,
   value = "",
@@ -24,23 +23,19 @@ const InputDate: React.FC<DatePickerProps> = ({
   const flatpickrRef = useRef<flatpickr.Instance | null>(null);
   const onChangeRef = useRef(onChange);
 
-  // Mantiene actualizado el callback sin recrear Flatpickr
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
 
-  // Inicializa Flatpickr una sola vez
   useEffect(() => {
     if (!datePickerRef.current) return;
 
     flatpickrRef.current = flatpickr(datePickerRef.current, {
       locale: Spanish,
 
-      // Lo que ve el usuario
       altInput: true,
       altFormat: "d-m-Y",
 
-      // Valor interno real
       dateFormat: "Y-m-d",
 
       defaultDate: value || undefined,
@@ -55,7 +50,6 @@ const InputDate: React.FC<DatePickerProps> = ({
 
         const selectedDate = selectedDates[0];
 
-        // Formato local YYYY-MM-DD, sin usar UTC
         const year = selectedDate.getFullYear();
         const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
         const day = String(selectedDate.getDate()).padStart(2, "0");
@@ -70,7 +64,6 @@ const InputDate: React.FC<DatePickerProps> = ({
     };
   }, []);
 
-  // Sincroniza el value externo al editar un evento
   useEffect(() => {
     if (!flatpickrRef.current) return;
 
@@ -81,7 +74,6 @@ const InputDate: React.FC<DatePickerProps> = ({
     }
   }, [value]);
 
-  // Limpia el selector
   useEffect(() => {
     if (clean) {
       flatpickrRef.current?.clear();
@@ -95,7 +87,12 @@ const InputDate: React.FC<DatePickerProps> = ({
         type="text"
         placeholder={placeholder}
         readOnly={readonly}
-        className={`w-${width} bg-white text-black rounded-3xl h-[2rem] px-3 border border-celeste outline-none cursor-pointer`}
+        className="w-full h-12 px-4 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 transition-all duration-200 hover:border-[#1d91d9] focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#1d91d9] cursor-pointer"
+      />
+
+      <FaRegCalendarAlt
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+        size={18}
       />
     </div>
   );

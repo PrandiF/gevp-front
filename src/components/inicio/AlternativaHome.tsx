@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import entrenamientos from "../../assets/entrenamientos3.webp";
 import eventos from "../../assets/eventos2.webp";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import { useEffect } from "react";
+import { HiOutlineCalendarDays, HiOutlinePlusCircle } from "react-icons/hi2";
+import Card from "./Card";
 
 function AlternativaHome() {
-  const navigate = useNavigate();
   const { role } = useUserStoreLocalStorage();
 
   useEffect(() => {
@@ -13,52 +13,26 @@ function AlternativaHome() {
   }, []);
 
   return (
-    <div className="relative flex xl:flex-row  flex-col w-full h-screen">
-      <div
-        className="relative xl:w-1/2  h-full overflow-hidden cursor-pointer hover:brightness-75 transition-all duration-300"
-        onClick={() => navigate("/calendario")}
-      >
-        <p
-          className="xl:text-[50px] md:text-[40px] text-[35px] font-bold  absolute inset-0 flex items-center justify-center z-10 text-white hover:scale-110 transition-all duration-300"
-          style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}
-        >
-          Calendario
-        </p>
-        <img
-          src={entrenamientos}
-          className="flex w-full xl:h-screen h-full object-cover"
-          style={{
-            filter: "brightness(0.5) sepia(1) hue-rotate(180deg) saturate(2)",
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundColor: "#2c7a9e",
-            mixBlendMode: "color",
-            opacity: 0.5,
-          }}
-        ></div>
-      </div>
+    <div className="flex h-screen w-full flex-col xl:flex-row ">
+      <Card
+        image={entrenamientos}
+        title="Calendario"
+        description="Consultá entrenamientos, partidos y la disponibilidad de todos los espacios deportivos."
+        buttonHref="/calendario"
+        buttonText="Ingresar"
+        icon={<HiOutlineCalendarDays />}
+        overlayColor="bg-[#0B5D89]/55"
+      />
 
-      <div
-        className="relative xl:w-1/2 h-full overflow-hidden cursor-pointer hover:brightness-75 transition-all duration-300"
-        onClick={() => navigate("/cargar")}
-      >
-        <p
-          className="xl:text-[50px] xl:text-start text-center md:text-[40px] text-[35px] font-bold  absolute inset-0 flex items-center justify-center z-10 text-white hover:scale-110 transition-all duration-300"
-          style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}
-        >
-          Nueva actividad
-        </p>
-        <img
-          src={eventos}
-          className="flex w-full xl:h-screen h-full object-cover"
-          style={{
-            filter: "brightness(0.3) sepia(1) hue-rotate(180deg) saturate(1)",
-          }}
-        />
-      </div>
+      <Card
+        image={eventos}
+        title="Nueva actividad"
+        description="Creá entrenamientos, partidos y nuevas actividades para mantener actualizado el calendario."
+        buttonHref="/cargar"
+        buttonText="Crear actividad"
+        icon={<HiOutlinePlusCircle />}
+        overlayColor="bg-black/50"
+      />
     </div>
   );
 }
