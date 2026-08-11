@@ -16,7 +16,6 @@ function InputSelect({
   options,
   onChange,
   placeholder,
-  width,
   value,
   clean,
   name,
@@ -42,9 +41,7 @@ function InputSelect({
         name={name}
         onChange={handleChange}
         value={selected}
-        className={`w-${width} bg-white rounded-3xl h-[2rem] px-3 border border-celeste outline-none cursor-pointer ${
-          selected === "" ? "text-[#b4b9c3]" : "text-black"
-        }`}
+        className={`w-full h-12 px-4 rounded-xl border border-gray-300 bg-white transition-all duration-200 hover:border-[#1d91d9] focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#1d91d9] ${selected === "" ? "text-gray-400" : "text-gray-800"} ${disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
         disabled={readonly || disabled}
       >
         <option value="" disabled>

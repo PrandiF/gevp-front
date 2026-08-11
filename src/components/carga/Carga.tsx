@@ -2,19 +2,20 @@ import BackButton from "../../commons/BackButton";
 import InputDate from "../../commons/InputDate";
 import InputSelect from "../../commons/InputSelect";
 import InputText from "../../commons/InputText";
-import Title from "../../commons/Title";
-import Header from "../Header";
+// import Title from "../../commons/Title";
+// import Header from "../Header";
 import { Report } from "notiflix/build/notiflix-report-aio";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
 import { createHorario, editHorario } from "../../services/horarios.service";
-import Button4 from "../../commons/Button4";
 import InputTime from "../../commons/InputTime";
 import { useUserStoreLocalStorage } from "../../store/userStore";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import ButtonSubmit from "../../commons/ButtonSubmit";
+import Header from "../Header";
 
 const allSports = [
   "Básquet",
@@ -253,153 +254,180 @@ function Carga() {
   }
 
   return (
-    <div className="relative flex w-full h-screen items-center z-20">
+    <>
       <Header />
-      <div className="flex w-full items-center flex-col gap-8 xl:pt-0 xl:pb-0 ">
-        <div className="xl:mt-[8%] mt-[10%] flex relative flex-col bg-[#fff] bg-opacity-90 z-20 xl:w-[65%] md:w-[65%] w-[90%] items-center gap-8 py-8 m-auto rounded-3xl">
-          <div
-            className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[70%] w-[90%] px-5 items-center gap-8 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
-            data-aos="fade"
-            data-aos-duration="2500"
-            data-aos-delay="400"
-          >
-            <div
-              className="flex mr-auto"
-              data-aos="fade"
-              data-aos-duration="2000"
-              data-aos-delay="400"
-            >
-              <BackButton />
-            </div>
-            <Title text={isEditing ? "Editar Actividad" : "Cargar Actividad"} />
-            <div className="flex flex-col xl:w-[70%] md:w-[70%] w-[50%] items-start justify-center xl:gap-6 md:gap-8 gap-3 mx-auto">
-              <div className="flex w-full justify-center gap-8">
-                <div className="flex w-full flex-col gap-6">
-                  <InputSelect
-                    placeholder="Gimnasio"
-                    options={[
-                      "Gimnasio 1",
-                      "Gimnasio 2",
-                      "Monza",
-                      "Alix",
-                      "Terracita",
-                      "Subsuelo",
-                      "Salón Social",
-                    ]}
-                    width="full"
-                    value={eventData.gimnasio}
-                    onChange={handleChange}
-                    name="gimnasio"
-                  />
-                  <InputDate
-                    placeholder="Fecha"
-                    width="full"
-                    value={selectedDate}
-                    onChange={(date) => {
-                      setSelectedDate(date);
-                    }}
-                  />
-
-                  <InputTime
-                    placeholder="Hora Inicio"
-                    value={startTime}
-                    onChange={(time) => {
-                      setStartTime(time);
-
-                      setEventData((prev) => ({
-                        ...prev,
-                        start: selectedDate ? `${selectedDate}T${time}:00` : "",
-                      }));
-                    }}
-                  />
-
-                  {/* <InputSelect
-                    placeholder="Quien Carga"
-                    width="full"
-                    options={[
-                      "Departamento Físico",
-                      "Entrenador/a Basquet",
-                      "Entrenador/a Cesto",
-                      "Entrenador/a Voley",
-                      "Entrenador/a Futbol",
-                      "Entrenador/a Gimnasia Rítmica",
-                    ]}
-                    value={eventData.quienCarga}
-                    onChange={handleChange}
-                    name="quienCarga"
-                  /> */}
-                  <InputSelect
-                    placeholder="Tipo de actividad"
-                    width="full"
-                    options={[
-                      "Entrenamiento",
-                      "Partido",
-                      "Partidos inferiores",
-                    ]}
-                    value={eventData.tipoDeActividad}
-                    onChange={handleChange}
-                    name="tipoDeActividad"
-                  />
-                </div>
-                <div className="flex w-full flex-col gap-6">
-                  <InputSelect
-                    placeholder={
-                      role === "entrenador" ? sport : "Seleccionar actividad"
-                    }
-                    width="full"
-                    options={sportOptions}
-                    value={eventData.deporte}
-                    onChange={handleChange}
-                    name="deporte"
-                    disabled={role === "entrenador"} // 🔒 bloqueado
-                  />
-                  <InputText
-                    placeholder="Categoría/Actividad"
-                    name="categoria"
-                    value={eventData.categoria}
-                    onChange={handleChange}
-                    width="full"
-                  />
-                  <InputTime
-                    placeholder="Hora Fin"
-                    value={endTime}
-                    onChange={(time) => {
-                      setEndTime(time);
-
-                      setEventData((prev) => ({
-                        ...prev,
-                        end: selectedDate ? `${selectedDate}T${time}:00` : "",
-                      }));
-                    }}
-                  />
-
-                  {/* NUEVO CAMPO REPETIR */}
-                  <InputSelect
-                    placeholder="Repetir"
-                    width="full"
-                    options={["Sí", "No"]}
-                    value={eventData.repetir}
-                    onChange={handleChange}
-                    name="repetir"
-                  />
-                </div>
-              </div>
-            </div>
-            <button className="flex mx-auto" disabled={isLoading}>
-              <Button4
-                text={isEditing ? "Guardar cambios" : "Cargar"}
-                onClick={handleSubmit}
-              />
-            </button>
-            {isLoading && (
-              <div className="loading-spinner text-center">
-                <ClipLoader color="#4D5061" loading={isLoading} size={50} />
-              </div>
-            )}
+      <div className="flex flex-1 min-h-0 w-full items-center justify-center px-4 pt-28 pb-6">
+        <div className="w-full max-w-5xl rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-10">
+          {/* Back */}
+          <div className="mb-8">
+            <BackButton />
           </div>
+
+          {/* Header */}
+          <div className="mb-12">
+            <h1 className="text-4xl font-bold text-slate-800">
+              {isEditing ? "Editar actividad" : "Nueva actividad"}
+            </h1>
+
+            <p className="mt-2 text-lg text-slate-500">
+              {isEditing
+                ? "Modificá la información de la actividad."
+                : "Creá entrenamientos, partidos y nuevas actividades para mantener actualizado el calendario del club."}
+            </p>
+          </div>
+
+          {/* ================= INFORMACIÓN ================= */}
+
+          <div className="mb-12">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-xl">
+                📍
+              </div>
+
+              <div>
+                <h2 className="font-semibold text-slate-800">Información</h2>
+
+                <p className="text-sm text-slate-500">
+                  Datos principales de la actividad.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              <InputSelect
+                placeholder="Gimnasio"
+                options={[
+                  "Gimnasio 1",
+                  "Gimnasio 2",
+                  "Monza",
+                  "Alix",
+                  "Terracita",
+                  "Subsuelo",
+                  "Salón Social",
+                ]}
+                width="full"
+                value={eventData.gimnasio}
+                onChange={handleChange}
+                name="gimnasio"
+              />
+
+              <InputSelect
+                placeholder={
+                  role === "entrenador" ? sport : "Seleccionar actividad"
+                }
+                width="full"
+                options={sportOptions}
+                value={eventData.deporte}
+                onChange={handleChange}
+                name="deporte"
+                disabled={role === "entrenador"}
+              />
+
+              <InputText
+                placeholder="Categoría / Actividad"
+                name="categoria"
+                value={eventData.categoria}
+                onChange={handleChange}
+                width="full"
+              />
+
+              <InputSelect
+                placeholder="Tipo de actividad"
+                width="full"
+                options={["Entrenamiento", "Partido", "Partidos inferiores"]}
+                value={eventData.tipoDeActividad}
+                onChange={handleChange}
+                name="tipoDeActividad"
+              />
+            </div>
+          </div>
+
+          {/* ================= FECHA ================= */}
+
+          <div className="mb-12">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-xl">
+                🕒
+              </div>
+
+              <div>
+                <h2 className="font-semibold text-slate-800">
+                  Fecha y horario
+                </h2>
+
+                <p className="text-sm text-slate-500">
+                  Indicá cuándo se realizará la actividad.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              <InputDate
+                placeholder="Fecha"
+                value={selectedDate}
+                onChange={(date) => {
+                  setSelectedDate(date);
+                }}
+              />
+
+              <InputSelect
+                placeholder="Repetir"
+                width="full"
+                options={["Sí", "No"]}
+                value={eventData.repetir}
+                onChange={handleChange}
+                name="repetir"
+              />
+
+              <InputTime
+                placeholder="Hora Inicio"
+                value={startTime}
+                onChange={(time) => {
+                  setStartTime(time);
+
+                  setEventData((prev) => ({
+                    ...prev,
+                    start: selectedDate ? `${selectedDate}T${time}:00` : "",
+                  }));
+                }}
+              />
+
+              <InputTime
+                placeholder="Hora Fin"
+                value={endTime}
+                onChange={(time) => {
+                  setEndTime(time);
+
+                  setEventData((prev) => ({
+                    ...prev,
+                    end: selectedDate ? `${selectedDate}T${time}:00` : "",
+                  }));
+                }}
+              />
+            </div>
+          </div>
+
+          {/* ================= BOTÓN ================= */}
+
+          {isLoading ? (
+            <div className="mt-12 flex flex-col items-center gap-4">
+              <ClipLoader color="#157cbc" size={42} />
+              <p className="font-medium text-slate-500">
+                Guardando actividad...
+              </p>
+            </div>
+          ) : (
+            <div className="mt-12 flex justify-center">
+              <ButtonSubmit
+                text={isEditing ? "Guardar cambios" : "Crear actividad"}
+                onClick={handleSubmit}
+                disabled={isLoading}
+              />
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

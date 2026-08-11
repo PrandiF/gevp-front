@@ -25,7 +25,7 @@ function InputPsw({ name, value, onChange }: InputPswProps) {
         name={name}
         value={value}
         onChange={handleChange}
-        className="w-full bg-white text-black rounded-3xl h-[2rem] pl-3 pr-10 border border-celeste outline-none"
+        className="w-full h-12 px-4 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 transition-all duration-200 hover:border-[#1d91d9] focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#1d91d9] cursor-pointer"
       />
       <button
         type="button"

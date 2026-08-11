@@ -11,6 +11,8 @@ import BackButton from "../../commons/BackButton";
 import { Report } from "notiflix";
 import { ClipLoader } from "react-spinners";
 import ButtonSubmit from "../../commons/ButtonSubmit";
+import Card from "../../commons/Card";
+import { FaLock, FaShieldAlt } from "react-icons/fa";
 function Login() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -70,60 +72,66 @@ function Login() {
   };
 
   return (
-    <div className="flex w-full h-screen items-center justify-center z-20">
-      <div className="flex relative flex-col bg-[#fff] bg-opacity-90  z-20 xl:w-[40%] md:w-[60%] w-[90%] items-center gap-10 py-8 m-auto rounded-3xl">
-        <div
-          className="flex relative flex-col bg-[#000] bg-opacity-15 backdrop-blur-sm z-20 xl:w-[90%] md:w-[60%] w-[90%] px-3 items-center gap-10 py-8 m-auto rounded-3xl xl:border-2 border border-gray-600"
-          data-aos="fade"
-          data-aos-duration="2200"
-          data-aos-delay="200"
-        >
-          <div
-            data-aos="fade"
-            data-aos-duration="2000"
-            data-aos-delay="600"
-            className="relative flex ml-0 w-full px-5"
-          >
-            <BackButton />
-          </div>
-          <div data-aos="fade" data-aos-duration="2000" data-aos-delay="400">
-            <img
-              src={logo}
-              className="xlL:w-[15%] md:w-[20%] w-[25%] flex mx-auto"
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <Card
+        className="relative w-full max-w-xl p-10"
+        data-aos="fade-up"
+        data-aos-duration="700"
+      >
+        <div className="mb-8">
+          <BackButton />
+        </div>
+
+        <img src={logo} alt="GEVP" className="mx-auto mb-6 w-32" />
+
+        <h1 className="text-center text-3xl font-bold text-gray-800 leading-tight">
+          Sistema de Gestión Deportiva
+        </h1>
+
+        <p className="mt-2 mb-8 text-center text-gray-500">
+          Ingresá con tu usuario para administrar entrenamientos, partidos y
+          calendarios.
+        </p>
+
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+          <InputText
+            placeholder="Usuario"
+            width="full"
+            onChange={handleChange}
+            value={userData.username}
+            name="username"
+          />
+
+          <InputPsw
+            onChange={handleChange}
+            value={userData.password}
+            name="password"
+          />
+
+          <div className="mt-2 flex mx-auto">
+            <ButtonSubmit
+              text="Iniciar Sesión"
+              submit
+              icon={<FaLock size={14} />}
             />
           </div>
+        </form>
 
-          <form
-            className="xl:w-[60%] flex flex-col gap-6"
-            onSubmit={handleSubmit}
-          >
-            <div data-aos="fade" data-aos-duration="2000" data-aos-delay="600">
-              <InputText
-                placeholder="Usuario"
-                width="full"
-                onChange={handleChange}
-                value={userData.username}
-                name="username"
-              />
-            </div>
-            <div data-aos="fade" data-aos-duration="2000" data-aos-delay="600">
-              <InputPsw
-                onChange={handleChange}
-                value={userData.password}
-                name="password"
-              />
-            </div>
-            <ButtonSubmit text="Iniciar Sesión" submit />
-          </form>
-
-          {isLoading && (
-            <div className="loading-spinner flex flex-col items-center">
-              <ClipLoader color="#4D5061" loading={isLoading} size={50} />
-              <p className="mt-3 text-sm text-gray-600">Iniciando sesión…</p>
-            </div>
-          )}
+        <div className="mt-8 flex items-center justify-center gap-2 text-sm text-gray-500">
+          <FaShieldAlt className="text-gray-400" />
+          <span>Acceso seguro y confidencial</span>
         </div>
-      </div>
+
+        {isLoading && (
+          <div className="mt-6 flex flex-col items-center gap-3 animate-fadeIn">
+            <ClipLoader color="#1d91d9" loading={isLoading} size={32} />
+
+            <p className="text-sm font-medium text-gray-500">
+              Iniciando sesión...
+            </p>
+          </div>
+        )}
+      </Card>
     </div>
   );
 }

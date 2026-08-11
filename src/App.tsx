@@ -26,45 +26,48 @@ function App() {
   );
 
   return (
-    <div className="relative min-h-screen w-full font-roboto scroll-smooth flex flex-col font-montserrat">
-      <img
-        src={imageBackground}
-        alt="fondo"
-        className="flex absolute  top-0 left-0 inset-0 w-screen h-full object-cover"
+    <div className="relative min-h-screen overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${imageBackground})` }}
       />
-      <Router>
-        <Routes>
-          {isAuthenticated ? (
-            <>
-              {/* Home solo para admin */}
-              {useUserStoreLocalStorage.getState().role === "admin" && (
-                <Route path="/inicio" element={<Home />} />
-              )}
 
-              <Route path="/cargar" element={<Carga />} />
-              <Route path="/calendario" element={<ClubCalendar />} />
+      {/* Overlay oscuro */}
+      <div className="absolute inset-0 bg-[#0B3E67]/35" />
 
-              {/* fallback: cualquier ruta desconocida va a calendario para entrenadores o a inicio para admin */}
-              <Route
-                path="*"
-                element={
-                  useUserStoreLocalStorage.getState().role === "admin" ? (
-                    <Navigate to="/inicio" replace />
-                  ) : (
-                    <Navigate to="/calendario" replace />
-                  )
-                }
-              />
-            </>
-          ) : (
-            <>
-              {/* <Route path="/" element={<AuthSelector />} /> */}
-              <Route path="/" element={<Login />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </>
-          )}
-        </Routes>
-      </Router>
+      {/* Contenido */}
+      <div className="relative z-10 min-h-screen">
+        <Router>
+          <Routes>
+            {isAuthenticated ? (
+              <>
+                {useUserStoreLocalStorage.getState().role === "admin" && (
+                  <Route path="/inicio" element={<Home />} />
+                )}
+
+                <Route path="/cargar" element={<Carga />} />
+                <Route path="/calendario" element={<ClubCalendar />} />
+
+                <Route
+                  path="*"
+                  element={
+                    useUserStoreLocalStorage.getState().role === "admin" ? (
+                      <Navigate to="/inicio" replace />
+                    ) : (
+                      <Navigate to="/calendario" replace />
+                    )
+                  }
+                />
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<Login />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </>
+            )}
+          </Routes>
+        </Router>
+      </div>
     </div>
   );
 }
