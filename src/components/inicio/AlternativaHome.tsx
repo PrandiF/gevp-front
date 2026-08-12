@@ -22,6 +22,7 @@ function AlternativaHome() {
         buttonText="Ingresar"
         icon={<HiOutlineCalendarDays />}
         overlayColor="bg-[#0B5D89]/55"
+        up
       />
 
       <Card

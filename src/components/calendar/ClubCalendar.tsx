@@ -300,9 +300,11 @@ export default function ClubCalendar() {
   const CalendarHeader = () => (
     <div className="mb-5 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
       <div className="flex items-start gap-3 flex-col">
-        <div className="pl-4 md:pt-0 pt-2">
-          <BackButton />
-        </div>
+        {role === "admin" && (
+          <div className="pl-4 md:pt-0 pt-2">
+            <BackButton />
+          </div>
+        )}
 
         <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm xl:px-5 xl:py-4">
           <div className="rounded-xl bg-[#157cbc]/10 p-2">
