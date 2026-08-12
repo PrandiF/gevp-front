@@ -9,6 +9,7 @@ type CardProps = {
   buttonText: string;
   icon?: React.ReactNode;
   overlayColor?: string;
+  up?: boolean;
 };
 
 function Card({
@@ -19,13 +20,14 @@ function Card({
   buttonText,
   icon,
   overlayColor = "bg-[#0b3e67]/55",
+  up,
 }: CardProps) {
   const navigate = useNavigate();
 
   return (
     <div
       onClick={() => navigate(buttonHref)}
-      className="group relative h-[50vh] md:h-[50vh] xl:h-full xl:w-1/2 w-[90%] overflow-hidden cursor-pointer mx-auto rounded-xl md:rounded-none"
+      className={`group relative h-[50vh] md:h-[50vh] xl:h-full xl:w-1/2 w-[90%] overflow-hidden cursor-pointer mx-auto ${up ? "rounded-t-xl" : "rounded-b-xl"} md:rounded-none`}
     >
       {/* Imagen */}
       <img
