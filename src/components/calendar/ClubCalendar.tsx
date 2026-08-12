@@ -118,6 +118,7 @@ export default function ClubCalendar() {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState("");
 
   const [calendarKey, setCalendarKey] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -153,8 +154,6 @@ export default function ClubCalendar() {
     if (!isAuthenticated) return;
     if (role === "entrenador" && !sport) return;
 
-    setLoading(true);
-
     try {
       let data: CalendarEvent[] = [];
 
@@ -168,19 +167,26 @@ export default function ClubCalendar() {
       }
 
       setEvents(Array.isArray(data) ? data : []);
-
-      // ⭐ IMPORTANTE
       setCalendarKey((prev) => prev + 1);
     } catch (error) {
       console.error(error);
       setEvents([]);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadEvents();
+    const fetchEvents = async () => {
+      setLoadingText("Actualizando calendario...");
+      setLoading(true);
+
+      try {
+        await loadEvents();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
   }, [isAuthenticated, role, sport, selectedSport]);
 
   /* =========================
@@ -238,11 +244,19 @@ export default function ClubCalendar() {
     setConfirmOpen(false);
     setSelectedEvent(null);
 
+    setLoadingText("Cancelando actividad...");
+    setLoading(true);
+
     try {
       await cancelarSerieCompleta(seriesId);
+
+      setLoadingText("Actualizando calendario...");
+
       await loadEvents();
     } catch (err) {
       console.error("Error cancelando serie:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -258,11 +272,19 @@ export default function ClubCalendar() {
     setConfirmOpen(false);
     setSelectedEvent(null);
 
+    setLoadingText("Cancelando actividad...");
+    setLoading(true);
+
     try {
       await cancelarInstance(eventId);
+
+      setLoadingText("Actualizando calendario...");
+
       await loadEvents();
     } catch (err) {
       console.error("Error cancelando instancia:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -518,9 +540,7 @@ export default function ClubCalendar() {
             <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-50">
               <ClipLoader size={45} color="#157cbc" />
 
-              <p className="mt-3 font-medium text-slate-600">
-                Actualizando calendario...
-              </p>
+              <p className="mt-3 font-medium text-slate-600">{loadingText}</p>
             </div>
           )}
 
