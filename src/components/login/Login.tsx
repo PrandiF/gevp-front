@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { login } from "../../services/user.service";
 import { useNavigate } from "react-router-dom";
 import { useUserStoreLocalStorage } from "../../store/userStore";
-import BackButton from "../../commons/BackButton";
 import { Report } from "notiflix";
 import { ClipLoader } from "react-spinners";
 import ButtonSubmit from "../../commons/ButtonSubmit";
@@ -78,10 +77,6 @@ function Login() {
         data-aos="fade-up"
         data-aos-duration="700"
       >
-        <div className="mb-8">
-          <BackButton />
-        </div>
-
         <img
           src={logo}
           alt="GEVP"
