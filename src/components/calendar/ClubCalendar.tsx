@@ -24,6 +24,7 @@ import {
   HiOutlineClipboardDocumentList,
 } from "react-icons/hi2";
 import { IoBasketballOutline } from "react-icons/io5";
+import BackButton from "../../commons/BackButton";
 
 /* =========================
    TYPES
@@ -119,6 +120,16 @@ export default function ClubCalendar() {
   const [loading, setLoading] = useState(false);
 
   const [calendarKey, setCalendarKey] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   /* =========================
      LABEL DEPORTE
@@ -265,24 +276,30 @@ export default function ClubCalendar() {
   ========================= */
 
   const CalendarHeader = () => (
-    <div className="mb-5 flex items-center justify-between">
-      {/* Título */}
-      <div className="rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-md shadow-sm px-5 py-4">
-        <div className="rounded-xl bg-[#157cbc]/10 p-2">
-          <div className="flex items-center gap-3">
-            <HiOutlineCalendarDays className="text-2xl text-[#157cbc]" />
-            <h2 className="text-2xl font-bold tracking-tight text-slate-800">
-              {calendarTitle}
-            </h2>
-          </div>
+    <div className="mb-5 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+      <div className="flex items-start gap-3 flex-col">
+        <div className="pl-4 md:pt-0 pt-2">
+          <BackButton />
         </div>
 
-        <div>
-          <p className="mt-1 text-slate-500">
-            Entrenamientos, partidos y disponibilidad de espacios deportivos.
-          </p>
+        <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm xl:px-5 xl:py-4">
+          <div className="rounded-xl bg-[#157cbc]/10 p-2">
+            <div className="flex items-center gap-3">
+              <HiOutlineCalendarDays className="text-2xl text-[#157cbc]" />
+              <h2 className="text-xl xl:text-2xl font-bold tracking-tight text-slate-800">
+                {calendarTitle}
+              </h2>
+            </div>
+          </div>
+
+          <div>
+            <p className="mt-1 text-slate-500 text-sm xl:text-base">
+              Entrenamientos, partidos y disponibilidad de espacios deportivos.
+            </p>
+          </div>
         </div>
       </div>
+      {/* Título */}
 
       {/* Filtros */}
       {role === "admin" && (
@@ -314,7 +331,7 @@ export default function ClubCalendar() {
               </button>
             )}
           </div>
-          <div className="flex items-end gap-5">
+          <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:gap-5">
             {/* Gimnasio */}
             <div className="flex flex-col gap-1">
               <label className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -328,7 +345,7 @@ export default function ClubCalendar() {
               <select
                 value={selectedGym}
                 onChange={(e) => setSelectedGym(e.target.value)}
-                className="w-40 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-[#157cbc] hover:shadow-md focus:border-[#157cbc] focus:outline-none focus:ring-4 focus:ring-blue-100 cursor-pointer"
+                className="w-full xl:w-40 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-[#157cbc] hover:shadow-md focus:border-[#157cbc] focus:outline-none focus:ring-4 focus:ring-blue-100 cursor-pointer"
               >
                 {CLUB_GYMS.map((gym) => (
                   <option key={gym.value} value={gym.value}>
@@ -348,7 +365,7 @@ export default function ClubCalendar() {
               <select
                 value={selectedSport}
                 onChange={(e) => setSelectedSport(e.target.value)}
-                className="w-40 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-[#157cbc] hover:shadow-md focus:border-[#157cbc] focus:outline-none focus:ring-4 focus:ring-blue-100 cursor-pointer"
+                className="w-full xl:w-40 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-[#157cbc] hover:shadow-md focus:border-[#157cbc] focus:outline-none focus:ring-4 focus:ring-blue-100 cursor-pointer"
               >
                 {CLUB_SPORTS.map((sport) => (
                   <option key={sport.value} value={sport.value}>
@@ -375,12 +392,126 @@ export default function ClubCalendar() {
     return <Navigate to={`/calendario/${sport}`} replace />;
   }
 
+  const renderDesktopEvent = (arg: any) => {
+    const e = arg.event.extendedProps;
+
+    const start = arg.event.start;
+    const end = arg.event.end;
+
+    const startTime = start
+      ? start.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      : "--";
+
+    const endTime = end
+      ? end.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      : "--";
+
+    return (
+      <div className="flex h-full flex-col justify-between overflow-hidden p-1.5 text-white">
+        <div>
+          <p className="flex items-center gap-1 truncate text-[11px] font-bold uppercase tracking-wide">
+            <span>{sportIcons[e.deporte] ?? "🏟️"}</span>
+            <span>{e.deporte}</span>
+          </p>
+
+          <p className="mt-0.5 truncate text-[12px] font-medium">
+            {e.categoria}
+          </p>
+
+          <div className="mt-1 flex items-center gap-1 opacity-80">
+            <HiOutlineMapPin size={11} className="flex-shrink-0" />
+            <span className="truncate">{e.gimnasio}</span>
+          </div>
+
+          {e.tipoDeActividad && (
+            <div className="mt-1 flex items-center gap-1 opacity-80">
+              <HiOutlineClipboardDocumentList
+                size={11}
+                className="flex-shrink-0"
+              />
+              <span className="truncate">{e.tipoDeActividad}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-2 text-[11px] font-semibold opacity-95">
+          {startTime}hs — {endTime}hs
+        </div>
+      </div>
+    );
+  };
+
+  const renderMobileEvent = (arg: any) => {
+    const e = arg.event.extendedProps;
+
+    const start = arg.event.start;
+    const end = arg.event.end;
+
+    const startTime = start
+      ? start.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      : "--";
+
+    const endTime = end
+      ? end.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      : "--";
+
+    return (
+      <div className="flex h-full flex-col justify-between overflow-hidden px-1 py-0.5 text-white">
+        <div>
+          <p className="flex items-center gap-1 truncate text-[11px] font-bold uppercase tracking-wide">
+            <span>{sportIcons[e.deporte] ?? "🏟️"}</span>
+            <span>{e.deporte}</span>
+          </p>
+
+          <p className="mt-0.5 truncate text-[12px] font-medium">
+            {e.categoria}
+          </p>
+
+          <div className="mt-1 flex items-center gap-1 opacity-80">
+            <HiOutlineMapPin size={11} className="flex-shrink-0" />
+            <span className="truncate">{e.gimnasio}</span>
+          </div>
+
+          {e.tipoDeActividad && (
+            <div className="mt-1 flex items-center gap-1 opacity-80">
+              <HiOutlineClipboardDocumentList
+                size={11}
+                className="flex-shrink-0"
+              />
+              <span className="truncate">{e.tipoDeActividad}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="text-[9px] font-medium opacity-90">
+          {startTime}hs - {endTime}hs
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="h-screen flex flex-col overflow-hidden z-10">
       <Header />
 
       <div className="flex-1 min-h-0 flex flex-col items-center w-full px-4 pt-28 pb-4">
-        <div className="flex-1 min-h-0 w-full rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-6 overflow-hidden relative flex flex-col">
+        <div className="flex-1 min-h-0 w-full rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-3 md:p-6 relative flex flex-col overflow-auto">
           <CalendarHeader />
 
           {loading && (
@@ -398,9 +529,9 @@ export default function ClubCalendar() {
               key={calendarKey}
               timeZone="local"
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-              initialView="timeGridWeek"
+              initialView={isMobile ? "timeGridDay" : "timeGridWeek"}
               locale={esLocale}
-              height="100%"
+              height={isMobile ? "auto" : "100%"}
               nowIndicator
               allDaySlot={false}
               expandRows
@@ -409,72 +540,27 @@ export default function ClubCalendar() {
               slotMaxTime="24:00:00"
               slotDuration="00:30:00"
               events={calendarEvents}
-              eventContent={(arg) => {
-                const e = arg.event.extendedProps;
-
-                const start = arg.event.start;
-                const end = arg.event.end;
-
-                const startTime = start
-                  ? start.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    })
-                  : "--";
-
-                const endTime = end
-                  ? end.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    })
-                  : "--";
-
-                return (
-                  <div className="flex h-full flex-col justify-between overflow-hidden p-1.5 text-white">
-                    <div>
-                      <p className="flex items-center gap-1 truncate text-[11px] font-bold uppercase tracking-wide">
-                        <span>{sportIcons[e.deporte] ?? "🏟️"}</span>
-                        <span>{e.deporte}</span>
-                      </p>
-
-                      <p className="mt-0.5 truncate text-[12px] font-medium">
-                        {e.categoria}
-                      </p>
-
-                      <div className="mt-1 flex items-center gap-1 opacity-80">
-                        <HiOutlineMapPin size={11} className="flex-shrink-0" />
-                        <span className="truncate">{e.gimnasio}</span>
-                      </div>
-
-                      {e.tipoDeActividad && (
-                        <div className="mt-1 flex items-center gap-1 opacity-80">
-                          <HiOutlineClipboardDocumentList
-                            size={11}
-                            className="flex-shrink-0"
-                          />
-                          <span className="truncate">{e.tipoDeActividad}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="mt-2 text-[11px] font-semibold opacity-95">
-                      {startTime} — {endTime}
-                    </div>
-                  </div>
-                );
-              }}
+              eventContent={(arg) =>
+                isMobile ? renderMobileEvent(arg) : renderDesktopEvent(arg)
+              }
               eventTimeFormat={{
                 hour: "2-digit",
                 minute: "2-digit",
                 meridiem: false,
               }}
-              headerToolbar={{
-                left: "prev,next today",
-                center: "title",
-                right: "dayGridMonth,timeGridWeek,timeGridDay",
-              }}
+              headerToolbar={
+                isMobile
+                  ? {
+                      left: "prev,today,next",
+                      center: "title",
+                      right: "timeGridDay,timeGridWeek",
+                    }
+                  : {
+                      left: "prev,next today",
+                      center: "title",
+                      right: "dayGridMonth,timeGridWeek,timeGridDay",
+                    }
+              }
               eventClick={(info) => {
                 const rect = info.el.getBoundingClientRect();
 

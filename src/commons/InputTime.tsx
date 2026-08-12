@@ -6,9 +6,15 @@ type InputTimeProps = {
   value?: string;
   onChange?: (time: string) => void;
   disabled?: boolean;
+  horaInicio?: boolean;
 };
 
-function InputTime({ value, onChange, disabled = false }: InputTimeProps) {
+function InputTime({
+  value,
+  onChange,
+  disabled = false,
+  horaInicio,
+}: InputTimeProps) {
   const options = [];
 
   for (let h = 8; h <= 23; h++) {
@@ -31,7 +37,7 @@ function InputTime({ value, onChange, disabled = false }: InputTimeProps) {
     <div className="relative w-full group">
       <Select
         isDisabled={disabled}
-        placeholder="Seleccionar hora..."
+        placeholder={`${horaInicio ? "Seleccionar hora de inicio..." : "Seleccionar hora de fin..."}`}
         value={options.find((o) => o.value === value) || null}
         options={options}
         onChange={(option) => onChange?.(option?.value ?? "")}
