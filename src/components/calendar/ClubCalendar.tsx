@@ -298,15 +298,15 @@ export default function ClubCalendar() {
   ========================= */
 
   const CalendarHeader = () => (
-    <div className="mb-5 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-      <div className="flex items-start gap-3 flex-col">
+    <div className="mb-2 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+      <div className="flex items-start gap-2 flex-col">
         {role === "admin" && (
           <div className="pl-4 md:pt-0 pt-2">
             <BackButton />
           </div>
         )}
 
-        <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm xl:px-5 xl:py-4">
+        <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm xl:px-5 xl:py-2">
           <div className="rounded-xl bg-[#157cbc]/10 p-2">
             <div className="flex items-center gap-3">
               <HiOutlineCalendarDays className="text-2xl text-[#157cbc]" />
@@ -355,7 +355,7 @@ export default function ClubCalendar() {
               </button>
             )}
           </div>
-          <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:gap-5">
+          <div className="flex flex-col gap-2 xl:flex-row xl:items-end xl:gap-5">
             {/* Gimnasio */}
             <div className="flex flex-col gap-1">
               <label className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -535,7 +535,7 @@ export default function ClubCalendar() {
       <Header />
 
       <div className="flex-1 min-h-0 flex flex-col items-center w-full px-4 pt-28 pb-4">
-        <div className="flex-1 min-h-0 w-full rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-3 md:p-6 relative flex flex-col overflow-auto">
+        <div className="flex-1 min-h-0 w-full rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-3 md:px-6 relative flex flex-col overflow-auto">
           <CalendarHeader />
 
           {loading && (
