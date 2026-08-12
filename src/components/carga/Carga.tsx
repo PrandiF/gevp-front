@@ -256,20 +256,20 @@ function Carga() {
   return (
     <>
       <Header />
-      <div className="flex flex-1 w-full justify-center overflow-y-auto px-4 pt-24 md:pt-28 pb-6">
-        <div className="w-full max-w-5xl rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-5 md:p-10">
+      <div className="flex flex-1 md:w-[90%] justify-center md:mx-auto overflow-y-auto px-4 pt-24 md:pt-32 pb-6">
+        <div className="w-full max-w-5xl rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-5 md:py-5 md:px-10">
           {/* Back */}
-          <div className="mb-5 md:mb-8">
+          <div className="mb-5 md:mb-5">
             <BackButton />
           </div>
 
           {/* Header */}
-          <div className="mb-12">
-            <h1 className="text-3xl md:text-4xl  font-bold text-slate-800">
+          <div className="mb-8">
+            <h1 className="text-2xl md:text-3xl  font-bold text-slate-800">
               {isEditing ? "Editar actividad" : "Nueva actividad"}
             </h1>
 
-            <p className="mt-2 text-base md:text-lg text-slate-500">
+            <p className="mt-2 text-base md:text-base text-slate-500">
               {isEditing
                 ? "Modificá la información de la actividad."
                 : "Creá entrenamientos, partidos y nuevas actividades para mantener actualizado el calendario del club."}
@@ -278,7 +278,7 @@ function Carga() {
 
           {/* ================= INFORMACIÓN ================= */}
 
-          <div className="mb-8 md:mb-12">
+          <div className="mb-8">
             <div className="mb-4 md:mb-6 flex items-center gap-3">
               <div className="flex h-10 w-10 md:h-11 md:w-11 text-lg md:text-xl items-center justify-center rounded-xl bg-blue-100">
                 📍
@@ -344,7 +344,7 @@ function Carga() {
 
           {/* ================= FECHA ================= */}
 
-          <div className="mb-8 md:mb-12">
+          <div className="mb-8">
             <div className="mb-4 md:mb-6 flex items-center gap-3">
               <div className="flex h-10 w-10 md:h-11 md:w-11 text-lg md:text-xl items-center justify-center rounded-xl bg-blue-100">
                 🕒
@@ -411,14 +411,14 @@ function Carga() {
           {/* ================= BOTÓN ================= */}
 
           {isLoading ? (
-            <div className="mt-12 flex flex-col items-center gap-4">
+            <div className="mt-8 flex flex-col items-center gap-4">
               <ClipLoader color="#157cbc" size={42} />
               <p className="font-medium text-slate-500">
                 Guardando actividad...
               </p>
             </div>
           ) : (
-            <div className="mt-12 flex justify-center">
+            <div className="mt-8 flex justify-center">
               <ButtonSubmit
                 text={isEditing ? "Guardar cambios" : "Crear actividad"}
                 onClick={handleSubmit}
