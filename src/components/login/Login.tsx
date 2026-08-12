@@ -74,7 +74,7 @@ function Login() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card
-        className="relative w-full max-w-xl p-10"
+        className="relative w-full max-w-xl p-6 sm:p-8 md:p-10"
         data-aos="fade-up"
         data-aos-duration="700"
       >
@@ -82,13 +82,17 @@ function Login() {
           <BackButton />
         </div>
 
-        <img src={logo} alt="GEVP" className="mx-auto mb-6 w-32" />
+        <img
+          src={logo}
+          alt="GEVP"
+          className="mx-auto mb-6 w-24 sm:w-28 md:w-32"
+        />
 
-        <h1 className="text-center text-3xl font-bold text-gray-800 leading-tight">
+        <h1 className="text-center text-2xl sm:text-3xl font-bold leading-tight text-gray-800">
           Sistema de Gestión Deportiva
         </h1>
 
-        <p className="mt-2 mb-8 text-center text-gray-500">
+        <p className="mt-2 mb-8 px-2 text-center text-sm sm:text-base text-gray-500">
           Ingresá con tu usuario para administrar entrenamientos, partidos y
           calendarios.
         </p>

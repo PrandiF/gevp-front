@@ -256,20 +256,20 @@ function Carga() {
   return (
     <>
       <Header />
-      <div className="flex flex-1 min-h-0 w-full items-center justify-center px-4 pt-28 pb-6">
-        <div className="w-full max-w-5xl rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-10">
+      <div className="flex flex-1 w-full justify-center overflow-y-auto px-4 pt-24 md:pt-28 pb-6">
+        <div className="w-full max-w-5xl rounded-3xl bg-white/95 backdrop-blur-md shadow-2xl border border-white/60 p-5 md:p-10">
           {/* Back */}
-          <div className="mb-8">
+          <div className="mb-5 md:mb-8">
             <BackButton />
           </div>
 
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-4xl font-bold text-slate-800">
+            <h1 className="text-3xl md:text-4xl  font-bold text-slate-800">
               {isEditing ? "Editar actividad" : "Nueva actividad"}
             </h1>
 
-            <p className="mt-2 text-lg text-slate-500">
+            <p className="mt-2 text-base md:text-lg text-slate-500">
               {isEditing
                 ? "Modificá la información de la actividad."
                 : "Creá entrenamientos, partidos y nuevas actividades para mantener actualizado el calendario del club."}
@@ -278,9 +278,9 @@ function Carga() {
 
           {/* ================= INFORMACIÓN ================= */}
 
-          <div className="mb-12">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-xl">
+          <div className="mb-8 md:mb-12">
+            <div className="mb-4 md:mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 md:h-11 md:w-11 text-lg md:text-xl items-center justify-center rounded-xl bg-blue-100">
                 📍
               </div>
 
@@ -293,7 +293,7 @@ function Carga() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <InputSelect
                 placeholder="Gimnasio"
                 options={[
@@ -344,9 +344,9 @@ function Carga() {
 
           {/* ================= FECHA ================= */}
 
-          <div className="mb-12">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-xl">
+          <div className="mb-8 md:mb-12">
+            <div className="mb-4 md:mb-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 md:h-11 md:w-11 text-lg md:text-xl items-center justify-center rounded-xl bg-blue-100">
                 🕒
               </div>
 
@@ -361,7 +361,7 @@ function Carga() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <InputDate
                 placeholder="Fecha"
                 value={selectedDate}
@@ -390,6 +390,7 @@ function Carga() {
                     start: selectedDate ? `${selectedDate}T${time}:00` : "",
                   }));
                 }}
+                horaInicio
               />
 
               <InputTime

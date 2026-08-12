@@ -13,7 +13,7 @@ function AlternativaHome() {
   }, []);
 
   return (
-    <div className="flex h-screen w-full flex-col xl:flex-row ">
+    <div className="flex h-screen w-full flex-col xl:flex-row pt-28 pb-10 md:pb-0 md:pt-0">
       <Card
         image={entrenamientos}
         title="Calendario"

@@ -68,6 +68,7 @@ export default function EventHoverPreview({
   // true = flecha a la izquierda
   // false = flecha a la derecha
   const [arrowLeft, setArrowLeft] = useState(false);
+  const isMobile = window.innerWidth < 768;
 
   useEffect(() => {
     const modalWidth = 256; // w-64
@@ -125,23 +126,38 @@ export default function EventHoverPreview({
   return (
     <div
       ref={modalRef}
-      className="fixed z-50 w-72 overflow-hidden rounded-2xl text-white shadow-[0_20px_60px_rgba(15,23,42,.25)]"
-      style={{
-        background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
-        top: position.y,
-        left: modalLeft,
-      }}
+      className={`
+    fixed z-50 overflow-hidden rounded-2xl text-white
+    shadow-[0_20px_60px_rgba(15,23,42,.25)]
+    ${isMobile ? "w-[90%] max-w-sm" : "w-72"}
+  `}
+      style={
+        isMobile
+          ? {
+              background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }
+          : {
+              background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
+              top: position.y,
+              left: modalLeft,
+            }
+      }
       onClick={(e) => e.stopPropagation()}
     >
       {/* Flecha */}
-      <div
-        className={`absolute top-5 h-4 w-4 rotate-45 ${
-          arrowLeft ? "left-[-8px]" : "right-[-8px]"
-        }`}
-        style={{
-          background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
-        }}
-      />
+      {!isMobile && (
+        <div
+          className={`absolute top-5 h-4 w-4 rotate-45 ${
+            arrowLeft ? "left-[-8px]" : "right-[-8px]"
+          }`}
+          style={{
+            background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
+          }}
+        />
+      )}
 
       {/* Cerrar */}
       <button

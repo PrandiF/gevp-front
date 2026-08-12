@@ -10,6 +10,15 @@ interface Props {
   isInstance: boolean;
 }
 
+const sportIcons: Record<string, React.ReactNode> = {
+  Básquet: "🏀",
+  "Voley Femenino": "🏐",
+  "Voley Masculino": "🏐",
+  Cesto: "🏐",
+  "Gimnasia Rítmica": "🤸",
+  "Otras Actividades": "🏋️",
+};
+
 export default function ConfirmCancelModal({
   open,
   onClose,
@@ -63,7 +72,7 @@ export default function ConfirmCancelModal({
       />
 
       {/* MODAL */}
-      <div className="relative bg-white rounded-2xl shadow-2xl w-[420px] p-6 animate-scaleIn">
+      <div className="relative bg-white rounded-2xl shadow-2xl w-[420px] p-6 animate-scaleIn md:mx-0 mx-4">
         {/* 🔥 OVERLAY LOADER */}
         {isLoading && (
           <div className="absolute inset-0 bg-white/70 flex flex-col items-center justify-center rounded-2xl z-50">
@@ -80,13 +89,17 @@ export default function ConfirmCancelModal({
         <p className="text-gray-600 mt-3">
           {isInstance
             ? "¿Qué querés cancelar?"
-            : "Este entrenamiento no es recurrente."}
+            : "Este evento no es recurrente."}
         </p>
 
         {/* INFO EVENTO */}
         <div className="mt-4 bg-gray-100 rounded-lg p-3 text-sm text-black">
-          <p className="font-semibold">{event.deporte?.toUpperCase()}</p>
+          <p className="font-semibold flex gap-1">
+            {sportIcons[event.deporte]}
+            <span>{event.deporte?.toUpperCase()}</span>
+          </p>
           <p>{event.categoria}</p>
+          <p>{event.tipoDeActividad}</p>
           <p>{event.gimnasio}</p>
 
           <p className="text-gray-500">
@@ -97,13 +110,14 @@ export default function ConfirmCancelModal({
               hour: "2-digit",
               minute: "2-digit",
               hour12: false,
-            })}{" "}
-            -
+            })}
+            hs -
             {new Date(event.end).toLocaleTimeString("es-AR", {
               hour: "2-digit",
               minute: "2-digit",
               hour12: false,
             })}
+            hs
           </p>
         </div>
 
