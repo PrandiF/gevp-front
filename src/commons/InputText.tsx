@@ -25,7 +25,7 @@ function InputText({
       value={value}
       name={name}
       onChange={handleChange}
-      className="w-full h-12 px-4 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 transition-all duration-200 hover:border-[#1d91d9] focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#1d91d9] cursor-pointer"
+      className="w-full h-12 px-4 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 transition-all duration-200 hover:border-[#1d91d9] focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#1d91d9]"
       readOnly={readonly}
       disabled={readonly}
     />

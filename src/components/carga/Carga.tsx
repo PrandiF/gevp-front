@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import ButtonSubmit from "../../commons/ButtonSubmit";
 import Header from "../Header";
+import EditRecurringModal from "../../commons/EditRecurringModal";
 
 const allSports = [
   "Básquet",
@@ -35,6 +36,7 @@ function Carga() {
   const [selectedDate, setSelectedDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [showRecurringEditModal, setShowRecurringEditModal] = useState(false);
 
   const [eventData, setEventData] = useState({
     gimnasio: "",
@@ -52,23 +54,23 @@ function Carga() {
   const editingEvent = location.state?.event;
   const isEditing = !!editingEvent;
 
-  const safeISO = (value: any) => {
-    const d = new Date(value);
-    if (isNaN(d.getTime())) return null;
-    return d.toISOString();
-  };
+  // useEffect(() => {
+  //   console.log(editingEvent);
+  // }, [editingEvent]);
 
   useEffect(() => {
     if (!editingEvent) return;
 
-    const start = safeISO(editingEvent.start);
-    const end = safeISO(editingEvent.end);
+    const start = editingEvent.start;
+    const end = editingEvent.end;
 
     if (!start || !end) return;
 
-    setSelectedDate(start.split("T")[0]);
+    setSelectedDate(start.slice(0, 10));
     setStartTime(start.slice(11, 16));
     setEndTime(end.slice(11, 16));
+
+    console.log(editingEvent.start);
 
     setEventData({
       gimnasio: editingEvent.gimnasio ?? "",
@@ -121,6 +123,24 @@ function Carga() {
   // };
 
   const handleSubmit = async () => {
+    if (!isEditing) {
+      await saveHorario();
+      return;
+    }
+
+    // Evento recurrente → preguntar
+    if (editingEvent?.recurringEventId) {
+      setShowRecurringEditModal(true);
+      return;
+    }
+
+    // Evento simple
+    await saveHorario();
+  };
+
+  const saveHorario = async (editMode: "single" | "series" = "series") => {
+    setIsLoading(true);
+
     setIsLoading(true);
 
     // Validaciones básicas
@@ -165,9 +185,12 @@ function Carga() {
       let res;
 
       if (isEditing) {
-        res = await editHorario(editingEvent.id, {
+        res = await editHorario(editingEvent.horarioId, {
           ...horarioData,
-          editMode: "series",
+          editMode,
+          ...(editMode === "single" && {
+            instanceId: editingEvent.id,
+          }),
         });
       } else {
         res = await createHorario(horarioData);
@@ -221,6 +244,8 @@ function Carga() {
 
       console.error(error);
     }
+
+    // TODO: mover TODO el contenido del handleSubmit acá
   };
 
   useEffect(() => {
@@ -428,6 +453,18 @@ function Carga() {
           )}
         </div>
       </div>
+      <EditRecurringModal
+        open={showRecurringEditModal}
+        onClose={() => setShowRecurringEditModal(false)}
+        onSingle={async () => {
+          setShowRecurringEditModal(false);
+          await saveHorario("single");
+        }}
+        onSeries={async () => {
+          setShowRecurringEditModal(false);
+          await saveHorario("series");
+        }}
+      />
     </>
   );
 }

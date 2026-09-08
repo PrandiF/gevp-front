@@ -589,8 +589,6 @@ export default function ClubCalendar() {
                 setHoveredEvent({
                   ...info.event.extendedProps,
                   id: info.event.id,
-                  start: info.event.start?.toISOString(),
-                  end: info.event.end?.toISOString(),
                 });
 
                 setHoverPosition({
