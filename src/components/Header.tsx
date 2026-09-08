@@ -13,13 +13,15 @@ function Header() {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  const isEditing = location.pathname === "/cargar" && !!location.state?.event;
+
   const navItems = [
     {
       label: "Calendario",
       path: "/calendario",
     },
     {
-      label: "Nueva actividad",
+      label: isEditing ? "Editar actividad" : "Nueva actividad",
       path: "/cargar",
     },
   ];

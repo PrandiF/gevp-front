@@ -212,12 +212,7 @@ export default function EventHoverPreview({
                 },
               });
             }}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${
-              true
-                ? "cursor-not-allowed bg-white/10 text-white/50"
-                : "bg-white/20 hover:bg-white/30"
-            }`}
-            disabled
+            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition bg-white/20 hover:bg-white/30 `}
           >
             <HiOutlinePencilSquare size={17} />
             Editar

@@ -30,6 +30,10 @@ function InputSelect({
   };
 
   useEffect(() => {
+    setSelected(value || "");
+  }, [value]);
+
+  useEffect(() => {
     if (clean) {
       setSelected("");
     }
